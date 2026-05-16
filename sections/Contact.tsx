@@ -12,6 +12,8 @@ export default function Contact() {
     message: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -22,6 +24,8 @@ export default function Contact() {
   };
 
   const handleSubmit = async () => {
+
+    setLoading(true);
 
     try {
 
@@ -65,6 +69,10 @@ export default function Contact() {
       toast.error("Something went wrong!");
 
       console.error(error);
+
+    } finally {
+
+      setLoading(false);
 
     }
   };
@@ -115,9 +123,12 @@ export default function Contact() {
 
             <button
               onClick={handleSubmit}
-              className="bg-white text-black px-8 py-4 rounded-full hover:bg-gray-200 transition"
+              disabled={loading}
+              className="bg-white text-black px-8 py-4 rounded-full hover:bg-gray-200 transition disabled:opacity-50"
             >
-              Book Appointment
+              {loading
+                ? "Booking..."
+                : "Book Appointment"}
             </button>
 
           </div>

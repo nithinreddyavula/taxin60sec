@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 export default function Testimonials() {
 
   const testimonials = [
@@ -20,24 +24,40 @@ export default function Testimonials() {
 
       <div className="max-w-7xl mx-auto px-6">
 
-        <p className="uppercase tracking-[0.3em] text-sm text-gray-500 mb-4">
-          Testimonials
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+        >
 
-        <h2 className="text-5xl font-bold mb-16">
-          What Our Clients Say
-        </h2>
+          <p className="uppercase tracking-[0.3em] text-sm text-gray-500 mb-4">
+            Testimonials
+          </p>
+
+          <h2 className="text-5xl font-bold mb-16">
+            What Our Clients Say
+          </h2>
+
+        </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          {testimonials.map((testimonial) => (
+          {testimonials.map((testimonial, index) => (
 
-            <div
+            <motion.div
               key={testimonial.name}
-              className="bg-white p-10 rounded-[30px] shadow"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.2,
+              }}
+              viewport={{ once: true }}
+              className="bg-white p-10 rounded-[30px] shadow hover:shadow-xl transition"
             >
 
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-gray-700 leading-relaxed text-lg">
                 "{testimonial.text}"
               </p>
 
@@ -45,7 +65,7 @@ export default function Testimonials() {
                 {testimonial.name}
               </h3>
 
-            </div>
+            </motion.div>
 
           ))}
 
