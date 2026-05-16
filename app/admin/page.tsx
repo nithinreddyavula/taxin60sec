@@ -3,12 +3,28 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
 export default function AdminPage() {
 
   const router = useRouter();
 
   const [contacts, setContacts] = useState([]);
   const [search, setSearch] = useState("");
+
+  const chartData = contacts.map((contact: any) => ({
+    date: contact.createdAt
+      ? new Date(contact.createdAt).toLocaleDateString()
+      : "Old",
+    leads: 1,
+  }));
 
   useEffect(() => {
 
@@ -33,9 +49,11 @@ export default function AdminPage() {
 
       <div className="max-w-7xl mx-auto">
 
+        {/* HEADER */}
         <div className="flex items-center justify-between mb-10">
 
           <div>
+
             <p className="uppercase tracking-[0.3em] text-sm text-gray-500">
               Admin Dashboard
             </p>
@@ -43,6 +61,7 @@ export default function AdminPage() {
             <h1 className="text-4xl font-bold mt-2">
               Client Inquiries
             </h1>
+
           </div>
 
           <button
@@ -57,7 +76,7 @@ export default function AdminPage() {
 
         </div>
 
-        {/* STATS CARDS */}
+        {/* STATS */}
         <div className="grid md:grid-cols-3 gap-6 mb-10">
 
           <div className="bg-white p-8 rounded-[30px] shadow">
@@ -115,6 +134,39 @@ export default function AdminPage() {
               }
 
             </h2>
+
+          </div>
+
+        </div>
+
+        {/* CHART */}
+        <div className="bg-white p-8 rounded-[30px] shadow mb-10">
+
+          <h2 className="text-2xl font-bold mb-6">
+            Lead Analytics
+          </h2>
+
+          <div className="h-[300px]">
+
+            <ResponsiveContainer width="100%" height="100%">
+
+              <LineChart data={chartData}>
+
+                <XAxis dataKey="date" />
+
+                <YAxis />
+
+                <Tooltip />
+
+                <Line
+                  type="monotone"
+                  dataKey="leads"
+                  strokeWidth={3}
+                />
+
+              </LineChart>
+
+            </ResponsiveContainer>
 
           </div>
 
