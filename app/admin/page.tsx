@@ -1,18 +1,31 @@
-async function getContacts() {
+"use client";
 
-  const res = await fetch(
-    "https://taxin60sec-backend-production.up.railway.app/api/contact",
-    {
-      cache: "no-store",
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function AdminPage() {
+
+  const router = useRouter();
+
+  const [contacts, setContacts] = useState([]);
+
+  useEffect(() => {
+
+    const isAuthenticated =
+      localStorage.getItem("admin-auth");
+
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
     }
-  );
 
-  return res.json();
-}
+    fetch(
+      "https://taxin60sec-backend-production.up.railway.app/api/contact"
+    )
+      .then((res) => res.json())
+      .then((data) => setContacts(data));
 
-export default async function AdminPage() {
-
-  const contacts = await getContacts();
+  }, [router]);
 
   return (
     <div className="min-h-screen bg-gray-100 p-10">
@@ -31,9 +44,15 @@ export default async function AdminPage() {
             </h1>
           </div>
 
-          <div className="bg-black text-white px-6 py-3 rounded-full">
-            {contacts.length} Leads
-          </div>
+          <button
+            onClick={() => {
+              localStorage.removeItem("admin-auth");
+              router.push("/login");
+            }}
+            className="bg-black text-white px-6 py-3 rounded-full"
+          >
+            Logout
+          </button>
 
         </div>
 
