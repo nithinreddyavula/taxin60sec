@@ -3,10 +3,10 @@ package com.taxin60sec.backend.controller;
 import com.taxin60sec.backend.entity.Contact;
 import com.taxin60sec.backend.repository.ContactRepository;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/contact")
-@CrossOrigin(origins = "https://taxin60sec.vercel.app")
 public class ContactController {
 
     private final ContactRepository contactRepository;
@@ -19,4 +19,8 @@ public class ContactController {
     public Contact saveContact(@RequestBody Contact contact) {
         return contactRepository.save(contact);
     }
+    @GetMapping
+public List<Contact> getAllContacts() {
+    return contactRepository.findAll();
+}
 }
