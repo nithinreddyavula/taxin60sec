@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/contact")
-@CrossOrigin("*")
+@CrossOrigin(origins = "https://taxin60sec.vercel.app")
 public class ContactController {
 
     private final ContactRepository contactRepository;
