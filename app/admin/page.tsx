@@ -8,6 +8,7 @@ export default function AdminPage() {
   const router = useRouter();
 
   const [contacts, setContacts] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
 
@@ -56,6 +57,18 @@ export default function AdminPage() {
 
         </div>
 
+        <div className="mb-6">
+
+          <input
+            type="text"
+            placeholder="Search clients..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full p-5 rounded-2xl border border-gray-300 outline-none"
+          />
+
+        </div>
+
         <div className="bg-white rounded-[30px] shadow overflow-hidden">
 
           <table className="w-full">
@@ -67,64 +80,72 @@ export default function AdminPage() {
                 <th className="text-left p-6">Email</th>
                 <th className="text-left p-6">Message</th>
                 <th className="text-left p-6">Created</th>
+                <th className="text-left p-6">Action</th>
               </tr>
 
             </thead>
 
             <tbody>
 
-              {contacts.map((contact: any) => (
+              {contacts
+                .filter((contact: any) =>
+                  contact.name
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+                )
+                .map((contact: any) => (
 
-                <tr
-                  key={contact.id}
-                  className="border-b border-gray-200 hover:bg-gray-50"
-                >
+                  <tr
+                    key={contact.id}
+                    className="border-b border-gray-200 hover:bg-gray-50"
+                  >
 
-                  <td className="p-6 font-medium">
-                    {contact.name}
-                  </td>
+                    <td className="p-6 font-medium">
+                      {contact.name}
+                    </td>
 
-                  <td className="p-6 text-gray-600">
-                    {contact.email}
-                  </td>
+                    <td className="p-6 text-gray-600">
+                      {contact.email}
+                    </td>
 
-                  <td className="p-6 text-gray-700">
-                    {contact.message}
-                  </td>
+                    <td className="p-6 text-gray-700">
+                      {contact.message}
+                    </td>
 
-                  <td className="p-6 text-gray-500">
-                    {contact.createdAt
-                      ? new Date(contact.createdAt).toLocaleString()
-                      : "Old Record"}
-                  </td>
-                  <td className="p-6">
+                    <td className="p-6 text-gray-500">
+                      {contact.createdAt
+                        ? new Date(contact.createdAt).toLocaleString()
+                        : "Old Record"}
+                    </td>
 
-  <button
-    onClick={async () => {
+                    <td className="p-6">
 
-      await fetch(
-        `https://taxin60sec-backend-production.up.railway.app/api/contact/${contact.id}`,
-        {
-          method: "DELETE",
-        }
-      );
+                      <button
+                        onClick={async () => {
 
-      setContacts(
-        contacts.filter(
-          (c: any) => c.id !== contact.id
-        )
-      );
-    }}
-    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-  >
-    Delete
-  </button>
+                          await fetch(
+                            `https://taxin60sec-backend-production.up.railway.app/api/contact/${contact.id}`,
+                            {
+                              method: "DELETE",
+                            }
+                          );
 
-</td>
+                          setContacts(
+                            contacts.filter(
+                              (c: any) => c.id !== contact.id
+                            )
+                          );
+                        }}
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+                      >
+                        Delete
+                      </button>
 
-                </tr>
+                    </td>
 
-              ))}
+                  </tr>
+
+                ))}
 
             </tbody>
 
