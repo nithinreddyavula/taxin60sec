@@ -22,7 +22,7 @@ export default function Contact() {
   const handleSubmit = async () => {
 
     const response = await fetch(
-      "http://localhost:8080/api/contact",
+      "https://taxin60sec.onrender.com/api/contact",
       {
         method: "POST",
         headers: {
