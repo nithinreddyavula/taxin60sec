@@ -22,7 +22,7 @@ export default function Contact() {
   const handleSubmit = async () => {
 
     const response = await fetch(
-      "https://taxin60sec-production.up.railway.app",
+      "https://taxin60sec-backend-production.up.railway.app/",
       {
         method: "POST",
         headers: {
