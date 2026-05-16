@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
@@ -13,32 +14,43 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
 
         {/* LOGO */}
-        <h1 className="text-2xl font-bold tracking-wide">
+        <Link
+          href="/"
+          className="text-2xl font-bold tracking-wide"
+        >
           TaxIn60Sec
-        </h1>
+        </Link>
 
         {/* DESKTOP MENU */}
         <div className="hidden md:flex gap-10 text-sm font-medium">
 
-          <a href="#" className="hover:text-gray-500 transition">
+          <Link
+            href="/"
+            className="hover:text-gray-500 transition"
+          >
             Home
-          </a>
+          </Link>
 
-          <a href="#" className="hover:text-gray-500 transition">
+          <Link
+            href="/about"
+            className="hover:text-gray-500 transition"
+          >
             About
-          </a>
+          </Link>
 
-          <a href="#" className="hover:text-gray-500 transition">
+          <Link
+            href="/services"
+            className="hover:text-gray-500 transition"
+          >
             Services
-          </a>
+          </Link>
 
-          <a href="#" className="hover:text-gray-500 transition">
-            Team
-          </a>
-
-          <a href="#" className="hover:text-gray-500 transition">
+          <Link
+            href="/contact"
+            className="hover:text-gray-500 transition"
+          >
             Contact
-          </a>
+          </Link>
 
         </div>
 
@@ -56,11 +68,21 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden px-6 pb-6 flex flex-col gap-6 text-sm font-medium bg-[#f8f7f4]">
 
-          <a href="#">Home</a>
-          <a href="#">About</a>
-          <a href="#">Services</a>
-          <a href="#">Team</a>
-          <a href="#">Contact</a>
+          <Link href="/" onClick={() => setOpen(false)}>
+            Home
+          </Link>
+
+          <Link href="/about" onClick={() => setOpen(false)}>
+            About
+          </Link>
+
+          <Link href="/services" onClick={() => setOpen(false)}>
+            Services
+          </Link>
+
+          <Link href="/contact" onClick={() => setOpen(false)}>
+            Contact
+          </Link>
 
         </div>
       )}
