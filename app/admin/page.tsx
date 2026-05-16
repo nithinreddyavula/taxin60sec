@@ -16,7 +16,7 @@ export default function AdminPage() {
 
   const router = useRouter();
 
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState<any[]>([]);
   const [search, setSearch] = useState("");
 
   const chartData = contacts.map((contact: any) => ({
