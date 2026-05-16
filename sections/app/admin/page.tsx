@@ -1,4 +1,5 @@
 async function getContacts() {
+
   const res = await fetch(
     "https://taxin60sec-backend-production.up.railway.app/api/contact",
     {
@@ -16,22 +17,36 @@ export default async function AdminPage() {
   return (
     <div className="min-h-screen bg-gray-100 p-10">
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
 
-        <h1 className="text-4xl font-bold mb-10">
-          Client Inquiries
-        </h1>
+        <div className="flex items-center justify-between mb-10">
 
-        <div className="bg-white rounded-3xl shadow overflow-hidden">
+          <div>
+            <p className="uppercase tracking-[0.3em] text-sm text-gray-500">
+              Admin Dashboard
+            </p>
+
+            <h1 className="text-4xl font-bold mt-2">
+              Client Inquiries
+            </h1>
+          </div>
+
+          <div className="bg-black text-white px-6 py-3 rounded-full">
+            {contacts.length} Leads
+          </div>
+
+        </div>
+
+        <div className="bg-white rounded-[30px] shadow overflow-hidden">
 
           <table className="w-full">
 
             <thead className="bg-black text-white">
 
               <tr>
-                <th className="text-left p-5">Name</th>
-                <th className="text-left p-5">Email</th>
-                <th className="text-left p-5">Message</th>
+                <th className="text-left p-6">Name</th>
+                <th className="text-left p-6">Email</th>
+                <th className="text-left p-6">Message</th>
               </tr>
 
             </thead>
@@ -42,11 +57,21 @@ export default async function AdminPage() {
 
                 <tr
                   key={contact.id}
-                  className="border-b border-gray-200"
+                  className="border-b border-gray-200 hover:bg-gray-50"
                 >
-                  <td className="p-5">{contact.name}</td>
-                  <td className="p-5">{contact.email}</td>
-                  <td className="p-5">{contact.message}</td>
+
+                  <td className="p-6 font-medium">
+                    {contact.name}
+                  </td>
+
+                  <td className="p-6 text-gray-600">
+                    {contact.email}
+                  </td>
+
+                  <td className="p-6 text-gray-700">
+                    {contact.message}
+                  </td>
+
                 </tr>
 
               ))}
