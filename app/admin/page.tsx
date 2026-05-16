@@ -57,6 +57,70 @@ export default function AdminPage() {
 
         </div>
 
+        {/* STATS CARDS */}
+        <div className="grid md:grid-cols-3 gap-6 mb-10">
+
+          <div className="bg-white p-8 rounded-[30px] shadow">
+
+            <p className="text-gray-500">
+              Total Leads
+            </p>
+
+            <h2 className="text-4xl font-bold mt-4">
+              {contacts.length}
+            </h2>
+
+          </div>
+
+          <div className="bg-white p-8 rounded-[30px] shadow">
+
+            <p className="text-gray-500">
+              Today Leads
+            </p>
+
+            <h2 className="text-4xl font-bold mt-4">
+
+              {
+                contacts.filter((contact: any) => {
+
+                  if (!contact.createdAt) return false;
+
+                  const today =
+                    new Date().toDateString();
+
+                  const contactDate =
+                    new Date(contact.createdAt).toDateString();
+
+                  return today === contactDate;
+
+                }).length
+              }
+
+            </h2>
+
+          </div>
+
+          <div className="bg-white p-8 rounded-[30px] shadow">
+
+            <p className="text-gray-500">
+              Latest Lead
+            </p>
+
+            <h2 className="text-2xl font-bold mt-4">
+
+              {
+                contacts.length > 0
+                  ? contacts[contacts.length - 1].name
+                  : "No Leads"
+              }
+
+            </h2>
+
+          </div>
+
+        </div>
+
+        {/* SEARCH */}
         <div className="mb-6">
 
           <input
@@ -69,6 +133,7 @@ export default function AdminPage() {
 
         </div>
 
+        {/* TABLE */}
         <div className="bg-white rounded-[30px] shadow overflow-hidden">
 
           <table className="w-full">
@@ -113,9 +178,11 @@ export default function AdminPage() {
                     </td>
 
                     <td className="p-6 text-gray-500">
+
                       {contact.createdAt
                         ? new Date(contact.createdAt).toLocaleString()
                         : "Old Record"}
+
                     </td>
 
                     <td className="p-6">
