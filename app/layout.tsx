@@ -17,8 +17,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TaxIn60Sec",
-  description: "Professional Tax & Compliance Services",
+  title: {
+    default: "TaxIn60Sec",
+    template: "%s | TaxIn60Sec",
+  },
+
+  description:
+    "Professional taxation, GST filing, audit, compliance, and startup advisory services.",
+
+  keywords: [
+    "CA Firm",
+    "GST Filing",
+    "Income Tax",
+    "Tax Consultant",
+    "Audit Services",
+    "Startup Registration",
+  ],
 };
 
 export default function RootLayout({
