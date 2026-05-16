@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
 
@@ -38,6 +39,16 @@ export default function Contact() {
     alert("Message Sent Successfully!");
 
     console.log(data);
+    await emailjs.send(
+  "service_h7uxsh6",
+  "template_b2yeqtp",
+  {
+    name: form.name,
+    email: form.email,
+    message: form.message,
+  },
+  "jYU-j6IxwfjyPtkQw"
+);
   };
 
   return (
