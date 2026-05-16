@@ -40,14 +40,14 @@ export default function Contact() {
       const data = await response.json();
 
       await emailjs.send(
-        "service_h7uxsh6",
-        "template_b2yeqtp",
+        "service_ouw63sj",
+        "template_yd0879u",
         {
           name: form.name,
           email: form.email,
           message: form.message,
         },
-        "jYU-j6IxwfjyPtkQw"
+        "lzNVEjLF6iMNz2tOP"
       );
 
       toast.success("Appointment Booked Successfully!");
