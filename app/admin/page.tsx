@@ -97,6 +97,30 @@ export default function AdminPage() {
                       ? new Date(contact.createdAt).toLocaleString()
                       : "Old Record"}
                   </td>
+                  <td className="p-6">
+
+  <button
+    onClick={async () => {
+
+      await fetch(
+        `https://taxin60sec-backend-production.up.railway.app/api/contact/${contact.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      setContacts(
+        contacts.filter(
+          (c: any) => c.id !== contact.id
+        )
+      );
+    }}
+    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+  >
+    Delete
+  </button>
+
+</td>
 
                 </tr>
 
