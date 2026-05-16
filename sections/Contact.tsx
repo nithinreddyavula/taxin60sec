@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
 
 export default function Contact() {
 
@@ -22,34 +23,50 @@ export default function Contact() {
 
   const handleSubmit = async () => {
 
-    const response = await fetch(
-      "https://taxin60sec-backend-production.up.railway.app/api/contact",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    try {
+
+      const response = await fetch(
+        "https://taxin60sec-backend-production.up.railway.app/api/contact",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(form),
+        }
+      );
+
+      const data = await response.json();
+
+      await emailjs.send(
+        "service_h7uxsh6",
+        "template_b2yeqtp",
+        {
+          name: form.name,
+          email: form.email,
+          message: form.message,
         },
+        "jYU-j6IxwfjyPtkQw"
+      );
 
-        body: JSON.stringify(form),
-      }
-    );
+      toast.success("Appointment Booked Successfully!");
 
-    const data = await response.json();
+      console.log(data);
 
-    await emailjs.send(
-      "service_h7uxsh6",
-      "template_b2yeqtp",
-      {
-        name: form.name,
-        email: form.email,
-        message: form.message,
-      },
-      "jYU-j6IxwfjyPtkQw"
-    );
+      setForm({
+        name: "",
+        email: "",
+        message: "",
+      });
 
-    alert("Appointment Booked Successfully!");
+    } catch (error) {
 
-    console.log(data);
+      toast.error("Something went wrong!");
+
+      console.error(error);
+
+    }
   };
 
   return (
@@ -73,6 +90,7 @@ export default function Contact() {
               type="text"
               name="name"
               placeholder="Your Name"
+              value={form.name}
               onChange={handleChange}
               className="w-full p-5 rounded-xl bg-white text-black outline-none"
             />
@@ -81,6 +99,7 @@ export default function Contact() {
               type="email"
               name="email"
               placeholder="Your Email"
+              value={form.email}
               onChange={handleChange}
               className="w-full p-5 rounded-xl bg-white text-black outline-none"
             />
@@ -89,6 +108,7 @@ export default function Contact() {
               name="message"
               placeholder="Your Message"
               rows={5}
+              value={form.message}
               onChange={handleChange}
               className="w-full p-5 rounded-xl bg-white text-black outline-none"
             />
