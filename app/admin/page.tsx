@@ -66,6 +66,7 @@ export default function AdminPage() {
                 <th className="text-left p-6">Name</th>
                 <th className="text-left p-6">Email</th>
                 <th className="text-left p-6">Message</th>
+                <th className="text-left p-6">Created</th>
               </tr>
 
             </thead>
@@ -89,6 +90,12 @@ export default function AdminPage() {
 
                   <td className="p-6 text-gray-700">
                     {contact.message}
+                  </td>
+
+                  <td className="p-6 text-gray-500">
+                    {contact.createdAt
+                      ? new Date(contact.createdAt).toLocaleString()
+                      : "Old Record"}
                   </td>
 
                 </tr>
