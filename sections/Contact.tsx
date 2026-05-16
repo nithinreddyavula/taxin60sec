@@ -36,19 +36,20 @@ export default function Contact() {
 
     const data = await response.json();
 
-    alert("Message Sent Successfully!");
+    await emailjs.send(
+      "service_h7uxsh6",
+      "template_b2yeqtp",
+      {
+        name: form.name,
+        email: form.email,
+        message: form.message,
+      },
+      "jYU-j6IxwfjyPtkQw"
+    );
+
+    alert("Appointment Booked Successfully!");
 
     console.log(data);
-    await emailjs.send(
-  "service_h7uxsh6",
-  "template_b2yeqtp",
-  {
-    name: form.name,
-    email: form.email,
-    message: form.message,
-  },
-  "jYU-j6IxwfjyPtkQw"
-);
   };
 
   return (
@@ -96,7 +97,7 @@ export default function Contact() {
               onClick={handleSubmit}
               className="bg-white text-black px-8 py-4 rounded-full hover:bg-gray-200 transition"
             >
-              Send Message
+              Book Appointment
             </button>
 
           </div>
