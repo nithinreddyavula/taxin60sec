@@ -243,7 +243,7 @@ export default function AdminPage() {
                         onClick={async () => {
 
                           await fetch(
-                            `https://taxin60sec-backend-production.up.railway.app/api/contact/${contact.id}`,
+                            `https://taxin60sec-backend.onrender.com/api/contact/${contact.id}`,
                             {
                               method: "DELETE",
                             }

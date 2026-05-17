@@ -30,7 +30,7 @@ export default function Contact() {
     try {
 
       const response = await fetch(
-        "https://taxin60sec-backend-production.up.railway.app/api/contact",
+        "https://taxin60sec-backend.onrender.com",
         {
           method: "POST",
           headers: {
