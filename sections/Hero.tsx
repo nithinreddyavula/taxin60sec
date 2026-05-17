@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Hero() {
 
   return (
-    <section className="min-h-screen flex items-center pt-32">
+    <section className="min-h-screen flex items-center pt-44">
 
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
