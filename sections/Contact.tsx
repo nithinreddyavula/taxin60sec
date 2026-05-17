@@ -82,7 +82,7 @@ export default function Contact() {
 
       <div className="max-w-4xl mx-auto px-6">
 
-        <div className="bg-black text-white rounded-[40px] p-16">
+        <div className="bg-black text-white rounded-[40px] p-8 md:p-16">
 
           <p className="uppercase tracking-[0.3em] text-sm text-gray-400 mb-6">
             Contact Us
