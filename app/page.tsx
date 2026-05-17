@@ -7,7 +7,10 @@ import About from "../sections/About";
 import Contact from "../sections/Contact";
 import Testimonials from "@/sections/Testimonials";
 import FAQ from "@/sections/FAQ";
-
+import WhyChooseUs from "@/sections/WhyChooseUs";
+import Stats from "@/sections/Stats";
+import Team from "@/sections/Team";
+import MapSection from "@/sections/MapSection";
 export default function Home() {
   return (
     <main>
@@ -16,8 +19,12 @@ export default function Home() {
       <Services />
       <About />
       <Contact />
+      <Team />
+      <Stats />
+      <WhyChooseUs />
       <Testimonials />
       <FAQ />
+      <MapSection />
       <Footer />
     </main>
   );
