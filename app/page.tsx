@@ -9,7 +9,6 @@ import Testimonials from "@/sections/Testimonials";
 import FAQ from "@/sections/FAQ";
 import WhyChooseUs from "@/sections/WhyChooseUs";
 import Stats from "@/sections/Stats";
-import Team from "@/sections/Team";
 import MapSection from "@/sections/MapSection";
 export default function Home() {
   return (
@@ -19,7 +18,6 @@ export default function Home() {
       <Services />
       <About />
       <Contact />
-      <Team />
       <Stats />
       <WhyChooseUs />
       <Testimonials />
