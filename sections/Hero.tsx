@@ -16,7 +16,6 @@ import {
   PieChart,
   ResponsiveContainer,
   Tooltip,
-  AreaProps,
   Cell,
 } from "recharts";
 
@@ -41,342 +40,339 @@ const complianceData = [
 ];
 
 export default function Hero() {
-
   return (
+    <section className="relative overflow-hidden bg-[#020817] text-white pt-24 lg:pt-32 pb-16 lg:pb-24">
 
-    <section className="relative bg-[#020817] overflow-hidden text-white pt-28 lg:pt-32 pb-20">
-
-      {/* BACKGROUND GLOW */}
+      {/* GLOW */}
       <div className="absolute inset-0 overflow-hidden">
 
-        <div className="absolute top-[-120px] left-[-120px] w-[350px] h-[350px] bg-blue-600/20 blur-[120px] rounded-full" />
+        <div className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] bg-blue-600/20 blur-[120px] rounded-full" />
 
-        <div className="absolute bottom-[-120px] right-[-120px] w-[350px] h-[350px] bg-indigo-600/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-150px] right-[-150px] w-[400px] h-[400px] bg-indigo-600/20 blur-[120px] rounded-full" />
 
       </div>
 
-      {/* MAIN CONTAINER */}
-      <div className="relative z-10 max-w-[1500px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-8 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
 
-        {/* LEFT SIDE */}
-        <div>
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-10 items-center">
 
-          {/* TAG */}
-          <div className="inline-flex items-center px-5 py-2 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 text-sm font-medium">
+          {/* LEFT */}
+          <div className="max-w-2xl">
 
-            Modern Finance. Smart Compliance. Stronger Business.
+            {/* BADGE */}
+            <div className="inline-flex items-center px-4 py-2 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 text-xs sm:text-sm font-medium">
 
-          </div>
-
-          {/* HEADING */}
-          <h1 className="mt-8 text-5xl lg:text-[54px] leading-[1.05] font-bold">
-
-            All-in-One
-
-            <br />
-
-            <span className="text-blue-500">
-
-              Finance &
-
-            </span>
-
-            <br />
-
-            Tax Solutions
-
-            <br />
-
-            For Businesses
-
-          </h1>
-
-          {/* DESCRIPTION */}
-          <p className="mt-6 text-base text-gray-300 leading-8 max-w-xl">
-
-            From GST to Global Compliance,
-            from Startup Registration to Virtual CFO —
-            we simplify finance so you can focus on growth.
-
-          </p>
-
-          {/* BUTTONS */}
-          <div className="mt-10 flex flex-wrap gap-4">
-
-            <a
-              href="/#contact"
-              className="px-7 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold flex items-center gap-3 shadow-2xl shadow-blue-500/20"
-            >
-
-              Book Consultation
-
-              <ArrowRight size={18} />
-
-            </a>
-
-            <a
-              href="https://wa.me/917013734079"
-              target="_blank"
-              className="px-7 py-4 rounded-2xl border border-white/10 hover:bg-white/10 transition text-white font-semibold"
-            >
-
-              Chat on WhatsApp
-
-            </a>
-
-          </div>
-
-          {/* STATS */}
-          <div className="mt-10 flex flex-wrap gap-8 text-sm text-gray-400">
-
-            <div>500+ Clients</div>
-
-            <div>10+ Years Experience</div>
-
-            <div>24hr Response Time</div>
-
-            <div>CA & Ex-Big4 Team</div>
-
-          </div>
-
-        </div>
-
-        {/* RIGHT DASHBOARD */}
-        <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[36px] p-5 shadow-2xl shadow-blue-500/10 w-full max-w-[900px] mr-auto">
-
-          <div className="grid grid-cols-[190px_1fr] gap-5">
-
-            {/* SIDEBAR */}
-            <div className="bg-[#0f172a] rounded-3xl p-5 border border-white/10">
-
-              <h3 className="text-2xl font-bold leading-tight">
-
-                Business
-                <br />
-                Dashboard
-
-              </h3>
-
-              <div className="mt-8 space-y-4">
-
-                {
-                  [
-                    { name: "Overview", icon: Home },
-                    { name: "Income", icon: BarChart3 },
-                    { name: "Expenses", icon: Receipt },
-                    { name: "Reports", icon: FileText },
-                    { name: "Documents", icon: Folder },
-                  ].map((item, i) => {
-
-                    const Icon = item.icon;
-
-                    return (
-
-                      <div
-                        key={i}
-                        className={`flex items-center gap-3 px-4 py-4 rounded-2xl transition cursor-pointer ${
-                          i === 0
-                            ? "bg-blue-600"
-                            : "hover:bg-white/5"
-                        }`}
-                      >
-
-                        <Icon size={18} />
-
-                        <span className="text-sm font-medium">
-
-                          {item.name}
-
-                        </span>
-
-                      </div>
-
-                    );
-
-                  })
-                }
-
-              </div>
+              Modern Finance. Smart Compliance. Stronger Business.
 
             </div>
 
-            {/* MAIN CONTENT */}
-            <div>
+            {/* TITLE */}
+            <h1 className="mt-6 sm:mt-8 text-[42px] sm:text-[56px] lg:text-[64px] leading-[1.05] font-bold tracking-tight">
 
-              {/* TOP CARDS */}
-              <div className="grid grid-cols-4 gap-4">
+              All-in-One
 
-                {
-                  [
-                    ["Total Revenue", "₹48000"],
-                    ["Total Profit", "₹12000"],
-                    ["Tax Savings", "₹3000"],
-                    ["Cash Flow", "₹8000"],
-                  ].map((item, i) => (
+              <br />
 
-                    <div
-                      key={i}
-                      className="bg-[#0f172a] rounded-2xl p-4 border border-white/10 min-h-[130px]"
-                    >
+              <span className="text-blue-500">
 
-                      <p className="text-xs text-gray-400 leading-5">
+                Finance &
 
-                        {item[0]}
+              </span>
 
-                      </p>
+              <br />
 
-                      <h3 className="mt-3 text-[24px] leading-none font-bold">
+              Tax Solutions
 
-                        {item[1]}
+              <br />
 
-                      </h3>
+              For Businesses
 
-                      <p className="mt-3 text-green-400 text-xs">
+            </h1>
 
-                        +12% vs last month
+            {/* DESC */}
+            <p className="mt-6 text-base sm:text-lg text-gray-300 leading-8 max-w-xl">
 
-                      </p>
+              From GST to Global Compliance,
+              from Startup Registration to Virtual CFO —
+              we simplify finance so you can focus on growth.
 
-                    </div>
+            </p>
 
-                  ))
-                }
+            {/* BUTTONS */}
+            <div className="mt-8 flex flex-col sm:flex-row gap-4">
 
-              </div>
+              <a
+                href="/#contact"
+                className="h-14 px-7 rounded-2xl bg-blue-600 hover:bg-blue-500 transition flex items-center justify-center gap-3 text-white font-semibold shadow-xl shadow-blue-500/20"
+              >
 
-              {/* CHARTS */}
-              <div className="grid grid-cols-[2.4fr_1fr] gap-4 mt-4">
+                Book Consultation
 
-                {/* AREA GRAPH */}
-                <div className="bg-[#0f172a] rounded-2xl p-6 border border-white/10 min-h-[360px]">
+                <ArrowRight size={18} />
 
-                  <div className="flex items-center justify-between">
+              </a>
 
-                    <h3 className="font-bold text-xl">
+              <a
+                href="https://wa.me/917013734079"
+                target="_blank"
+                className="h-14 px-7 rounded-2xl border border-white/10 hover:bg-white/10 transition flex items-center justify-center font-semibold"
+              >
 
-                      Business Growth
+                Chat on WhatsApp
 
-                    </h3>
+              </a>
 
-                    <p className="text-sm text-gray-400">
+            </div>
 
-                      This Year
+            {/* STATS */}
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-gray-400">
 
-                    </p>
+              <div>500+ Clients</div>
 
-                  </div>
+              <div>10+ Years Experience</div>
 
-                  <div className="h-[260px] mt-6">
+              <div>24hr Response Time</div>
 
-                    <ResponsiveContainer width="100%" height="100%">
+              <div>CA & Ex-Big4 Team</div>
 
-                      <AreaChart data={growthData}>
+            </div>
 
-                        <defs>
+          </div>
 
-                          <linearGradient
-                            id="color"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                          >
+          {/* RIGHT */}
+          <div className="w-full">
 
-                            <stop
-                              offset="5%"
-                              stopColor="#3b82f6"
-                              stopOpacity={0.8}
-                            />
+            <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[28px] lg:rounded-[36px] p-4 lg:p-5 shadow-2xl shadow-blue-500/10">
 
-                            <stop
-                              offset="95%"
-                              stopColor="#3b82f6"
-                              stopOpacity={0}
-                            />
+              <div className="grid lg:grid-cols-[190px_1fr] gap-5">
 
-                          </linearGradient>
+                {/* SIDEBAR */}
+                <div className="hidden lg:block bg-[#0f172a] rounded-3xl p-5 border border-white/10">
 
-                        </defs>
+                  <h3 className="text-2xl font-bold leading-tight">
 
-                        <Tooltip />
+                    Business
+                    <br />
+                    Dashboard
 
-                        <Area
-                          type="monotone"
-                          dataKey="value"
-                          stroke="#3b82f6"
-                          strokeWidth={4}
-                          fillOpacity={1}
-                          fill="url(#color)"
-                        />
+                  </h3>
 
-                      </AreaChart>
+                  <div className="mt-8 space-y-4">
 
-                    </ResponsiveContainer>
+                    {[
+                      { name: "Overview", icon: Home },
+                      { name: "Income", icon: BarChart3 },
+                      { name: "Expenses", icon: Receipt },
+                      { name: "Reports", icon: FileText },
+                      { name: "Documents", icon: Folder },
+                    ].map((item, i) => {
+
+                      const Icon = item.icon;
+
+                      return (
+                        <div
+                          key={i}
+                          className={`flex items-center gap-3 px-4 py-4 rounded-2xl transition cursor-pointer ${
+                            i === 0
+                              ? "bg-blue-600"
+                              : "hover:bg-white/5"
+                          }`}
+                        >
+
+                          <Icon size={18} />
+
+                          <span className="text-sm font-medium">
+
+                            {item.name}
+
+                          </span>
+
+                        </div>
+                      );
+                    })}
 
                   </div>
 
                 </div>
 
-                {/* DONUT CHART */}
-                <div className="bg-[#0f172a] rounded-2xl p-5 border border-white/10 flex flex-col items-center justify-center min-h-[360px]">
+                {/* MAIN */}
+                <div>
 
-                  <h3 className="font-bold text-lg text-center">
+                  {/* TOP CARDS */}
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
 
-                    Compliance
-                    <br />
-                    Status
+                    {[
+                      ["Total Revenue", "₹48L+"],
+                      ["Total Profit", "₹12.4L"],
+                      ["Tax Savings", "₹3.2L"],
+                      ["Cash Flow", "₹8.7L"],
+                    ].map((item, i) => (
 
-                  </h3>
+                      <div
+                        key={i}
+                        className="bg-[#0f172a] rounded-2xl p-4 border border-white/10"
+                      >
 
-                  <div className="w-[190px] h-[190px] mt-4 relative">
+                        <p className="text-xs text-gray-400 leading-5">
 
-                    <ResponsiveContainer width="100%" height="100%">
+                          {item[0]}
 
-                      <PieChart>
+                        </p>
 
-                        <Pie
-                          data={complianceData}
-                          innerRadius={58}
-                          outerRadius={82}
-                          paddingAngle={2}
-                          dataKey="value"
-                        >
+                        <h3 className="mt-3 text-2xl lg:text-[28px] font-bold leading-none">
 
-                          <Cell fill="#3b82f6" />
-                          <Cell fill="#1e293b" />
+                          {item[1]}
 
-                        </Pie>
+                        </h3>
 
-                      </PieChart>
+                        <p className="mt-3 text-green-400 text-xs">
 
-                    </ResponsiveContainer>
+                          +12% vs last month
 
-                    {/* CENTER TEXT */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        </p>
 
-                      <h2 className="text-5xl font-bold">
+                      </div>
 
-                        92%
-
-                      </h2>
-
-                      <p className="text-green-400 text-sm">
-
-                        Compliant
-
-                      </p>
-
-                    </div>
+                    ))}
 
                   </div>
 
-                  {/* STATUS LIST */}
-                  <div className="mt-4 space-y-2 text-sm text-gray-300">
+                  {/* CHARTS */}
+                  <div className="grid grid-cols-1 lg:grid-cols-[2.3fr_1fr] gap-4 mt-4">
 
-                    <p>✓ GST</p>
-                    <p>✓ Income Tax</p>
-                    <p>✓ TDS</p>
-                    <p>✓ ROC</p>
+                    {/* GRAPH */}
+                    <div className="bg-[#0f172a] rounded-2xl p-5 lg:p-6 border border-white/10">
+
+                      <div className="flex items-center justify-between">
+
+                        <h3 className="font-bold text-lg lg:text-xl">
+
+                          Business Growth
+
+                        </h3>
+
+                        <p className="text-sm text-gray-400">
+
+                          This Year
+
+                        </p>
+
+                      </div>
+
+                      <div className="h-[220px] lg:h-[280px] mt-6">
+
+                        <ResponsiveContainer width="100%" height="100%">
+
+                          <AreaChart data={growthData}>
+
+                            <defs>
+
+                              <linearGradient
+                                id="color"
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="1"
+                              >
+
+                                <stop
+                                  offset="5%"
+                                  stopColor="#3b82f6"
+                                  stopOpacity={0.8}
+                                />
+
+                                <stop
+                                  offset="95%"
+                                  stopColor="#3b82f6"
+                                  stopOpacity={0}
+                                />
+
+                              </linearGradient>
+
+                            </defs>
+
+                            <Tooltip />
+
+                            <Area
+                              type="monotone"
+                              dataKey="value"
+                              stroke="#3b82f6"
+                              strokeWidth={4}
+                              fillOpacity={1}
+                              fill="url(#color)"
+                            />
+
+                          </AreaChart>
+
+                        </ResponsiveContainer>
+
+                      </div>
+
+                    </div>
+
+                    {/* DONUT */}
+                    <div className="bg-[#0f172a] rounded-2xl p-5 border border-white/10 flex flex-col items-center justify-center">
+
+                      <h3 className="font-bold text-lg text-center">
+
+                        Compliance Status
+
+                      </h3>
+
+                      <div className="w-[160px] h-[160px] lg:w-[190px] lg:h-[190px] mt-4 relative">
+
+                        <ResponsiveContainer width="100%" height="100%">
+
+                          <PieChart>
+
+                            <Pie
+                              data={complianceData}
+                              innerRadius={58}
+                              outerRadius={82}
+                              paddingAngle={2}
+                              dataKey="value"
+                            >
+
+                              <Cell fill="#3b82f6" />
+
+                              <Cell fill="#1e293b" />
+
+                            </Pie>
+
+                          </PieChart>
+
+                        </ResponsiveContainer>
+
+                        {/* CENTER */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+
+                          <h2 className="text-4xl lg:text-5xl font-bold">
+
+                            92%
+
+                          </h2>
+
+                          <p className="text-green-400 text-sm">
+
+                            Compliant
+
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                      {/* STATUS */}
+                      <div className="mt-5 space-y-2 text-sm text-gray-300">
+
+                        <p>✓ GST</p>
+                        <p>✓ Income Tax</p>
+                        <p>✓ TDS</p>
+                        <p>✓ ROC</p>
+
+                      </div>
+
+                    </div>
 
                   </div>
 
@@ -393,6 +389,5 @@ export default function Hero() {
       </div>
 
     </section>
-
   );
 }
