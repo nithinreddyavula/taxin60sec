@@ -12,35 +12,74 @@ export default function Navbar() {
 
         <div className="flex items-center justify-between h-24">
 
-          {/* LOGO */}
-          <Link
+          
+ {/* LOGO */}
+<Link
   href="/"
-  className="cursor-pointer"
+  className="group cursor-pointer"
 >
 
-           <div className="flex items-center gap-3">
+  <div className="flex items-center gap-4">
 
-  <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-xl shadow-blue-500/30">
+    {/* PREMIUM ICON */}
+    <div className="relative">
 
-    T
+      {/* GLOW */}
+      <div className="absolute inset-0 bg-blue-500 blur-2xl opacity-40 rounded-2xl group-hover:opacity-70 transition duration-500" />
+
+      {/* ICON BOX */}
+      <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700 flex items-center justify-center border border-white/10 shadow-2xl shadow-blue-500/30 overflow-hidden">
+
+        {/* INNER DESIGN */}
+        <div className="absolute inset-0 opacity-20">
+
+          <div className="absolute top-2 left-2 w-6 h-6 border border-white/30 rounded-full" />
+
+          <div className="absolute bottom-2 right-2 w-4 h-4 bg-white/20 rounded-full" />
+
+        </div>
+
+        {/* TEXT */}
+        <span className="text-white font-extrabold text-2xl tracking-tight">
+
+          T
+
+        </span>
+
+      </div>
+
+    </div>
+
+    {/* BRAND */}
+    <div>
+
+      <h1 className="text-4xl font-extrabold tracking-tight leading-none">
+
+        <span className="text-white">
+          Tax
+        </span>
+
+        <span className="text-blue-500">
+          60
+        </span>
+
+        <span className="text-white">
+          Sec
+        </span>
+
+      </h1>
+
+      <p className="mt-1 text-[11px] tracking-[0.45em] uppercase text-gray-400 font-medium">
+
+        Tax • Finance • Growth
+
+      </p>
+
+    </div>
 
   </div>
 
-  <div>
-
-    <h1 className="text-3xl font-bold text-white">
-      Tax60Sec
-    </h1>
-
-    <p className="text-xs tracking-[0.3em] text-gray-400">
-      TAX • FINANCE • GROWTH
-    </p>
-
-  </div>
-
-</div>
-
-          </Link>
+</Link>
 
           {/* MENU */}
           <div className="hidden md:flex items-center gap-12 text-white font-medium">
