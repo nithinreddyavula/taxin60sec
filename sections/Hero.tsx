@@ -208,10 +208,10 @@ export default function Hero() {
 
                 {
                   [
-                    ["Total Revenue", "₹48,75,000"],
-                    ["Total Profit", "₹12,45,000"],
-                    ["Tax Savings", "₹3,25,000"],
-                    ["Cash Flow", "₹8,75,000"],
+                    ["Total Revenue", "₹48000"],
+                    ["Total Profit", "₹12000"],
+                    ["Tax Savings", "₹3000"],
+                    ["Cash Flow", "₹8000"],
                   ].map((item, i) => (
 
                     <div
