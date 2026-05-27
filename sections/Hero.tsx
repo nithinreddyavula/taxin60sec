@@ -16,6 +16,7 @@ import {
   PieChart,
   ResponsiveContainer,
   Tooltip,
+  Cell,
 } from "recharts";
 
 const growthData = [
@@ -27,10 +28,14 @@ const growthData = [
   { month: "Jun", value: 35 },
   { month: "Jul", value: 30 },
   { month: "Aug", value: 45 },
+  { month: "Sep", value: 40 },
+  { month: "Oct", value: 55 },
+  { month: "Nov", value: 48 },
+  { month: "Dec", value: 60 },
 ];
 
 const complianceData = [
-  { name: "Done", value: 92 },
+  { name: "Completed", value: 92 },
   { name: "Pending", value: 8 },
 ];
 
@@ -40,7 +45,7 @@ export default function Hero() {
 
     <section className="relative bg-[#020817] overflow-hidden text-white pt-28 lg:pt-32 pb-20">
 
-      {/* BG GLOW */}
+      {/* BACKGROUND GLOW */}
       <div className="absolute inset-0 overflow-hidden">
 
         <div className="absolute top-[-120px] left-[-120px] w-[350px] h-[350px] bg-blue-600/20 blur-[120px] rounded-full" />
@@ -49,25 +54,30 @@ export default function Hero() {
 
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+      {/* MAIN */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-10 items-center">
 
-        {/* LEFT */}
+        {/* LEFT CONTENT */}
         <div>
 
+          {/* TAG */}
           <div className="inline-flex items-center px-5 py-2 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 text-sm font-medium">
 
             Modern Finance. Smart Compliance. Stronger Business.
 
           </div>
 
-          <h1 className="mt-8 text-5xl lg:text-[70px] leading-[1.05] font-bold">
+          {/* TITLE */}
+          <h1 className="mt-8 text-5xl lg:text-[62px] leading-[1.05] font-bold">
 
             All-in-One
 
             <br />
 
             <span className="text-blue-500">
+
               Finance &
+
             </span>
 
             <br />
@@ -80,6 +90,7 @@ export default function Hero() {
 
           </h1>
 
+          {/* DESCRIPTION */}
           <p className="mt-8 text-lg text-gray-300 leading-8 max-w-2xl">
 
             From GST to Global Compliance,
@@ -93,7 +104,7 @@ export default function Hero() {
 
             <a
               href="/#contact"
-              className="px-7 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold flex items-center gap-3"
+              className="px-7 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold flex items-center gap-3 shadow-2xl shadow-blue-500/20"
             >
 
               Book Consultation
@@ -114,12 +125,21 @@ export default function Hero() {
 
           </div>
 
+          {/* STATS */}
+          <div className="mt-10 flex flex-wrap gap-8 text-sm text-gray-400">
+
+            <div>500+ Clients</div>
+            <div>10+ Years Experience</div>
+            <div>24hr Response Time</div>
+
+          </div>
+
         </div>
 
         {/* RIGHT DASHBOARD */}
-        <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[40px] p-6 shadow-2xl shadow-blue-500/10">
+        <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[36px] p-5 shadow-2xl shadow-blue-500/10 w-full max-w-[760px] ml-auto">
 
-          <div className="grid grid-cols-[220px_1fr] gap-6">
+          <div className="grid grid-cols-[180px_1fr] gap-4">
 
             {/* SIDEBAR */}
             <div className="bg-[#0f172a] rounded-3xl p-5 border border-white/10">
@@ -175,11 +195,11 @@ export default function Hero() {
 
             </div>
 
-            {/* MAIN */}
+            {/* MAIN DASHBOARD */}
             <div>
 
               {/* TOP CARDS */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-3">
 
                 {
                   [
@@ -191,22 +211,22 @@ export default function Hero() {
 
                     <div
                       key={i}
-                      className="bg-[#0f172a] rounded-2xl p-4 border border-white/10"
+                      className="bg-[#0f172a] rounded-2xl p-3 border border-white/10 min-h-[120px]"
                     >
 
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-gray-400 leading-5">
 
                         {item[0]}
 
                       </p>
 
-                      <h3 className="mt-3 text-2xl font-bold">
+                      <h3 className="mt-3 text-[28px] leading-none font-bold">
 
                         {item[1]}
 
                       </h3>
 
-                      <p className="mt-2 text-green-400 text-xs">
+                      <p className="mt-3 text-green-400 text-xs">
 
                         +12% vs last month
 
@@ -219,11 +239,11 @@ export default function Hero() {
 
               </div>
 
-              {/* GRAPH + DONUT */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+              {/* CHARTS */}
+              <div className="grid grid-cols-[2fr_1fr] gap-4 mt-4">
 
                 {/* GRAPH */}
-                <div className="col-span-2 bg-[#0f172a] rounded-2xl p-6 border border-white/10 min-h-[320px]">
+                <div className="bg-[#0f172a] rounded-2xl p-6 border border-white/10 min-h-[320px]">
 
                   <div className="flex items-center justify-between">
 
@@ -297,11 +317,13 @@ export default function Hero() {
 
                   <h3 className="font-bold text-lg text-center">
 
-                    Compliance Status
+                    Compliance
+                    <br />
+                    Status
 
                   </h3>
 
-                  <div className="w-[180px] h-[180px] mt-4">
+                  <div className="w-[180px] h-[180px] mt-4 relative">
 
                     <ResponsiveContainer width="100%" height="100%">
 
@@ -313,27 +335,38 @@ export default function Hero() {
                           outerRadius={75}
                           paddingAngle={3}
                           dataKey="value"
-                        />
+                        >
+
+                          <Cell fill="#3b82f6" />
+                          <Cell fill="#1e293b" />
+
+                        </Pie>
 
                       </PieChart>
 
                     </ResponsiveContainer>
 
+                    {/* CENTER TEXT */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+
+                      <h2 className="text-4xl font-bold">
+
+                        92%
+
+                      </h2>
+
+                      <p className="text-green-400 text-sm">
+
+                        Compliant
+
+                      </p>
+
+                    </div>
+
                   </div>
 
-                  <h2 className="text-5xl font-bold mt-2">
-
-                    92%
-
-                  </h2>
-
-                  <p className="text-green-400 text-sm mt-2">
-
-                    Compliant
-
-                  </p>
-
-                  <div className="mt-6 space-y-2 text-sm text-gray-300">
+                  {/* STATUS */}
+                  <div className="mt-4 space-y-2 text-sm text-gray-300">
 
                     <p>✓ GST</p>
                     <p>✓ Income Tax</p>
