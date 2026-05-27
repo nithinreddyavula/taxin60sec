@@ -16,6 +16,7 @@ import {
   PieChart,
   ResponsiveContainer,
   Tooltip,
+  AreaProps,
   Cell,
 } from "recharts";
 
@@ -54,10 +55,10 @@ export default function Hero() {
 
       </div>
 
-      {/* MAIN */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-10 items-center">
+      {/* MAIN CONTAINER */}
+      <div className="relative z-10 max-w-[1500px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-8 items-center">
 
-        {/* LEFT CONTENT */}
+        {/* LEFT SIDE */}
         <div>
 
           {/* TAG */}
@@ -67,8 +68,8 @@ export default function Hero() {
 
           </div>
 
-          {/* TITLE */}
-          <h1 className="mt-8 text-5xl lg:text-[62px] leading-[1.05] font-bold">
+          {/* HEADING */}
+          <h1 className="mt-8 text-5xl lg:text-[54px] leading-[1.05] font-bold">
 
             All-in-One
 
@@ -91,7 +92,7 @@ export default function Hero() {
           </h1>
 
           {/* DESCRIPTION */}
-          <p className="mt-8 text-lg text-gray-300 leading-8 max-w-2xl">
+          <p className="mt-6 text-base text-gray-300 leading-8 max-w-xl">
 
             From GST to Global Compliance,
             from Startup Registration to Virtual CFO —
@@ -129,17 +130,21 @@ export default function Hero() {
           <div className="mt-10 flex flex-wrap gap-8 text-sm text-gray-400">
 
             <div>500+ Clients</div>
+
             <div>10+ Years Experience</div>
+
             <div>24hr Response Time</div>
+
+            <div>CA & Ex-Big4 Team</div>
 
           </div>
 
         </div>
 
         {/* RIGHT DASHBOARD */}
-        <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[36px] p-5 shadow-2xl shadow-blue-500/10 w-full max-w-[760px] ml-auto">
+        <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[36px] p-5 shadow-2xl shadow-blue-500/10 w-full max-w-[900px] mr-auto">
 
-          <div className="grid grid-cols-[180px_1fr] gap-4">
+          <div className="grid grid-cols-[190px_1fr] gap-5">
 
             {/* SIDEBAR */}
             <div className="bg-[#0f172a] rounded-3xl p-5 border border-white/10">
@@ -195,11 +200,11 @@ export default function Hero() {
 
             </div>
 
-            {/* MAIN DASHBOARD */}
+            {/* MAIN CONTENT */}
             <div>
 
               {/* TOP CARDS */}
-              <div className="grid grid-cols-4 gap-3">
+              <div className="grid grid-cols-4 gap-4">
 
                 {
                   [
@@ -211,7 +216,7 @@ export default function Hero() {
 
                     <div
                       key={i}
-                      className="bg-[#0f172a] rounded-2xl p-3 border border-white/10 min-h-[120px]"
+                      className="bg-[#0f172a] rounded-2xl p-4 border border-white/10 min-h-[130px]"
                     >
 
                       <p className="text-xs text-gray-400 leading-5">
@@ -220,7 +225,7 @@ export default function Hero() {
 
                       </p>
 
-                      <h3 className="mt-3 text-[28px] leading-none font-bold">
+                      <h3 className="mt-3 text-[24px] leading-none font-bold">
 
                         {item[1]}
 
@@ -240,10 +245,10 @@ export default function Hero() {
               </div>
 
               {/* CHARTS */}
-              <div className="grid grid-cols-[2fr_1fr] gap-4 mt-4">
+              <div className="grid grid-cols-[2.4fr_1fr] gap-4 mt-4">
 
-                {/* GRAPH */}
-                <div className="bg-[#0f172a] rounded-2xl p-6 border border-white/10 min-h-[320px]">
+                {/* AREA GRAPH */}
+                <div className="bg-[#0f172a] rounded-2xl p-6 border border-white/10 min-h-[360px]">
 
                   <div className="flex items-center justify-between">
 
@@ -261,7 +266,7 @@ export default function Hero() {
 
                   </div>
 
-                  <div className="h-[220px] mt-6">
+                  <div className="h-[260px] mt-6">
 
                     <ResponsiveContainer width="100%" height="100%">
 
@@ -299,7 +304,7 @@ export default function Hero() {
                           type="monotone"
                           dataKey="value"
                           stroke="#3b82f6"
-                          strokeWidth={3}
+                          strokeWidth={4}
                           fillOpacity={1}
                           fill="url(#color)"
                         />
@@ -312,8 +317,8 @@ export default function Hero() {
 
                 </div>
 
-                {/* DONUT */}
-                <div className="bg-[#0f172a] rounded-2xl p-5 border border-white/10 flex flex-col items-center justify-center min-h-[320px]">
+                {/* DONUT CHART */}
+                <div className="bg-[#0f172a] rounded-2xl p-5 border border-white/10 flex flex-col items-center justify-center min-h-[360px]">
 
                   <h3 className="font-bold text-lg text-center">
 
@@ -323,7 +328,7 @@ export default function Hero() {
 
                   </h3>
 
-                  <div className="w-[180px] h-[180px] mt-4 relative">
+                  <div className="w-[190px] h-[190px] mt-4 relative">
 
                     <ResponsiveContainer width="100%" height="100%">
 
@@ -331,9 +336,9 @@ export default function Hero() {
 
                         <Pie
                           data={complianceData}
-                          innerRadius={55}
-                          outerRadius={75}
-                          paddingAngle={3}
+                          innerRadius={58}
+                          outerRadius={82}
+                          paddingAngle={2}
                           dataKey="value"
                         >
 
@@ -349,7 +354,7 @@ export default function Hero() {
                     {/* CENTER TEXT */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
 
-                      <h2 className="text-4xl font-bold">
+                      <h2 className="text-5xl font-bold">
 
                         92%
 
@@ -365,7 +370,7 @@ export default function Hero() {
 
                   </div>
 
-                  {/* STATUS */}
+                  {/* STATUS LIST */}
                   <div className="mt-4 space-y-2 text-sm text-gray-300">
 
                     <p>✓ GST</p>
