@@ -1,25 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-
-const stats = [
-  {
-    number: "500+",
-    title: "Happy Clients",
-  },
-  {
-    number: "10+",
-    title: "Years Experience",
-  },
-  {
-    number: "98%",
-    title: "Client Satisfaction",
-  },
-  {
-    number: "24/7",
-    title: "Support",
-  },
-];
+import {
+  ArrowRight,
+  PlayCircle,
+} from "lucide-react";
 
 export default function Stats() {
 
@@ -30,82 +14,273 @@ export default function Stats() {
       {/* GLOW */}
       <div className="absolute inset-0 overflow-hidden">
 
-        <div className="absolute top-[-120px] left-[-120px] w-[350px] h-[350px] bg-blue-600/20 blur-[120px] rounded-full" />
-
-        <div className="absolute bottom-[-120px] right-[-120px] w-[350px] h-[350px] bg-indigo-600/20 blur-[120px] rounded-full" />
+        <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] bg-blue-600/20 blur-[120px] rounded-full" />
 
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
 
-        {/* TOP */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto"
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
 
-          <p className="uppercase tracking-[0.3em] text-sm text-blue-400 font-semibold">
+          {/* LEFT STATS */}
+          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[32px] p-8">
 
-            Our Impact
+            <h3 className="text-3xl font-bold text-white">
 
-          </p>
+              Trusted by Businesses
 
-          <h2 className="mt-5 text-5xl font-bold text-white leading-tight">
+            </h3>
 
-            Trusted By
-            <span className="text-blue-500">
-              {" "}Businesses Across India
-            </span>
+            <div className="mt-10 grid grid-cols-2 gap-8">
 
-          </h2>
+              <div>
 
-          <p className="mt-6 text-lg text-gray-300 leading-8">
+                <h2 className="text-5xl font-bold text-blue-500">
 
-            Helping startups, professionals, creators,
-            and businesses manage finance,
-            taxation, and compliance seamlessly.
+                  500+
 
-          </p>
+                </h2>
 
-        </motion.div>
+                <p className="mt-2 text-gray-300">
 
-        {/* GRID */}
-        <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-
-          {
-            stats.map((item, index) => (
-
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                }}
-                viewport={{ once: true }}
-                className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[30px] p-10 text-center hover:border-blue-500/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10"
-              >
-
-                <h3 className="text-6xl font-bold text-blue-500">
-
-                  {item.number}
-
-                </h3>
-
-                <p className="mt-5 text-gray-300 text-lg">
-
-                  {item.title}
+                  Happy Clients
 
                 </p>
 
-              </motion.div>
+              </div>
 
-            ))
-          }
+              <div>
+
+                <h2 className="text-5xl font-bold text-blue-500">
+
+                  1000+
+
+                </h2>
+
+                <p className="mt-2 text-gray-300">
+
+                  GST Returns Filed
+
+                </p>
+
+              </div>
+
+              <div>
+
+                <h2 className="text-5xl font-bold text-blue-500">
+
+                  10+
+
+                </h2>
+
+                <p className="mt-2 text-gray-300">
+
+                  Years Experience
+
+                </p>
+
+              </div>
+
+              <div>
+
+                <h2 className="text-5xl font-bold text-blue-500">
+
+                  50+
+
+                </h2>
+
+                <p className="mt-2 text-gray-300">
+
+                  Industries Served
+
+                </p>
+
+              </div>
+
+            </div>
+
+            <button className="mt-10 px-6 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold flex items-center gap-3">
+
+              View All Services
+
+              <ArrowRight size={18} />
+
+            </button>
+
+          </div>
+
+          {/* CENTER VIDEOS */}
+          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[32px] p-8 lg:col-span-1">
+
+            <div className="flex items-center justify-between">
+
+              <h3 className="text-2xl font-bold text-white">
+
+                Tax in 60 Sec — Learn with Us
+
+              </h3>
+
+              <button className="text-blue-400 hover:text-blue-300 transition text-sm font-semibold">
+
+                View All Videos →
+
+              </button>
+
+            </div>
+
+            {/* VIDEOS */}
+            <div className="mt-8 space-y-5">
+
+              {/* VIDEO 1 */}
+              <div className="group flex gap-4">
+
+                <div className="relative min-w-[130px] h-[80px] rounded-2xl overflow-hidden bg-gradient-to-br from-blue-700 to-indigo-900 flex items-center justify-center">
+
+                  <PlayCircle
+                    size={40}
+                    className="text-white"
+                  />
+
+                </div>
+
+                <div>
+
+                  <h4 className="text-white font-semibold leading-6">
+
+                    5 GST Mistakes Every Business Should Avoid
+
+                  </h4>
+
+                  <p className="text-gray-400 text-sm mt-2">
+
+                    60 sec guide
+
+                  </p>
+
+                </div>
+
+              </div>
+
+              {/* VIDEO 2 */}
+              <div className="group flex gap-4">
+
+                <div className="relative min-w-[130px] h-[80px] rounded-2xl overflow-hidden bg-gradient-to-br from-indigo-700 to-blue-900 flex items-center justify-center">
+
+                  <PlayCircle
+                    size={40}
+                    className="text-white"
+                  />
+
+                </div>
+
+                <div>
+
+                  <h4 className="text-white font-semibold leading-6">
+
+                    TDS Explained in 60 Seconds
+
+                  </h4>
+
+                  <p className="text-gray-400 text-sm mt-2">
+
+                    Quick finance learning
+
+                  </p>
+
+                </div>
+
+              </div>
+
+              {/* VIDEO 3 */}
+              <div className="group flex gap-4">
+
+                <div className="relative min-w-[130px] h-[80px] rounded-2xl overflow-hidden bg-gradient-to-br from-blue-800 to-cyan-900 flex items-center justify-center">
+
+                  <PlayCircle
+                    size={40}
+                    className="text-white"
+                  />
+
+                </div>
+
+                <div>
+
+                  <h4 className="text-white font-semibold leading-6">
+
+                    Smart Tax Planning Tips For Businesses
+
+                  </h4>
+
+                  <p className="text-gray-400 text-sm mt-2">
+
+                    Save tax legally
+
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* RIGHT CTA */}
+          <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-blue-900 via-[#081229] to-[#020817] p-10 shadow-2xl shadow-blue-500/10">
+
+            {/* GLOW */}
+            <div className="absolute top-[-50px] right-[-50px] w-[200px] h-[200px] bg-blue-500/20 blur-[100px] rounded-full" />
+
+            <div className="relative z-10">
+
+              <h2 className="text-4xl font-bold text-white leading-tight">
+
+                Ready to Simplify Your Finance?
+
+              </h2>
+
+              <p className="mt-6 text-gray-300 leading-8">
+
+                Book a free consultation with our experts
+                and grow your business with confidence.
+
+              </p>
+
+              {/* BUTTONS */}
+              <div className="mt-10 space-y-4">
+
+                <a
+                  href="/#contact"
+                  className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold"
+                >
+
+                  Book Free Consultation
+
+                  <ArrowRight size={18} />
+
+                </a>
+
+                <a
+                  href="https://wa.me/917013734079"
+                  target="_blank"
+                  className="w-full flex items-center justify-center px-6 py-4 rounded-2xl border border-white/10 hover:bg-white/10 transition text-white font-semibold"
+                >
+
+                  Chat on WhatsApp
+
+                </a>
+
+              </div>
+
+              <p className="mt-6 text-sm text-gray-400">
+
+                No commitment. 100% confidential.
+
+              </p>
+
+            </div>
+
+          </div>
 
         </div>
 
