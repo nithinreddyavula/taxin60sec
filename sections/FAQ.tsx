@@ -1,184 +1,132 @@
 "use client";
 
-import {
-  ArrowRight,
-} from "lucide-react";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
-export default function Hero() {
+const faqs = [
+  {
+    question: "What services does Tax60Sec provide?",
+    answer:
+      "We provide GST filing, income tax filing, startup registration, virtual CFO services, audit support, compliance management, and financial advisory solutions.",
+  },
+  {
+    question: "How quickly can I get support?",
+    answer:
+      "Our team usually responds within a few hours through WhatsApp, email, or consultation booking.",
+  },
+  {
+    question: "Do you work with startups and creators?",
+    answer:
+      "Yes. We work with startups, freelancers, YouTubers, e-commerce businesses, and growing companies.",
+  },
+  {
+    question: "Can I consult online?",
+    answer:
+      "Absolutely. We provide complete online consultation and support across India.",
+  },
+];
+
+export default function FAQ() {
+
+  const [active, setActive] = useState<number | null>(0);
 
   return (
 
-    <section className="relative pt-44 pb-24 bg-[#020817] overflow-hidden text-white min-h-screen">
+    <section className="relative py-32 bg-[#020817] overflow-hidden">
 
       {/* GLOW */}
       <div className="absolute inset-0 overflow-hidden">
 
-        <div className="absolute top-[-150px] left-[-100px] w-[400px] h-[400px] bg-blue-600/20 blur-[120px] rounded-full" />
-
-        <div className="absolute bottom-[-150px] right-[-100px] w-[400px] h-[400px] bg-indigo-600/20 blur-[120px] rounded-full" />
+        <div className="absolute top-[-120px] left-[-120px] w-[350px] h-[350px] bg-blue-600/20 blur-[120px] rounded-full" />
 
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-6">
 
-        {/* LEFT */}
-        <div>
+        {/* TOP */}
+        <div className="text-center">
 
-          <div className="inline-flex items-center px-6 py-3 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 font-medium">
+          <p className="uppercase tracking-[0.3em] text-sm text-blue-400 font-semibold">
 
-            Modern Finance. Smart Compliance. Stronger Business.
-
-          </div>
-
-          <h1 className="mt-10 text-7xl leading-[1.05] font-bold">
-
-            All-in-One
-
-            <br />
-
-            <span className="text-blue-500">
-              Finance &
-            </span>
-
-            <br />
-
-            Tax Solutions for
-
-            <br />
-
-            <span className="text-blue-500">
-              Growing Businesses
-            </span>
-
-          </h1>
-
-          <p className="mt-10 text-xl text-gray-300 leading-9 max-w-2xl">
-
-            From GST filing to startup registration,
-            virtual CFO services, audits, and tax planning —
-            we simplify finance for modern businesses.
+            FAQs
 
           </p>
 
-          {/* BUTTONS */}
-          <div className="mt-12 flex flex-wrap items-center gap-5">
+          <h2 className="mt-5 text-5xl font-bold text-white leading-tight">
 
-            <a
-              href="#contact"
-              className="px-8 py-5 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold flex items-center gap-3 shadow-2xl shadow-blue-500/20"
-            >
+            Frequently Asked
+            <span className="text-blue-500">
+              {" "}Questions
+            </span>
 
-              Book Consultation
+          </h2>
 
-              <ArrowRight size={20} />
+          <p className="mt-6 text-lg text-gray-300 leading-8 max-w-2xl mx-auto">
 
-            </a>
+            Everything you need to know
+            about our services and support.
 
-            <a
-              href="https://wa.me/917013734079"
-              target="_blank"
-              className="px-8 py-5 rounded-2xl border border-white/10 hover:bg-white/10 transition text-white font-semibold"
-            >
-
-              Chat on WhatsApp
-
-            </a>
-
-          </div>
+          </p>
 
         </div>
 
-        {/* RIGHT */}
-        <div className="relative">
+        {/* FAQS */}
+        <div className="mt-20 space-y-6">
 
-          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[40px] p-8 shadow-2xl shadow-blue-500/10">
+          {
+            faqs.map((faq, index) => (
 
-            {/* TOP CARDS */}
-            <div className="grid grid-cols-2 gap-5">
+              <div
+                key={index}
+                className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[28px] overflow-hidden"
+              >
 
-              <div className="bg-[#0f172a] rounded-3xl p-8 border border-white/10">
+                <button
+                  onClick={() =>
+                    setActive(
+                      active === index ? null : index
+                    )
+                  }
+                  className="w-full flex items-center justify-between px-8 py-7 text-left"
+                >
 
-                <p className="text-gray-400">
-                  Total Revenue
-                </p>
+                  <span className="text-xl font-semibold text-white">
 
-                <h3 className="mt-4 text-5xl font-bold">
+                    {faq.question}
 
-                  ₹48,75,000
+                  </span>
 
-                </h3>
+                  <ChevronDown
+                    size={24}
+                    className={`text-blue-400 transition-transform duration-300 ${
+                      active === index
+                        ? "rotate-180"
+                        : ""
+                    }`}
+                  />
 
-                <p className="mt-4 text-green-400">
+                </button>
 
-                  +12.5% this month
+                <div
+                  className={`transition-all duration-300 overflow-hidden ${
+                    active === index
+                      ? "max-h-[300px] pb-8 px-8"
+                      : "max-h-0"
+                  }`}
+                >
 
-                </p>
+                  <p className="text-gray-300 leading-8">
 
-              </div>
+                    {faq.answer}
 
-              <div className="bg-[#0f172a] rounded-3xl p-8 border border-white/10">
+                  </p>
 
-                <p className="text-gray-400">
-                  Tax Savings
-                </p>
-
-                <h3 className="mt-4 text-5xl font-bold">
-
-                  ₹3,25,000
-
-                </h3>
-
-                <p className="mt-4 text-green-400">
-
-                  +8.7% improvement
-
-                </p>
-
-              </div>
-
-            </div>
-
-            {/* CHART */}
-            <div className="mt-6 bg-[#0f172a] rounded-3xl p-8 border border-white/10 h-[400px] flex flex-col justify-between">
-
-              <div className="flex items-center justify-between">
-
-                <h3 className="text-3xl font-bold">
-
-                  Business Growth
-
-                </h3>
-
-                <p className="text-gray-400">
-
-                  This Year
-
-                </p>
+                </div>
 
               </div>
 
-              {/* BARS */}
-              <div className="flex items-end justify-between gap-4 h-[250px]">
-
-                <div className="w-full bg-blue-900 rounded-t-3xl h-[20%]" />
-
-                <div className="w-full bg-blue-700 rounded-t-3xl h-[40%]" />
-
-                <div className="w-full bg-blue-800 rounded-t-3xl h-[25%]" />
-
-                <div className="w-full bg-blue-500 rounded-t-3xl h-[65%]" />
-
-                <div className="w-full bg-blue-700 rounded-t-3xl h-[35%]" />
-
-                <div className="w-full bg-blue-400 rounded-t-3xl h-[85%]" />
-
-                <div className="w-full bg-blue-700 rounded-t-3xl h-[50%]" />
-
-              </div>
-
-            </div>
-
-          </div>
+            ))
+          }
 
         </div>
 
