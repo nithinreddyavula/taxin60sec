@@ -1,179 +1,136 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Link from "next/link";
-import {
-  ArrowRight,
-  CheckCircle2,
-  Clock3,
-  ShieldCheck,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
-  return (
-    <section className="relative overflow-hidden bg-[#020817] text-white min-h-screen pt-36">
 
-      {/* BACKGROUND GLOW */}
+  return (
+
+    <section className="relative bg-[#020817] overflow-hidden text-white pt-32 lg:pt-36 pb-20">
+
+      {/* GLOW */}
       <div className="absolute inset-0 overflow-hidden">
 
-        <div className="absolute top-[-200px] left-[-200px] w-[500px] h-[500px] bg-blue-600/20 blur-[120px] rounded-full" />
+        <div className="absolute top-[-150px] left-[-100px] w-[350px] h-[350px] bg-blue-600/20 blur-[120px] rounded-full" />
 
-        <div className="absolute bottom-[-200px] right-[-200px] w-[500px] h-[500px] bg-indigo-600/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-150px] right-[-100px] w-[350px] h-[350px] bg-indigo-600/20 blur-[120px] rounded-full" />
 
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
         {/* LEFT */}
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <div>
 
           {/* TAG */}
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-5 py-2 rounded-full text-sm font-medium">
+          <div className="inline-flex items-center px-5 py-2 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 text-sm font-medium">
 
             Modern Finance. Smart Compliance. Stronger Business.
 
           </div>
 
           {/* HEADING */}
-          <h1 className="mt-8 text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-tight">
+          <h1 className="mt-8 text-5xl sm:text-6xl lg:text-6xl leading-[1.1] font-bold">
 
             All-in-One
+
+            <br />
+
             <span className="text-blue-500">
-              {" "}Finance &
+              Finance &
             </span>
 
             <br />
 
-            Tax Solutions for
-            <span className="text-blue-500">
-              {" "}Growing Businesses
-            </span>
+            Tax Solutions
+
+            <br />
+
+            For Businesses
 
           </h1>
 
-          {/* DESCRIPTION */}
+          {/* DESC */}
           <p className="mt-8 text-lg text-gray-300 leading-8 max-w-2xl">
 
-            From GST to Global Compliance, from Startup Registration
-            to Virtual CFO — we simplify finance so you can focus
-            on growth.
+            From GST filing to startup registration,
+            audits, tax planning, and virtual CFO services —
+            we simplify finance for modern businesses.
 
           </p>
 
           {/* BUTTONS */}
-          <div className="mt-10 flex flex-col sm:flex-row gap-5">
+          <div className="mt-10 flex flex-wrap gap-5">
 
-            <Link
-              href="/contact"
-              className="group inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 transition px-8 py-4 rounded-2xl font-semibold shadow-2xl shadow-blue-500/20"
+            <a
+              href="#contact"
+              className="px-7 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold flex items-center gap-3 shadow-2xl shadow-blue-500/20"
             >
 
-              Book a Free Consultation
+              Book Consultation
 
-              <ArrowRight
-                className="group-hover:translate-x-1 transition"
-                size={18}
-              />
+              <ArrowRight size={18} />
 
-            </Link>
+            </a>
 
             <a
               href="https://wa.me/917013734079"
               target="_blank"
-              className="inline-flex items-center justify-center border border-white/20 hover:border-white/40 bg-white/5 hover:bg-white/10 transition px-8 py-4 rounded-2xl font-semibold"
+              className="px-7 py-4 rounded-2xl border border-white/10 hover:bg-white/10 transition text-white font-semibold"
             >
 
-              Chat on WhatsApp
+              WhatsApp
 
             </a>
 
           </div>
 
-          {/* STATS */}
-          <div className="mt-12 flex flex-wrap gap-8 text-sm text-gray-300">
+        </div>
 
-            <div className="flex items-center gap-2">
+        {/* RIGHT */}
+        <div className="relative">
 
-              <CheckCircle2
-                size={18}
-                className="text-blue-400"
-              />
-
-              <span>500+ Clients</span>
-
-            </div>
-
-            <div className="flex items-center gap-2">
-
-              <ShieldCheck
-                size={18}
-                className="text-blue-400"
-              />
-
-              <span>10+ Years Experience</span>
-
-            </div>
-
-            <div className="flex items-center gap-2">
-
-              <Clock3
-                size={18}
-                className="text-blue-400"
-              />
-
-              <span>24hr Response Time</span>
-
-            </div>
-
-          </div>
-
-        </motion.div>
-
-        {/* RIGHT SIDE */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="relative"
-        >
-
-          <div className="relative rounded-[32px] border border-white/10 bg-white/5 backdrop-blur-xl p-6 shadow-2xl shadow-blue-500/10">
+          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[36px] p-6 shadow-2xl shadow-blue-500/10">
 
             {/* TOP CARDS */}
             <div className="grid grid-cols-2 gap-4">
 
-              <div className="bg-[#0f172a] border border-white/5 rounded-2xl p-5">
+              <div className="bg-[#0f172a] rounded-3xl p-6 border border-white/10">
 
                 <p className="text-gray-400 text-sm">
                   Total Revenue
                 </p>
 
-                <h3 className="mt-3 text-3xl font-bold">
-                  ₹48,75,000
+                <h3 className="mt-3 text-4xl font-bold">
+
+                  ₹48L+
+
                 </h3>
 
-                <p className="mt-2 text-green-400 text-sm">
+                <p className="mt-3 text-green-400 text-sm">
+
                   +12.5% this month
+
                 </p>
 
               </div>
 
-              <div className="bg-[#0f172a] border border-white/5 rounded-2xl p-5">
+              <div className="bg-[#0f172a] rounded-3xl p-6 border border-white/10">
 
                 <p className="text-gray-400 text-sm">
                   Tax Savings
                 </p>
 
-                <h3 className="mt-3 text-3xl font-bold">
-                  ₹3,25,000
+                <h3 className="mt-3 text-4xl font-bold">
+
+                  ₹3.2L
+
                 </h3>
 
-                <p className="mt-2 text-green-400 text-sm">
+                <p className="mt-3 text-green-400 text-sm">
+
                   +8.7% improvement
+
                 </p>
 
               </div>
@@ -181,35 +138,40 @@ export default function Hero() {
             </div>
 
             {/* CHART */}
-            <div className="mt-6 bg-[#0f172a] border border-white/5 rounded-2xl p-6">
+            <div className="mt-5 bg-[#0f172a] rounded-3xl p-6 border border-white/10">
 
               <div className="flex items-center justify-between">
 
-                <h3 className="text-lg font-semibold">
+                <h3 className="text-2xl font-bold">
+
                   Business Growth
+
                 </h3>
 
-                <span className="text-sm text-gray-400">
+                <p className="text-gray-400 text-sm">
+
                   This Year
-                </span>
+
+                </p>
 
               </div>
 
-              <div className="mt-8 flex items-end gap-4 h-[220px]">
+              {/* BARS */}
+              <div className="mt-8 flex items-end justify-between gap-3 h-[180px]">
 
-                <div className="w-full bg-blue-500/40 rounded-t-xl h-[30%]" />
+                <div className="w-full bg-blue-900 rounded-t-2xl h-[20%]" />
 
-                <div className="w-full bg-blue-500/40 rounded-t-xl h-[40%]" />
+                <div className="w-full bg-blue-700 rounded-t-2xl h-[40%]" />
 
-                <div className="w-full bg-blue-500/40 rounded-t-xl h-[35%]" />
+                <div className="w-full bg-blue-800 rounded-t-2xl h-[25%]" />
 
-                <div className="w-full bg-blue-500 rounded-t-xl h-[70%]" />
+                <div className="w-full bg-blue-500 rounded-t-2xl h-[65%]" />
 
-                <div className="w-full bg-blue-500/40 rounded-t-xl h-[50%]" />
+                <div className="w-full bg-blue-700 rounded-t-2xl h-[35%]" />
 
-                <div className="w-full bg-blue-500 rounded-t-xl h-[90%]" />
+                <div className="w-full bg-blue-400 rounded-t-2xl h-[85%]" />
 
-                <div className="w-full bg-blue-500/40 rounded-t-xl h-[65%]" />
+                <div className="w-full bg-blue-700 rounded-t-2xl h-[50%]" />
 
               </div>
 
@@ -217,10 +179,11 @@ export default function Hero() {
 
           </div>
 
-        </motion.div>
+        </div>
 
       </div>
 
     </section>
+
   );
 }
