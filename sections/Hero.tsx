@@ -6,18 +6,18 @@ export default function Hero() {
 
   return (
 
-    <section className="relative bg-[#020817] overflow-hidden text-white pt-32 lg:pt-36 pb-20">
+    <section className="relative bg-[#020817] overflow-hidden text-white pt-28 lg:pt-32 pb-16">
 
       {/* GLOW */}
       <div className="absolute inset-0 overflow-hidden">
 
-        <div className="absolute top-[-150px] left-[-100px] w-[350px] h-[350px] bg-blue-600/20 blur-[120px] rounded-full" />
+        <div className="absolute top-[-120px] left-[-100px] w-[320px] h-[320px] bg-blue-600/20 blur-[120px] rounded-full" />
 
-        <div className="absolute bottom-[-150px] right-[-100px] w-[350px] h-[350px] bg-indigo-600/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-120px] right-[-100px] w-[320px] h-[320px] bg-indigo-600/20 blur-[120px] rounded-full" />
 
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
         {/* LEFT */}
         <div>
@@ -30,7 +30,7 @@ export default function Hero() {
           </div>
 
           {/* HEADING */}
-          <h1 className="mt-8 text-5xl sm:text-6xl lg:text-6xl leading-[1.1] font-bold">
+          <h1 className="mt-7 text-5xl sm:text-6xl lg:text-[64px] leading-[1.05] font-bold">
 
             All-in-One
 
@@ -50,8 +50,8 @@ export default function Hero() {
 
           </h1>
 
-          {/* DESC */}
-          <p className="mt-8 text-lg text-gray-300 leading-8 max-w-2xl">
+          {/* DESCRIPTION */}
+          <p className="mt-7 text-lg text-gray-300 leading-8 max-w-2xl">
 
             From GST filing to startup registration,
             audits, tax planning, and virtual CFO services —
@@ -60,10 +60,10 @@ export default function Hero() {
           </p>
 
           {/* BUTTONS */}
-          <div className="mt-10 flex flex-wrap gap-5">
+          <div className="mt-9 flex flex-wrap gap-4">
 
             <a
-              href="#contact"
+              href="/#contact"
               className="px-7 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold flex items-center gap-3 shadow-2xl shadow-blue-500/20"
             >
 
@@ -90,18 +90,18 @@ export default function Hero() {
         {/* RIGHT */}
         <div className="relative">
 
-          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[36px] p-6 shadow-2xl shadow-blue-500/10">
+          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[32px] p-5 shadow-2xl shadow-blue-500/10">
 
             {/* TOP CARDS */}
             <div className="grid grid-cols-2 gap-4">
 
-              <div className="bg-[#0f172a] rounded-3xl p-6 border border-white/10">
+              <div className="bg-[#0f172a] rounded-3xl p-5 border border-white/10">
 
                 <p className="text-gray-400 text-sm">
                   Total Revenue
                 </p>
 
-                <h3 className="mt-3 text-4xl font-bold">
+                <h3 className="mt-3 text-3xl font-bold">
 
                   ₹48L+
 
@@ -115,13 +115,13 @@ export default function Hero() {
 
               </div>
 
-              <div className="bg-[#0f172a] rounded-3xl p-6 border border-white/10">
+              <div className="bg-[#0f172a] rounded-3xl p-5 border border-white/10">
 
                 <p className="text-gray-400 text-sm">
                   Tax Savings
                 </p>
 
-                <h3 className="mt-3 text-4xl font-bold">
+                <h3 className="mt-3 text-3xl font-bold">
 
                   ₹3.2L
 
@@ -138,7 +138,7 @@ export default function Hero() {
             </div>
 
             {/* CHART */}
-            <div className="mt-5 bg-[#0f172a] rounded-3xl p-6 border border-white/10">
+            <div className="mt-5 bg-[#0f172a] rounded-3xl p-5 border border-white/10">
 
               <div className="flex items-center justify-between">
 
@@ -157,7 +157,7 @@ export default function Hero() {
               </div>
 
               {/* BARS */}
-              <div className="mt-8 flex items-end justify-between gap-3 h-[180px]">
+              <div className="mt-7 flex items-end justify-between gap-3 h-[160px]">
 
                 <div className="w-full bg-blue-900 rounded-t-2xl h-[20%]" />
 
