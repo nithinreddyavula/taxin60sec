@@ -16,6 +16,8 @@ export default function Stats() {
 
         <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] bg-blue-600/20 blur-[120px] rounded-full" />
 
+        <div className="absolute bottom-[-100px] right-[-100px] w-[300px] h-[300px] bg-indigo-600/20 blur-[120px] rounded-full" />
+
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -99,7 +101,8 @@ export default function Stats() {
 
             </div>
 
-            <button className="mt-10 px-6 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold flex items-center gap-3">
+            {/* BUTTON */}
+            <button className="mt-10 px-6 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold flex items-center gap-3 shadow-xl shadow-blue-500/20">
 
               View All Services
 
@@ -110,7 +113,7 @@ export default function Stats() {
           </div>
 
           {/* CENTER VIDEOS */}
-          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[32px] p-8 lg:col-span-1">
+          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[32px] p-8">
 
             <div className="flex items-center justify-between">
 
@@ -128,13 +131,13 @@ export default function Stats() {
 
             </div>
 
-            {/* VIDEOS */}
+            {/* VIDEO LIST */}
             <div className="mt-8 space-y-5">
 
-              {/* VIDEO 1 */}
-              <div className="group flex gap-4">
+              {/* VIDEO */}
+              <div className="flex gap-4 group">
 
-                <div className="relative min-w-[130px] h-[80px] rounded-2xl overflow-hidden bg-gradient-to-br from-blue-700 to-indigo-900 flex items-center justify-center">
+                <div className="min-w-[130px] h-[80px] rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-900 flex items-center justify-center relative overflow-hidden">
 
                   <PlayCircle
                     size={40}
@@ -153,7 +156,7 @@ export default function Stats() {
 
                   <p className="text-gray-400 text-sm mt-2">
 
-                    60 sec guide
+                    Quick 60 sec finance lesson
 
                   </p>
 
@@ -161,10 +164,10 @@ export default function Stats() {
 
               </div>
 
-              {/* VIDEO 2 */}
-              <div className="group flex gap-4">
+              {/* VIDEO */}
+              <div className="flex gap-4 group">
 
-                <div className="relative min-w-[130px] h-[80px] rounded-2xl overflow-hidden bg-gradient-to-br from-indigo-700 to-blue-900 flex items-center justify-center">
+                <div className="min-w-[130px] h-[80px] rounded-2xl bg-gradient-to-br from-indigo-700 to-blue-900 flex items-center justify-center relative overflow-hidden">
 
                   <PlayCircle
                     size={40}
@@ -183,7 +186,7 @@ export default function Stats() {
 
                   <p className="text-gray-400 text-sm mt-2">
 
-                    Quick finance learning
+                    Simplified finance concepts
 
                   </p>
 
@@ -191,10 +194,10 @@ export default function Stats() {
 
               </div>
 
-              {/* VIDEO 3 */}
-              <div className="group flex gap-4">
+              {/* VIDEO */}
+              <div className="flex gap-4 group">
 
-                <div className="relative min-w-[130px] h-[80px] rounded-2xl overflow-hidden bg-gradient-to-br from-blue-800 to-cyan-900 flex items-center justify-center">
+                <div className="min-w-[130px] h-[80px] rounded-2xl bg-gradient-to-br from-blue-800 to-cyan-900 flex items-center justify-center relative overflow-hidden">
 
                   <PlayCircle
                     size={40}
@@ -213,7 +216,7 @@ export default function Stats() {
 
                   <p className="text-gray-400 text-sm mt-2">
 
-                    Save tax legally
+                    Save taxes legally & smartly
 
                   </p>
 
@@ -226,32 +229,52 @@ export default function Stats() {
           </div>
 
           {/* RIGHT CTA */}
-          <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-blue-900 via-[#081229] to-[#020817] p-10 shadow-2xl shadow-blue-500/10">
+          <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-gradient-to-br from-[#08142e] via-[#081229] to-[#020817] p-10 shadow-2xl shadow-blue-500/10 min-h-[420px] flex flex-col justify-between">
 
             {/* GLOW */}
-            <div className="absolute top-[-50px] right-[-50px] w-[200px] h-[200px] bg-blue-500/20 blur-[100px] rounded-full" />
+            <div className="absolute top-[-80px] right-[-80px] w-[250px] h-[250px] bg-blue-500/20 blur-[120px] rounded-full" />
+
+            <div className="absolute bottom-[-100px] left-[-100px] w-[220px] h-[220px] bg-indigo-500/10 blur-[100px] rounded-full" />
 
             <div className="relative z-10">
 
-              <h2 className="text-4xl font-bold text-white leading-tight">
+              {/* TAG */}
+              <div className="inline-flex px-4 py-2 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 text-sm font-medium">
 
-                Ready to Simplify Your Finance?
+                Free Consultation Available
+
+              </div>
+
+              {/* TITLE */}
+              <h2 className="mt-8 text-5xl font-bold text-white leading-tight">
+
+                Ready to
+                <span className="text-blue-500">
+                  {" "}Simplify
+                </span>
+
+                <br />
+
+                Your Finance?
 
               </h2>
 
-              <p className="mt-6 text-gray-300 leading-8">
+              {/* DESC */}
+              <p className="mt-6 text-gray-300 leading-8 text-lg">
 
-                Book a free consultation with our experts
-                and grow your business with confidence.
+                Book a free consultation with our finance experts
+                and grow your business with confidence,
+                compliance, and smart tax planning.
 
               </p>
 
               {/* BUTTONS */}
               <div className="mt-10 space-y-4">
 
+                {/* BTN */}
                 <a
                   href="/#contact"
-                  className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold"
+                  className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold shadow-2xl shadow-blue-500/20"
                 >
 
                   Book Free Consultation
@@ -260,6 +283,7 @@ export default function Stats() {
 
                 </a>
 
+                {/* BTN */}
                 <a
                   href="https://wa.me/917013734079"
                   target="_blank"
@@ -272,9 +296,10 @@ export default function Stats() {
 
               </div>
 
+              {/* FOOTER */}
               <p className="mt-6 text-sm text-gray-400">
 
-                No commitment. 100% confidential.
+                No commitment • 100% confidential • Fast response
 
               </p>
 
