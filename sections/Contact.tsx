@@ -2,9 +2,15 @@
 
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
-import { toast } from "sonner";
+import {
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
 
 export default function Contact() {
+
+  const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
@@ -12,36 +18,35 @@ export default function Contact() {
     message: "",
   });
 
-  const [loading, setLoading] = useState(false);
-
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement
+    >
   ) => {
+
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
+
   };
 
   const handleSubmit = async () => {
 
-    setLoading(true);
-
     try {
 
-      const response = await fetch(
-        "https://taxin60sec-backend.onrender.com",
+      setLoading(true);
+
+      await fetch(
+        "https://taxin60sec-backend.onrender.com/api/contact",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-
           body: JSON.stringify(form),
         }
       );
-
-      const data = await response.json();
 
       await emailjs.send(
         "service_ouw63sj",
@@ -54,9 +59,7 @@ export default function Contact() {
         "lzNVEjLF6iMNz2tOP"
       );
 
-      toast.success("Appointment Booked Successfully!");
-
-      console.log(data);
+      alert("Consultation Booked Successfully!");
 
       setForm({
         name: "",
@@ -64,35 +67,150 @@ export default function Contact() {
         message: "",
       });
 
+      setLoading(false);
+
     } catch (error) {
 
-      toast.error("Something went wrong!");
-
-      console.error(error);
-
-    } finally {
+      console.log(error);
 
       setLoading(false);
 
+      alert("Something went wrong!");
+
     }
+
   };
 
   return (
-    <section className="py-32">
 
-      <div className="max-w-4xl mx-auto px-6">
+    <section className="relative py-32 bg-[#020817] overflow-hidden text-white">
 
-        <div className="bg-black text-white rounded-[40px] p-8 md:p-16">
+      {/* GLOW */}
+      <div className="absolute inset-0 overflow-hidden">
 
-          <p className="uppercase tracking-[0.3em] text-sm text-gray-400 mb-6">
+        <div className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] bg-blue-600/20 blur-[120px] rounded-full" />
+
+        <div className="absolute bottom-[-150px] right-[-150px] w-[400px] h-[400px] bg-indigo-600/20 blur-[120px] rounded-full" />
+
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+
+        {/* LEFT */}
+        <div>
+
+          <p className="uppercase tracking-[0.3em] text-sm text-blue-400 font-semibold">
+
             Contact Us
+
           </p>
 
-          <h2 className="text-4xl md:text-5xl font-bold">
-            Talk To Our Experts
+          <h2 className="mt-5 text-5xl font-bold leading-tight">
+
+            Let’s Build Your
+            <span className="text-blue-500">
+              {" "}Business Smarter
+            </span>
+
           </h2>
 
+          <p className="mt-8 text-lg text-gray-300 leading-8">
+
+            Get expert help with taxation, compliance,
+            business setup, financial reporting,
+            and growth strategy.
+
+          </p>
+
+          {/* CONTACT INFO */}
           <div className="mt-12 space-y-6">
+
+            <div className="flex items-center gap-4">
+
+              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+
+                <Phone className="text-blue-400" />
+
+              </div>
+
+              <div>
+
+                <p className="text-gray-400 text-sm">
+                  Phone Number
+                </p>
+
+                <h4 className="text-xl font-semibold">
+                  +91 7013734079
+                </h4>
+
+              </div>
+
+            </div>
+
+            <div className="flex items-center gap-4">
+
+              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+
+                <Mail className="text-blue-400" />
+
+              </div>
+
+              <div>
+
+                <p className="text-gray-400 text-sm">
+                  Email Address
+                </p>
+
+                <h4 className="text-xl font-semibold">
+                  compliance@taxin60sec.com
+                </h4>
+
+              </div>
+
+            </div>
+
+            <div className="flex items-center gap-4">
+
+              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+
+                <MapPin className="text-blue-400" />
+
+              </div>
+
+              <div>
+
+                <p className="text-gray-400 text-sm">
+                  Availability
+                </p>
+
+                <h4 className="text-xl font-semibold">
+                  Online Consultation Across India
+                </h4>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* RIGHT FORM */}
+        <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[36px] p-8">
+
+          <h3 className="text-3xl font-bold">
+
+            Book Free Consultation
+
+          </h3>
+
+          <p className="mt-4 text-gray-400 leading-7">
+
+            Fill out the form and our team will contact you shortly.
+
+          </p>
+
+          <div className="mt-10 space-y-6">
 
             <input
               type="text"
@@ -100,7 +218,7 @@ export default function Contact() {
               placeholder="Your Name"
               value={form.name}
               onChange={handleChange}
-              className="w-full p-5 rounded-xl bg-white text-black outline-none"
+              className="w-full bg-[#0f172a] border border-white/10 focus:border-blue-500 outline-none rounded-2xl px-6 py-5"
             />
 
             <input
@@ -109,26 +227,30 @@ export default function Contact() {
               placeholder="Your Email"
               value={form.email}
               onChange={handleChange}
-              className="w-full p-5 rounded-xl bg-white text-black outline-none"
+              className="w-full bg-[#0f172a] border border-white/10 focus:border-blue-500 outline-none rounded-2xl px-6 py-5"
             />
 
             <textarea
-              name="message"
-              placeholder="Your Message"
               rows={5}
+              name="message"
+              placeholder="Tell us about your requirements"
               value={form.message}
               onChange={handleChange}
-              className="w-full p-5 rounded-xl bg-white text-black outline-none"
+              className="w-full bg-[#0f172a] border border-white/10 focus:border-blue-500 outline-none rounded-2xl px-6 py-5"
             />
 
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="bg-white text-black px-8 py-4 rounded-full hover:bg-gray-200 transition disabled:opacity-50"
+              className="w-full bg-blue-600 hover:bg-blue-500 transition rounded-2xl py-5 font-semibold text-lg shadow-2xl shadow-blue-500/20"
             >
-              {loading
-                ? "Booking..."
-                : "Book Appointment"}
+
+              {
+                loading
+                  ? "Booking..."
+                  : "Book Consultation"
+              }
+
             </button>
 
           </div>
@@ -138,5 +260,6 @@ export default function Contact() {
       </div>
 
     </section>
+
   );
 }

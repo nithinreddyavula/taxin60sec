@@ -1,79 +1,157 @@
+"use client";
+
+import { motion } from "framer-motion";
 import {
-  ShieldCheck,
-  Clock3,
   BadgeCheck,
-  Users,
+  Clock3,
+  FileSpreadsheet,
+  Headphones,
+  ShieldCheck,
+  TrendingUp,
 } from "lucide-react";
+
+const features = [
+  {
+    icon: BadgeCheck,
+    title: "Expert Professionals",
+    desc: "Experienced tax and finance experts guiding your business growth.",
+  },
+  {
+    icon: Clock3,
+    title: "Fast Turnaround",
+    desc: "Quick response times and streamlined compliance processing.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Trusted & Secure",
+    desc: "Your financial data stays protected with complete confidentiality.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Growth Focused",
+    desc: "We don't just file taxes — we help your business scale smarter.",
+  },
+  {
+    icon: FileSpreadsheet,
+    title: "Modern Financial Systems",
+    desc: "Automation, dashboards, analytics & business reporting solutions.",
+  },
+  {
+    icon: Headphones,
+    title: "Dedicated Support",
+    desc: "Direct WhatsApp and consultation support whenever you need help.",
+  },
+];
 
 export default function WhyChooseUs() {
 
-  const features = [
-    {
-      icon: <ShieldCheck size={40} />,
-      title: "Trusted Expertise",
-      description:
-        "Professional taxation and compliance guidance from experienced experts.",
-    },
-    {
-      icon: <Clock3 size={40} />,
-      title: "Fast Response",
-      description:
-        "Quick consultation booking and timely support for all business needs.",
-    },
-    {
-      icon: <BadgeCheck size={40} />,
-      title: "Reliable Compliance",
-      description:
-        "Accurate GST, audit, and tax filing with full compliance assurance.",
-    },
-    {
-      icon: <Users size={40} />,
-      title: "Client Focused",
-      description:
-        "Dedicated support tailored for startups, businesses, and individuals.",
-    },
-  ];
-
   return (
-    <section className="py-32 bg-white">
 
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="relative py-32 bg-white overflow-hidden">
 
-        <p className="uppercase tracking-[0.3em] text-sm text-gray-500 mb-4">
-          Why Choose Us
-        </p>
+      {/* BACKGROUND GLOW */}
+      <div className="absolute inset-0 overflow-hidden">
 
-        <h2 className="text-5xl font-bold mb-16">
-          Trusted By Businesses Across India
-        </h2>
+        <div className="absolute top-[-100px] left-[-100px] w-[350px] h-[350px] bg-blue-100 blur-[120px] rounded-full" />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="absolute bottom-[-100px] right-[-100px] w-[350px] h-[350px] bg-indigo-100 blur-[120px] rounded-full" />
 
-          {features.map((feature) => (
+      </div>
 
-            <div
-              key={feature.title}
-              className="bg-gray-100 p-10 rounded-[30px] hover:shadow-xl transition"
-            >
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
 
-              {feature.icon}
+        {/* TOP */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto"
+        >
 
-              <h3 className="text-2xl font-bold mt-6">
-                {feature.title}
-              </h3>
+          <p className="uppercase tracking-[0.3em] text-sm text-blue-600 font-semibold">
 
-              <p className="text-gray-600 mt-4 leading-relaxed">
-                {feature.description}
-              </p>
+            Why Choose Us
 
-            </div>
+          </p>
 
-          ))}
+          <h2 className="mt-5 text-5xl font-bold text-gray-900 leading-tight">
+
+            Built For
+            <span className="text-blue-600">
+              {" "}Modern Businesses
+            </span>
+
+          </h2>
+
+          <p className="mt-6 text-lg text-gray-600 leading-8">
+
+            We combine financial expertise, automation,
+            compliance strategy, and personalized support
+            to help businesses grow confidently.
+
+          </p>
+
+        </motion.div>
+
+        {/* GRID */}
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          {
+            features.map((item, index) => {
+
+              const Icon = item.icon;
+
+              return (
+
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="group bg-white border border-gray-200 hover:border-blue-500/20 rounded-[30px] p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10 relative overflow-hidden"
+                >
+
+                  {/* GLOW */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition" />
+
+                  {/* ICON */}
+                  <div className="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center">
+
+                    <Icon
+                      size={30}
+                      className="text-blue-600"
+                    />
+
+                  </div>
+
+                  {/* TITLE */}
+                  <h3 className="mt-8 text-2xl font-bold text-gray-900">
+
+                    {item.title}
+
+                  </h3>
+
+                  {/* DESC */}
+                  <p className="mt-4 text-gray-600 leading-7">
+
+                    {item.desc}
+
+                  </p>
+
+                </motion.div>
+
+              );
+
+            })
+          }
 
         </div>
 
       </div>
 
     </section>
+
   );
 }
