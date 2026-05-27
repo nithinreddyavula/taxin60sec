@@ -66,8 +66,8 @@ export default function Footer() {
 
           <div className="flex flex-col gap-4 text-gray-400">
 
-            <p>taxin60sec@gmail.com</p>
-            <p>+91 9876543210</p>
+            <p>compliance@taxin60sec.com</p>
+            <p>+91 7013734079</p>
             <p>Bangalore, India</p>
 
           </div>
