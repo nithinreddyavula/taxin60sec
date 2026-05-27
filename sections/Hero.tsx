@@ -134,12 +134,14 @@ export default function Hero() {
 
                 {
                   [
-                    ["Overview", Home],
-                    ["Income", BarChart3],
-                    ["Expenses", Receipt],
-                    ["Reports", FileText],
-                    ["Documents", Folder],
-                  ].map(([name, Icon], i) => {
+  { name: "Overview", icon: Home },
+  { name: "Income", icon: BarChart3 },
+  { name: "Expenses", icon: Receipt },
+  { name: "Reports", icon: FileText },
+  { name: "Documents", icon: Folder },
+].map((item, i) => {
+
+  const Icon = item.icon;
 
                     const Comp = Icon as any;
 
@@ -158,7 +160,7 @@ export default function Hero() {
 
                         <span className="text-sm">
 
-                          {name}
+                          {item.name}
 
                         </span>
 
