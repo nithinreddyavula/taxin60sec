@@ -83,7 +83,10 @@ export default function Contact() {
 
   return (
 
-    <section className="relative py-32 bg-[#020817] overflow-hidden text-white">
+    <section
+  id="contact"
+  className="relative py-32 bg-[#020817] overflow-hidden text-white"
+>
 
       {/* GLOW */}
       <div className="absolute inset-0 overflow-hidden">
