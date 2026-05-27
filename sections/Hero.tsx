@@ -124,9 +124,11 @@ export default function Hero() {
             {/* SIDEBAR */}
             <div className="bg-[#0f172a] rounded-3xl p-5 border border-white/10">
 
-              <h3 className="text-xl font-bold">
+              <h3 className="text-2xl font-bold leading-tight">
 
-                Business Dashboard
+                Business
+                <br />
+                Dashboard
 
               </h3>
 
@@ -134,31 +136,29 @@ export default function Hero() {
 
                 {
                   [
-  { name: "Overview", icon: Home },
-  { name: "Income", icon: BarChart3 },
-  { name: "Expenses", icon: Receipt },
-  { name: "Reports", icon: FileText },
-  { name: "Documents", icon: Folder },
-].map((item, i) => {
+                    { name: "Overview", icon: Home },
+                    { name: "Income", icon: BarChart3 },
+                    { name: "Expenses", icon: Receipt },
+                    { name: "Reports", icon: FileText },
+                    { name: "Documents", icon: Folder },
+                  ].map((item, i) => {
 
-  const Icon = item.icon;
-
-                    const Comp = Icon as any;
+                    const Icon = item.icon;
 
                     return (
 
                       <div
                         key={i}
-                        className={`flex items-center gap-3 px-4 py-3 rounded-2xl ${
+                        className={`flex items-center gap-3 px-4 py-4 rounded-2xl transition cursor-pointer ${
                           i === 0
                             ? "bg-blue-600"
                             : "hover:bg-white/5"
-                        } transition cursor-pointer`}
+                        }`}
                       >
 
-                        <Comp size={18} />
+                        <Icon size={18} />
 
-                        <span className="text-sm">
+                        <span className="text-sm font-medium">
 
                           {item.name}
 
@@ -179,7 +179,7 @@ export default function Hero() {
             <div>
 
               {/* TOP CARDS */}
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
 
                 {
                   [
@@ -220,14 +220,14 @@ export default function Hero() {
               </div>
 
               {/* GRAPH + DONUT */}
-              <div className="grid grid-cols-3 gap-4 mt-4">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
 
                 {/* GRAPH */}
-                <div className="col-span-2 bg-[#0f172a] rounded-2xl p-5 border border-white/10">
+                <div className="col-span-2 bg-[#0f172a] rounded-2xl p-6 border border-white/10 min-h-[320px]">
 
                   <div className="flex items-center justify-between">
 
-                    <h3 className="font-bold text-lg">
+                    <h3 className="font-bold text-xl">
 
                       Business Growth
 
@@ -241,7 +241,7 @@ export default function Hero() {
 
                   </div>
 
-                  <div className="h-[220px] mt-4">
+                  <div className="h-[220px] mt-6">
 
                     <ResponsiveContainer width="100%" height="100%">
 
@@ -279,6 +279,7 @@ export default function Hero() {
                           type="monotone"
                           dataKey="value"
                           stroke="#3b82f6"
+                          strokeWidth={3}
                           fillOpacity={1}
                           fill="url(#color)"
                         />
@@ -292,15 +293,15 @@ export default function Hero() {
                 </div>
 
                 {/* DONUT */}
-                <div className="bg-[#0f172a] rounded-2xl p-5 border border-white/10 flex flex-col items-center justify-center">
+                <div className="bg-[#0f172a] rounded-2xl p-5 border border-white/10 flex flex-col items-center justify-center min-h-[320px]">
 
-                  <h3 className="font-bold">
+                  <h3 className="font-bold text-lg text-center">
 
                     Compliance Status
 
                   </h3>
 
-                  <div className="w-full h-[180px]">
+                  <div className="w-[180px] h-[180px] mt-4">
 
                     <ResponsiveContainer width="100%" height="100%">
 
@@ -308,8 +309,9 @@ export default function Hero() {
 
                         <Pie
                           data={complianceData}
-                          innerRadius={50}
-                          outerRadius={70}
+                          innerRadius={55}
+                          outerRadius={75}
+                          paddingAngle={3}
                           dataKey="value"
                         />
 
@@ -319,7 +321,7 @@ export default function Hero() {
 
                   </div>
 
-                  <h2 className="text-4xl font-bold">
+                  <h2 className="text-5xl font-bold mt-2">
 
                     92%
 
@@ -330,6 +332,15 @@ export default function Hero() {
                     Compliant
 
                   </p>
+
+                  <div className="mt-6 space-y-2 text-sm text-gray-300">
+
+                    <p>✓ GST</p>
+                    <p>✓ Income Tax</p>
+                    <p>✓ TDS</p>
+                    <p>✓ ROC</p>
+
+                  </div>
 
                 </div>
 
