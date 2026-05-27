@@ -1,139 +1,184 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import {
+  ArrowRight,
+} from "lucide-react";
 
-const faqs = [
-  {
-    question: "What services does Tax60Sec provide?",
-    answer:
-      "We provide GST filing, income tax filing, startup registration, virtual CFO services, audit support, compliance management, and financial advisory solutions.",
-  },
-  {
-    question: "How quickly can I get support?",
-    answer:
-      "Our team usually responds within a few hours through WhatsApp, email, or consultation booking.",
-  },
-  {
-    question: "Do you work with startups and creators?",
-    answer:
-      "Yes. We work with startups, freelancers, YouTubers, e-commerce businesses, and growing companies.",
-  },
-  {
-    question: "Can I consult online?",
-    answer:
-      "Absolutely. We provide complete online consultation and support across India.",
-  },
-  {
-    question: "How do I get started?",
-    answer:
-      "Simply book a consultation through the website or contact us on WhatsApp.",
-  },
-];
-
-export default function FAQ() {
-
-  const [active, setActive] = useState<number | null>(0);
+export default function Hero() {
 
   return (
 
-    <section className="relative py-32 bg-white overflow-hidden">
+    <section className="relative pt-44 pb-24 bg-[#020817] overflow-hidden text-white min-h-screen">
 
-      {/* BACKGROUND */}
+      {/* GLOW */}
       <div className="absolute inset-0 overflow-hidden">
 
-        <div className="absolute top-[-100px] right-[-100px] w-[300px] h-[300px] bg-blue-100 blur-[120px] rounded-full" />
+        <div className="absolute top-[-150px] left-[-100px] w-[400px] h-[400px] bg-blue-600/20 blur-[120px] rounded-full" />
 
-        <div className="absolute bottom-[-100px] left-[-100px] w-[300px] h-[300px] bg-indigo-100 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-150px] right-[-100px] w-[400px] h-[400px] bg-indigo-600/20 blur-[120px] rounded-full" />
 
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 
-        {/* TOP */}
-        <div className="text-center">
+        {/* LEFT */}
+        <div>
 
-          <p className="uppercase tracking-[0.3em] text-sm text-blue-600 font-semibold">
+          <div className="inline-flex items-center px-6 py-3 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 font-medium">
 
-            FAQs
+            Modern Finance. Smart Compliance. Stronger Business.
 
-          </p>
+          </div>
 
-          <h2 className="mt-5 text-5xl font-bold text-gray-900 leading-tight">
+          <h1 className="mt-10 text-7xl leading-[1.05] font-bold">
 
-            Frequently Asked
-            <span className="text-blue-600">
-              {" "}Questions
+            All-in-One
+
+            <br />
+
+            <span className="text-blue-500">
+              Finance &
             </span>
 
-          </h2>
+            <br />
 
-          <p className="mt-6 text-lg text-gray-600 leading-8 max-w-2xl mx-auto">
+            Tax Solutions for
 
-            Everything you need to know about our
-            services, support, and consultation process.
+            <br />
+
+            <span className="text-blue-500">
+              Growing Businesses
+            </span>
+
+          </h1>
+
+          <p className="mt-10 text-xl text-gray-300 leading-9 max-w-2xl">
+
+            From GST filing to startup registration,
+            virtual CFO services, audits, and tax planning —
+            we simplify finance for modern businesses.
 
           </p>
+
+          {/* BUTTONS */}
+          <div className="mt-12 flex flex-wrap items-center gap-5">
+
+            <a
+              href="#contact"
+              className="px-8 py-5 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold flex items-center gap-3 shadow-2xl shadow-blue-500/20"
+            >
+
+              Book Consultation
+
+              <ArrowRight size={20} />
+
+            </a>
+
+            <a
+              href="https://wa.me/917013734079"
+              target="_blank"
+              className="px-8 py-5 rounded-2xl border border-white/10 hover:bg-white/10 transition text-white font-semibold"
+            >
+
+              Chat on WhatsApp
+
+            </a>
+
+          </div>
 
         </div>
 
-        {/* FAQ LIST */}
-        <div className="mt-20 space-y-6">
+        {/* RIGHT */}
+        <div className="relative">
 
-          {
-            faqs.map((faq, index) => (
+          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[40px] p-8 shadow-2xl shadow-blue-500/10">
 
-              <div
-                key={index}
-                className="bg-white border border-gray-200 rounded-[24px] overflow-hidden shadow-sm"
-              >
+            {/* TOP CARDS */}
+            <div className="grid grid-cols-2 gap-5">
 
-                {/* QUESTION */}
-                <button
-                  onClick={() =>
-                    setActive(active === index ? null : index)
-                  }
-                  className="w-full flex items-center justify-between px-8 py-6 text-left"
-                >
+              <div className="bg-[#0f172a] rounded-3xl p-8 border border-white/10">
 
-                  <span className="text-xl font-semibold text-gray-900">
+                <p className="text-gray-400">
+                  Total Revenue
+                </p>
 
-                    {faq.question}
+                <h3 className="mt-4 text-5xl font-bold">
 
-                  </span>
+                  ₹48,75,000
 
-                  <ChevronDown
-                    size={24}
-                    className={`text-blue-600 transition-transform duration-300 ${
-                      active === index
-                        ? "rotate-180"
-                        : ""
-                    }`}
-                  />
+                </h3>
 
-                </button>
+                <p className="mt-4 text-green-400">
 
-                {/* ANSWER */}
-                <div
-                  className={`transition-all duration-300 overflow-hidden ${
-                    active === index
-                      ? "max-h-[300px] pb-8 px-8"
-                      : "max-h-0"
-                  }`}
-                >
+                  +12.5% this month
 
-                  <p className="text-gray-600 leading-8">
-
-                    {faq.answer}
-
-                  </p>
-
-                </div>
+                </p>
 
               </div>
 
-            ))
-          }
+              <div className="bg-[#0f172a] rounded-3xl p-8 border border-white/10">
+
+                <p className="text-gray-400">
+                  Tax Savings
+                </p>
+
+                <h3 className="mt-4 text-5xl font-bold">
+
+                  ₹3,25,000
+
+                </h3>
+
+                <p className="mt-4 text-green-400">
+
+                  +8.7% improvement
+
+                </p>
+
+              </div>
+
+            </div>
+
+            {/* CHART */}
+            <div className="mt-6 bg-[#0f172a] rounded-3xl p-8 border border-white/10 h-[400px] flex flex-col justify-between">
+
+              <div className="flex items-center justify-between">
+
+                <h3 className="text-3xl font-bold">
+
+                  Business Growth
+
+                </h3>
+
+                <p className="text-gray-400">
+
+                  This Year
+
+                </p>
+
+              </div>
+
+              {/* BARS */}
+              <div className="flex items-end justify-between gap-4 h-[250px]">
+
+                <div className="w-full bg-blue-900 rounded-t-3xl h-[20%]" />
+
+                <div className="w-full bg-blue-700 rounded-t-3xl h-[40%]" />
+
+                <div className="w-full bg-blue-800 rounded-t-3xl h-[25%]" />
+
+                <div className="w-full bg-blue-500 rounded-t-3xl h-[65%]" />
+
+                <div className="w-full bg-blue-700 rounded-t-3xl h-[35%]" />
+
+                <div className="w-full bg-blue-400 rounded-t-3xl h-[85%]" />
+
+                <div className="w-full bg-blue-700 rounded-t-3xl h-[50%]" />
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 
