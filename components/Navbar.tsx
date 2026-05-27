@@ -13,27 +13,32 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-24">
 
           {/* LOGO */}
-          <Link href="/">
+          <Link
+  href="/"
+  className="cursor-pointer"
+>
 
-            <div>
+           <div className="flex items-center gap-3">
 
-              <h1 className="text-4xl font-bold text-white">
+  <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-xl shadow-blue-500/30">
 
-                Tax
-                <span className="text-blue-500">
-                  60
-                </span>
-                Sec
+    T
 
-              </h1>
+  </div>
 
-              <p className="text-gray-400 text-sm tracking-[0.3em] mt-1">
+  <div>
 
-                TAX | FINANCE | GROWTH
+    <h1 className="text-3xl font-bold text-white">
+      Tax60Sec
+    </h1>
 
-              </p>
+    <p className="text-xs tracking-[0.3em] text-gray-400">
+      TAX • FINANCE • GROWTH
+    </p>
 
-            </div>
+  </div>
+
+</div>
 
           </Link>
 
