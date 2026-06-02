@@ -8,20 +8,20 @@ import {
 
 export default function Contact() {
   return (
-    <section className="py-16 lg:py-20 overflow-hidden">
+    <section className="pt-10 pb-16 lg:pt-14 lg:pb-20">
 
       <div className="container-main">
 
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
+        <div className="grid lg:grid-cols-2 gap-10">
 
-          {/* LEFT */}
+          {/* LEFT SIDE */}
           <div className="max-w-xl">
 
             <p className="text-blue-400 uppercase tracking-[0.25em] text-sm mb-4">
               Contact Us
             </p>
 
-            <h2 className="text-4xl sm:text-5xl font-bold leading-tight mb-6">
+            <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
               Let’s Build Your{" "}
               <span className="text-blue-500">
                 Business Smarter
@@ -97,16 +97,16 @@ export default function Contact() {
 
           </div>
 
-          {/* RIGHT FORM */}
-          <div className="w-full max-w-lg lg:ml-auto">
+          {/* RIGHT SIDE FORM */}
+          <div className="max-w-md w-full">
 
-            <div className="card-dark p-6 sm:p-7">
+            <div className="card-dark p-6">
 
               <h3 className="text-3xl font-bold mb-3">
                 Book Free Consultation
               </h3>
 
-              <p className="text-secondary mb-6 leading-7">
+              <p className="text-secondary mb-6">
                 Fill out the form and our team
                 will contact you shortly.
               </p>
@@ -167,7 +167,6 @@ export default function Contact() {
                     btn-primary
                     w-full
                     h-12
-                    text-base
                     justify-center
                   "
                 >

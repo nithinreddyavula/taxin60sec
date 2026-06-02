@@ -1,7 +1,5 @@
 export default function WhatsAppButton() {
-
   return (
-
     <a
       href="https://wa.me/917013734079"
       target="_blank"
@@ -10,22 +8,18 @@ export default function WhatsAppButton() {
       bottom-5
       right-5
       z-50
-      bg-[#00D95F]
+      bg-[#22C55E]
+      hover:bg-[#16A34A]
       text-white
-      px-5
-      py-3
+      px-6
+      py-4
       rounded-full
       font-semibold
-      shadow-lg
-      text-sm
-      sm:text-base
+      shadow-2xl
+      transition
       "
     >
-
       WhatsApp
-
     </a>
-
   );
-
 }

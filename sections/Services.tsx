@@ -1,67 +1,64 @@
 import {
-  Briefcase,
   Calculator,
+  Briefcase,
   ShieldCheck,
   Landmark,
-  BarChart3,
+  Building2,
   FileText,
 } from "lucide-react";
 
 const services = [
   {
-    icon: FileText,
-    title: "GST Filing",
-    desc: "GST Registration, Returns, Refunds & Compliance.",
-  },
-  {
     icon: Calculator,
-    title: "Income Tax",
-    desc: "ITR Filing, Tax Planning & TDS Support.",
+    title: "GST Filing",
+    desc: "GST Registration, Returns, Refunds, LUT & Compliance.",
   },
   {
-    icon: Landmark,
+    icon: FileText,
+    title: "Income Tax",
+    desc: "ITR Filing, Tax Planning, TDS & Assessment Support.",
+  },
+  {
+    icon: Building2,
     title: "Startup Services",
-    desc: "Company Registration & ROC Compliance.",
+    desc: "Company Registration, ROC Compliance & Fundraising.",
   },
   {
     icon: Briefcase,
     title: "Virtual CFO",
-    desc: "Financial Reporting & Cash Flow Management.",
+    desc: "Financial Reporting, Cash Flow Management & Advisory.",
   },
   {
     icon: ShieldCheck,
     title: "Audit & Assurance",
-    desc: "Internal Audit & Due Diligence.",
+    desc: "Statutory Audit, Internal Audit & Due Diligence.",
   },
   {
-    icon: BarChart3,
+    icon: Landmark,
     title: "Finance Automation",
-    desc: "Build Dashboards & Automate Workflows.",
+    desc: "Automate Workflows, Build Dashboards & Save Time.",
   },
 ];
 
 export default function Services() {
   return (
-    <section className="section-space overflow-hidden">
+    <section className="py-20">
+
       <div className="container-main">
 
         <div className="text-center mb-14">
 
-          <p className="text-blue-400 uppercase tracking-[0.3em] text-sm mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Our Services
-          </p>
-
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-            Complete Finance & Tax Solutions
           </h2>
 
           <p className="text-secondary text-lg">
-            Everything your business needs under one roof.
+            Complete finance and tax solutions under one roof.
           </p>
 
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
           {services.map((service, index) => {
             const Icon = service.icon;
@@ -69,20 +66,26 @@ export default function Services() {
             return (
               <div
                 key={index}
-                className="card-dark p-6"
+                className="card-dark p-7 hover:-translate-y-1 transition"
               >
 
                 <div className="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-5">
-                  <Icon className="text-blue-400 w-7 h-7" />
+
+                  <Icon className="text-blue-500" size={28} />
+
                 </div>
 
                 <h3 className="text-2xl font-semibold mb-3">
                   {service.title}
                 </h3>
 
-                <p className="text-secondary leading-7">
+                <p className="text-secondary leading-8">
                   {service.desc}
                 </p>
+
+                <button className="mt-5 text-blue-400 font-medium">
+                  Learn More →
+                </button>
 
               </div>
             );
@@ -91,6 +94,7 @@ export default function Services() {
         </div>
 
       </div>
+
     </section>
   );
 }

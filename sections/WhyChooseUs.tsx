@@ -1,48 +1,55 @@
+import Image from "next/image";
 import {
-  CheckCircle,
+  CheckCircle2,
 } from "lucide-react";
 
 const points = [
   "Expert CA & Ex-Big4 Team",
   "Technology-Driven Processes",
-  "Fast Response & Support",
+  "On-Time Compliance Every Time",
   "Transparent Pricing",
-  "Reliable Compliance",
+  "Personalized Business Support",
 ];
 
 export default function WhyChooseUs() {
   return (
-    <section className="section-space overflow-hidden">
+    <section className="py-20">
+
       <div className="container-main">
 
-        <div className="card-dark p-8 lg:p-12">
+        <div className="card-dark overflow-hidden">
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center p-8 lg:p-12">
 
+            {/* LEFT */}
             <div>
 
-              <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+              <h2 className="text-4xl font-bold mb-6">
                 Why Choose Tax60Sec?
               </h2>
 
               <p className="text-secondary text-lg leading-8 mb-8">
-                We combine finance expertise with technology
-                to deliver faster, smarter and more reliable compliance.
+                We combine expert knowledge with technology
+                to deliver faster, smarter and hassle-free
+                compliance for your business.
               </p>
 
               <div className="space-y-5">
 
-                {points.map((point, index) => (
+                {points.map((point, i) => (
                   <div
-                    key={index}
+                    key={i}
                     className="flex items-center gap-4"
                   >
 
-                    <CheckCircle className="text-blue-400 w-6 h-6 flex-shrink-0" />
+                    <CheckCircle2
+                      className="text-blue-500"
+                      size={24}
+                    />
 
-                    <p className="text-lg">
+                    <span className="text-lg">
                       {point}
-                    </p>
+                    </span>
 
                   </div>
                 ))}
@@ -51,51 +58,16 @@ export default function WhyChooseUs() {
 
             </div>
 
-            <div className="card-dark p-8">
+            {/* RIGHT */}
+            <div className="relative rounded-3xl overflow-hidden border border-white/10">
 
-              <div className="grid grid-cols-2 gap-6">
-
-                <div>
-                  <h3 className="text-4xl font-bold text-blue-500">
-                    500+
-                  </h3>
-
-                  <p className="text-secondary mt-2">
-                    Clients Served
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-4xl font-bold text-blue-500">
-                    10+
-                  </h3>
-
-                  <p className="text-secondary mt-2">
-                    Years Experience
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-4xl font-bold text-blue-500">
-                    24hr
-                  </h3>
-
-                  <p className="text-secondary mt-2">
-                    Response Time
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-4xl font-bold text-blue-500">
-                    95%
-                  </h3>
-
-                  <p className="text-secondary mt-2">
-                    Compliance Rate
-                  </p>
-                </div>
-
-              </div>
+              <Image
+                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1200&auto=format&fit=crop"
+                alt="Finance"
+                width={800}
+                height={500}
+                className="w-full h-auto object-cover"
+              />
 
             </div>
 
@@ -104,6 +76,7 @@ export default function WhyChooseUs() {
         </div>
 
       </div>
+
     </section>
   );
 }
