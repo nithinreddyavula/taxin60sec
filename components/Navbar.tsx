@@ -10,11 +10,11 @@ export default function Navbar() {
 
   return (
 
-    <header className="sticky top-0 z-50 border-b border-white/5 bg-[#020817]/90 backdrop-blur-lg">
+    <header className="sticky top-0 z-50 border-b border-white/5 bg-[#020817]/80 backdrop-blur-xl">
 
       <div className="container-main">
 
-        <div className="h-16 flex items-center justify-between">
+        <div className="h-20 flex items-center justify-between">
 
           {/* LOGO */}
           <Link
@@ -22,7 +22,7 @@ export default function Navbar() {
             className="flex items-center gap-3"
           >
 
-            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-lg">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-xl font-bold shadow-lg shadow-blue-500/30">
 
               T
 
@@ -30,13 +30,13 @@ export default function Navbar() {
 
             <div>
 
-              <h2 className="text-2xl font-bold">
+              <h2 className="text-3xl font-bold tracking-tight">
 
                 Tax<span className="text-blue-500">60</span>Sec
 
               </h2>
 
-              <p className="text-[10px] uppercase tracking-[0.3em] text-gray-400">
+              <p className="text-[11px] uppercase tracking-[0.35em] text-gray-400">
 
                 Tax | Finance | Growth
 
@@ -47,37 +47,37 @@ export default function Navbar() {
           </Link>
 
           {/* DESKTOP NAV */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+          <nav className="hidden lg:flex items-center gap-10 text-sm font-medium">
 
             <Link href="/">Home</Link>
 
             <Link href="/services">Services</Link>
 
-            <Link href="/about">About</Link>
+            <Link href="/about">About Us</Link>
 
             <Link href="/contact">Contact</Link>
 
           </nav>
 
-          {/* CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* BUTTONS */}
+          <div className="hidden lg:flex items-center gap-4">
 
             <a
               href="https://wa.me/917013734079"
               target="_blank"
-              className="btn-secondary text-sm"
+              className="btn-secondary"
             >
 
-              WhatsApp
+              Chat on WhatsApp
 
             </a>
 
             <Link
               href="/contact"
-              className="btn-primary text-sm"
+              className="btn-primary"
             >
 
-              Book Consultation
+              Book Consultation →
 
             </Link>
 
@@ -86,13 +86,13 @@ export default function Navbar() {
           {/* MOBILE */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden"
+            className="lg:hidden"
           >
 
             {
               open
-                ? <X size={24} />
-                : <Menu size={24} />
+                ? <X size={28} />
+                : <Menu size={28} />
             }
 
           </button>
@@ -105,9 +105,9 @@ export default function Navbar() {
       {
         open && (
 
-          <div className="md:hidden border-t border-white/5 bg-[#020817]">
+          <div className="lg:hidden border-t border-white/5 bg-[#020817]">
 
-            <div className="container-main py-6 flex flex-col gap-5">
+            <div className="container-main py-6 flex flex-col gap-6">
 
               <Link href="/">Home</Link>
 
