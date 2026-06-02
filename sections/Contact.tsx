@@ -1,260 +1,191 @@
 "use client";
 
-import { useState } from "react";
-import emailjs from "@emailjs/browser";
-import {
-  Mail,
-  MapPin,
-  Phone,
-} from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 export default function Contact() {
-
-  const [loading, setLoading] = useState(false);
-
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement
-    >
-  ) => {
-
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-
-  };
-
-  const handleSubmit = async () => {
-
-    try {
-
-      setLoading(true);
-
-      await fetch(
-        "https://taxin60sec-backend.onrender.com/api/contact",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form),
-        }
-      );
-
-      await emailjs.send(
-        "service_ouw63sj",
-        "template_yd0879u",
-        {
-          name: form.name,
-          email: form.email,
-          message: form.message,
-        },
-        "lzNVEjLF6iMNz2tOP"
-      );
-
-      alert("Consultation Booked Successfully!");
-
-      setForm({
-        name: "",
-        email: "",
-        message: "",
-      });
-
-      setLoading(false);
-
-    } catch (error) {
-
-      console.log(error);
-
-      setLoading(false);
-
-      alert("Something went wrong!");
-
-    }
-
-  };
 
   return (
 
     <section
-  id="contact"
-  className="relative py-32 bg-[#020817] overflow-hidden text-white"
->
+      id="contact"
+      className="relative overflow-hidden bg-[#020817] py-24 text-white"
+    >
 
       {/* GLOW */}
       <div className="absolute inset-0 overflow-hidden">
 
-        <div className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] bg-blue-600/20 blur-[120px] rounded-full" />
+        <div className="absolute top-[-120px] right-[-120px] h-[350px] w-[350px] rounded-full bg-blue-600/20 blur-[120px]" />
 
-        <div className="absolute bottom-[-150px] right-[-150px] w-[400px] h-[400px] bg-indigo-600/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-120px] left-[-120px] h-[350px] w-[350px] rounded-full bg-indigo-600/20 blur-[120px]" />
 
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
 
-        {/* LEFT */}
-        <div>
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
 
-          <p className="uppercase tracking-[0.3em] text-sm text-blue-400 font-semibold">
+          {/* LEFT FORM */}
+          <div className="rounded-[32px] border border-white/10 bg-white/5 p-8 lg:p-10 backdrop-blur-xl shadow-2xl shadow-blue-500/10">
 
-            Contact Us
+            <h2 className="text-4xl font-bold">
 
-          </p>
+              Book Free Consultation
 
-          <h2 className="mt-5 text-5xl font-bold leading-tight">
+            </h2>
 
-            Let’s Build Your
-            <span className="text-blue-500">
-              {" "}Business Smarter
-            </span>
+            <p className="mt-4 text-lg text-gray-400 leading-8">
 
-          </h2>
+              Fill out the form and our team will contact you shortly.
 
-          <p className="mt-8 text-lg text-gray-300 leading-8">
+            </p>
 
-            Get expert help with taxation, compliance,
-            business setup, financial reporting,
-            and growth strategy.
+            <form className="mt-10 space-y-6">
 
-          </p>
+              <input
+                type="text"
+                placeholder="Your Name"
+                className="w-full rounded-2xl border border-white/10 bg-[#0f172a] px-6 py-5 text-white outline-none transition focus:border-blue-500"
+              />
 
-          {/* CONTACT INFO */}
-          <div className="mt-12 space-y-6">
+              <input
+                type="email"
+                placeholder="Your Email"
+                className="w-full rounded-2xl border border-white/10 bg-[#0f172a] px-6 py-5 text-white outline-none transition focus:border-blue-500"
+              />
 
-            <div className="flex items-center gap-4">
+              <textarea
+                rows={6}
+                placeholder="Tell us about your requirements"
+                className="w-full rounded-2xl border border-white/10 bg-[#0f172a] px-6 py-5 text-white outline-none transition focus:border-blue-500"
+              />
 
-              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+              <button
+                type="submit"
+                className="w-full rounded-2xl bg-blue-600 py-5 text-lg font-semibold transition hover:bg-blue-500 shadow-xl shadow-blue-500/20"
+              >
 
-                <Phone className="text-blue-400" />
+                Book Consultation
 
-              </div>
+              </button>
 
-              <div>
-
-                <p className="text-gray-400 text-sm">
-                  Phone Number
-                </p>
-
-                <h4 className="text-xl font-semibold">
-                  +91 7013734079
-                </h4>
-
-              </div>
-
-            </div>
-
-            <div className="flex items-center gap-4">
-
-              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
-
-                <Mail className="text-blue-400" />
-
-              </div>
-
-              <div>
-
-                <p className="text-gray-400 text-sm">
-                  Email Address
-                </p>
-
-                <h4 className="text-xl font-semibold">
-                  compliance@taxin60sec.com
-                </h4>
-
-              </div>
-
-            </div>
-
-            <div className="flex items-center gap-4">
-
-              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
-
-                <MapPin className="text-blue-400" />
-
-              </div>
-
-              <div>
-
-                <p className="text-gray-400 text-sm">
-                  Availability
-                </p>
-
-                <h4 className="text-xl font-semibold">
-                  Online Consultation Across India
-                </h4>
-
-              </div>
-
-            </div>
+            </form>
 
           </div>
 
-        </div>
+          {/* RIGHT CONTENT */}
+          <div className="pt-4">
 
-        {/* RIGHT FORM */}
-        <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[36px] p-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-blue-400">
 
-          <h3 className="text-3xl font-bold">
+              Contact Us
 
-            Book Free Consultation
+            </p>
 
-          </h3>
+            <h2 className="mt-6 text-5xl lg:text-6xl font-bold leading-tight">
 
-          <p className="mt-4 text-gray-400 leading-7">
+              Let’s Build Your{" "}
 
-            Fill out the form and our team will contact you shortly.
+              <span className="text-blue-500">
 
-          </p>
+                Business Smarter
 
-          <div className="mt-10 space-y-6">
+              </span>
 
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              value={form.name}
-              onChange={handleChange}
-              className="w-full bg-[#0f172a] border border-white/10 focus:border-blue-500 outline-none rounded-2xl px-6 py-5"
-            />
+            </h2>
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              value={form.email}
-              onChange={handleChange}
-              className="w-full bg-[#0f172a] border border-white/10 focus:border-blue-500 outline-none rounded-2xl px-6 py-5"
-            />
+            <p className="mt-8 max-w-xl text-lg leading-9 text-gray-300">
 
-            <textarea
-              rows={5}
-              name="message"
-              placeholder="Tell us about your requirements"
-              value={form.message}
-              onChange={handleChange}
-              className="w-full bg-[#0f172a] border border-white/10 focus:border-blue-500 outline-none rounded-2xl px-6 py-5"
-            />
+              Get expert help with taxation, compliance,
+              business setup, financial reporting,
+              and growth strategy.
 
-            <button
-              onClick={handleSubmit}
-              disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-500 transition rounded-2xl py-5 font-semibold text-lg shadow-2xl shadow-blue-500/20"
-            >
+            </p>
 
-              {
-                loading
-                  ? "Booking..."
-                  : "Book Consultation"
-              }
+            {/* CONTACT ITEMS */}
+            <div className="mt-12 space-y-8">
 
-            </button>
+              {/* PHONE */}
+              <div className="flex items-start gap-5">
+
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+
+                  <Phone className="text-blue-400" size={30} />
+
+                </div>
+
+                <div>
+
+                  <p className="text-gray-400">
+
+                    Phone Number
+
+                  </p>
+
+                  <h3 className="mt-1 text-3xl font-bold">
+
+                    +91 7013734079
+
+                  </h3>
+
+                </div>
+
+              </div>
+
+              {/* EMAIL */}
+              <div className="flex items-start gap-5">
+
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+
+                  <Mail className="text-blue-400" size={30} />
+
+                </div>
+
+                <div>
+
+                  <p className="text-gray-400">
+
+                    Email Address
+
+                  </p>
+
+                  <h3 className="mt-1 text-2xl lg:text-3xl font-bold break-all">
+
+                    compliance@taxin60sec.com
+
+                  </h3>
+
+                </div>
+
+              </div>
+
+              {/* LOCATION */}
+              <div className="flex items-start gap-5">
+
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+
+                  <MapPin className="text-blue-400" size={30} />
+
+                </div>
+
+                <div>
+
+                  <p className="text-gray-400">
+
+                    Availability
+
+                  </p>
+
+                  <h3 className="mt-1 text-2xl lg:text-3xl font-bold">
+
+                    Online Consultation Across India
+
+                  </h3>
+
+                </div>
+
+              </div>
+
+            </div>
 
           </div>
 
@@ -265,4 +196,5 @@ export default function Contact() {
     </section>
 
   );
+
 }
