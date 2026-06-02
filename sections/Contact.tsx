@@ -8,15 +8,16 @@ import {
 
 export default function Contact() {
   return (
-    <section className="section-space overflow-hidden">
+    <section className="py-16 lg:py-20 overflow-hidden">
+
       <div className="container-main">
 
-        <div className="grid lg:grid-cols-2 gap-10 items-start">
+        <div className="grid lg:grid-cols-2 gap-10 items-center">
 
-          {/* LEFT CONTENT */}
-          <div className="flex flex-col justify-center">
+          {/* LEFT */}
+          <div className="max-w-xl">
 
-            <p className="text-blue-400 uppercase tracking-[0.3em] text-sm font-medium mb-4">
+            <p className="text-blue-400 uppercase tracking-[0.25em] text-sm mb-4">
               Contact Us
             </p>
 
@@ -27,19 +28,19 @@ export default function Contact() {
               </span>
             </h2>
 
-            <p className="text-secondary text-lg leading-8 max-w-xl mb-10">
+            <p className="text-secondary text-lg leading-8 mb-10">
               Get expert help with taxation, compliance,
-              business setup, financial reporting, and
-              growth strategy.
+              business setup, financial reporting,
+              and growth strategy.
             </p>
 
             <div className="space-y-6">
 
               {/* PHONE */}
-              <div className="flex items-start gap-4">
+              <div className="flex gap-4">
 
                 <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                  <Phone className="text-blue-400 w-6 h-6" />
+                  <Phone className="w-6 h-6 text-blue-400" />
                 </div>
 
                 <div>
@@ -51,13 +52,14 @@ export default function Contact() {
                     +91 7013734079
                   </h3>
                 </div>
+
               </div>
 
               {/* EMAIL */}
-              <div className="flex items-start gap-4">
+              <div className="flex gap-4">
 
                 <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                  <Mail className="text-blue-400 w-6 h-6" />
+                  <Mail className="w-6 h-6 text-blue-400" />
                 </div>
 
                 <div>
@@ -69,13 +71,14 @@ export default function Contact() {
                     compliance@taxin60sec.com
                   </h3>
                 </div>
+
               </div>
 
               {/* LOCATION */}
-              <div className="flex items-start gap-4">
+              <div className="flex gap-4">
 
                 <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="text-blue-400 w-6 h-6" />
+                  <MapPin className="w-6 h-6 text-blue-400" />
                 </div>
 
                 <div>
@@ -87,94 +90,100 @@ export default function Contact() {
                     Online Consultation Across India
                   </h3>
                 </div>
+
               </div>
 
             </div>
+
           </div>
 
           {/* RIGHT FORM */}
-          <div className="card-dark p-6 sm:p-8">
+          <div className="w-full max-w-lg lg:ml-auto">
 
-            <h3 className="text-3xl sm:text-4xl font-bold mb-4">
-              Book Free Consultation
-            </h3>
+            <div className="card-dark p-6 sm:p-7">
 
-            <p className="text-secondary mb-8 leading-7">
-              Fill out the form and our team will
-              contact you shortly.
-            </p>
+              <h3 className="text-3xl font-bold mb-3">
+                Book Free Consultation
+              </h3>
 
-            <form className="space-y-5">
+              <p className="text-secondary mb-6 leading-7">
+                Fill out the form and our team
+                will contact you shortly.
+              </p>
 
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="
-                  w-full
-                  h-14
-                  rounded-2xl
-                  bg-[#0B1220]
-                  border
-                  border-white/10
-                  px-5
-                  text-white
-                  outline-none
-                  focus:border-blue-500
-                "
-              />
+              <form className="space-y-4">
 
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="
-                  w-full
-                  h-14
-                  rounded-2xl
-                  bg-[#0B1220]
-                  border
-                  border-white/10
-                  px-5
-                  text-white
-                  outline-none
-                  focus:border-blue-500
-                "
-              />
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  className="
+                    w-full
+                    h-12
+                    rounded-xl
+                    bg-[#0B1220]
+                    border
+                    border-white/10
+                    px-4
+                    outline-none
+                    focus:border-blue-500
+                  "
+                />
 
-              <textarea
-                rows={5}
-                placeholder="Tell us about your requirements"
-                className="
-                  w-full
-                  rounded-2xl
-                  bg-[#0B1220]
-                  border
-                  border-white/10
-                  px-5
-                  py-4
-                  text-white
-                  outline-none
-                  resize-none
-                  focus:border-blue-500
-                "
-              />
+                <input
+                  type="email"
+                  placeholder="Your Email"
+                  className="
+                    w-full
+                    h-12
+                    rounded-xl
+                    bg-[#0B1220]
+                    border
+                    border-white/10
+                    px-4
+                    outline-none
+                    focus:border-blue-500
+                  "
+                />
 
-              <button
-                className="
-                  btn-primary
-                  w-full
-                  justify-center
-                  h-14
-                  text-lg
-                "
-              >
-                Book Consultation
-              </button>
+                <textarea
+                  rows={4}
+                  placeholder="Tell us about your requirements"
+                  className="
+                    w-full
+                    rounded-xl
+                    bg-[#0B1220]
+                    border
+                    border-white/10
+                    px-4
+                    py-4
+                    outline-none
+                    resize-none
+                    focus:border-blue-500
+                  "
+                />
 
-            </form>
+                <button
+                  className="
+                    btn-primary
+                    w-full
+                    h-12
+                    text-base
+                    justify-center
+                  "
+                >
+                  Book Consultation
+                </button>
+
+              </form>
+
+            </div>
+
           </div>
 
         </div>
+
       </div>
+
     </section>
   );
 }
