@@ -55,7 +55,7 @@ export default function Services() {
 
   return (
 
-    <section className="relative bg-[#020817] py-28 overflow-hidden">
+    <section className="relative bg-[#020817] py-18 overflow-hidden">
 
       {/* GLOW */}
       <div className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] bg-blue-600/10 blur-[140px] rounded-full" />
@@ -73,7 +73,7 @@ export default function Services() {
 
           </p>
 
-          <h2 className="mt-5 text-5xl sm:text-6xl font-bold text-white leading-tight">
+          <h2 className="mt-5 text-3xl lg:text-4xl sm:text-2xl lg:text-3xl lg:text-5xl font-bold text-white leading-tight">
 
             Modern Finance
             <br />
@@ -84,7 +84,7 @@ export default function Services() {
 
           </h2>
 
-          <p className="mt-8 text-lg text-gray-400 leading-9 max-w-2xl">
+          <p className="mt-8 text-base text-gray-400 leading-9 max-w-2xl">
 
             We help startups, founders and modern businesses
             simplify taxation, compliance and financial operations
@@ -95,7 +95,7 @@ export default function Services() {
         </div>
 
         {/* GRID */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
           {
             services.map((service, i) => {
@@ -107,7 +107,7 @@ export default function Services() {
                 <Link
                   href="/services"
                   key={i}
-                  className="group relative overflow-hidden rounded-[32px] bg-[#0b1220] border border-white/5 p-8 hover:border-blue-500/30 transition-all duration-300"
+                  className="group relative overflow-hidden rounded-[32px] bg-[#0b1220] border border-white/5 p-5 hover:border-blue-500/30 transition-all duration-300"
                 >
 
                   {/* HOVER GLOW */}
@@ -136,7 +136,7 @@ export default function Services() {
 
                     </h3>
 
-                    <p className="mt-5 text-gray-400 leading-8 text-lg">
+                    <p className="mt-5 text-gray-400 leading-8 text-base">
 
                       {service.description}
 
