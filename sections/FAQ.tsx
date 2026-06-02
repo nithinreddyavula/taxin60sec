@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+
 const faqs = [
   {
     q: "How fast can you complete GST filing?",
@@ -18,46 +23,50 @@ const faqs = [
 ];
 
 export default function FAQ() {
+  const [openIndex, setOpenIndex] = useState(0);
+
   return (
-    <section className="py-20">
+    <section className="section-space">
+      <div className="container-main">
+        <div className="mx-auto max-w-3xl">
+          <div className="section-header">
+            <p className="eyebrow">FAQ</p>
+            <h2 className="section-title mt-3">Frequently Asked Questions</h2>
+            <p className="section-copy mt-3">Everything you need to know.</p>
+          </div>
 
-      <div className="container-main max-w-4xl">
+          <div className="space-y-3">
+            {faqs.map((faq, index) => {
+              const isOpen = openIndex === index;
 
-        <div className="text-center mb-14">
+              return (
+                <div key={faq.q} className="card-dark overflow-hidden">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                    onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                    aria-expanded={isOpen}
+                  >
+                    <span className="text-base font-semibold">{faq.q}</span>
+                    <ChevronDown
+                      size={18}
+                      className={`shrink-0 text-blue-300 transition ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
 
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Frequently Asked Questions
-          </h2>
-
-          <p className="text-secondary text-lg">
-            Everything you need to know.
-          </p>
-
+                  {isOpen && (
+                    <p className="border-t border-white/10 px-5 py-4 text-sm leading-6 text-secondary">
+                      {faq.a}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
-
-        <div className="space-y-5">
-
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="card-dark p-7"
-            >
-
-              <h3 className="text-xl font-semibold mb-3">
-                {faq.q}
-              </h3>
-
-              <p className="text-secondary leading-8">
-                {faq.a}
-              </p>
-
-            </div>
-          ))}
-
-        </div>
-
       </div>
-
     </section>
   );
 }

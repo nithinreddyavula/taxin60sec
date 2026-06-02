@@ -2,239 +2,134 @@
 
 import Link from "next/link";
 
+const heroStats = [
+  ["500+", "Happy Clients"],
+  ["10+", "Years Experience"],
+  ["24hr", "Response Time"],
+  ["95%", "Compliance Rate"],
+];
+
 export default function Hero() {
   return (
-    <section className="pt-14 lg:pt-20 pb-16 lg:pb-20 overflow-hidden">
+    <section className="overflow-hidden py-10 md:py-14">
       <div className="container-main">
-
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-
-          {/* LEFT CONTENT */}
+        <div className="grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
-
-            <div className="inline-flex items-center px-4 py-2 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 text-sm mb-6">
+            <div className="mb-5 inline-flex items-center rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1.5 text-xs font-semibold text-blue-300">
               Trusted by 500+ Businesses
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-              All-in-One Finance
-              <br />
-              & Tax Solutions
+            <h1 className="max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl">
+              All-in-One Finance & Tax Solutions
             </h1>
 
-            <p className="text-secondary text-lg leading-8 max-w-xl mb-8">
-              We help startups, businesses and professionals
-              stay compliant, optimize taxes and simplify
-              financial operations with expert support.
+            <p className="section-copy mt-5 max-w-2xl">
+              We help startups, businesses and professionals stay compliant,
+              optimize taxes and simplify financial operations with expert
+              support.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-10">
-
-              <Link
-                href="/contact"
-                className="btn-primary"
-              >
-                Book Consultation →
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <Link href="/contact" className="btn-primary">
+                Book Consultation
               </Link>
-
               <a
                 href="https://wa.me/917013734079"
                 target="_blank"
+                rel="noreferrer"
                 className="btn-secondary"
               >
                 Chat on WhatsApp
               </a>
-
             </div>
 
-            {/* STATS */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-
-              <div>
-                <h3 className="text-3xl font-bold">
-                  500+
-                </h3>
-
-                <p className="text-secondary mt-2">
-                  Happy Clients
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-3xl font-bold">
-                  10+
-                </h3>
-
-                <p className="text-secondary mt-2">
-                  Years Experience
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-3xl font-bold">
-                  24hr
-                </h3>
-
-                <p className="text-secondary mt-2">
-                  Response Time
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-3xl font-bold">
-                  95%
-                </h3>
-
-                <p className="text-secondary mt-2">
-                  Compliance Rate
-                </p>
-              </div>
-
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {heroStats.map(([value, label]) => (
+                <div
+                  key={label}
+                  className="rounded-2xl border border-white/10 bg-white/[0.025] p-4"
+                >
+                  <h3 className="text-2xl font-bold tracking-tight text-white">
+                    {value}
+                  </h3>
+                  <p className="mt-1 text-xs font-medium text-secondary">
+                    {label}
+                  </p>
+                </div>
+              ))}
             </div>
-
           </div>
 
-          {/* RIGHT DASHBOARD */}
-          <div className="card-dark p-5">
-
-            {/* TOP CARDS */}
-            <div className="grid grid-cols-2 gap-4 mb-4">
-
-              <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5">
-                <p className="text-secondary mb-3">
-                  Total Revenue
-                </p>
-
-                <h3 className="text-4xl font-bold mb-3">
-                  ₹24,50,000
-                </h3>
-
-                <p className="text-green-400">
-                  ↑ 18.6% vs last month
-                </p>
-              </div>
-
-              <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5">
-                <p className="text-secondary mb-3">
-                  Tax Savings
-                </p>
-
-                <h3 className="text-4xl font-bold mb-3">
-                  ₹4,25,000
-                </h3>
-
-                <p className="text-green-400">
-                  ↑ 22.4% vs last month
-                </p>
-              </div>
-
+          <div className="card-dark p-4 md:p-5">
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                ["Total Revenue", "INR 24,50,000", "+18.6% vs last month"],
+                ["Tax Savings", "INR 4,25,000", "+22.4% vs last month"],
+              ].map(([label, value, trend]) => (
+                <div
+                  key={label}
+                  className="rounded-2xl border border-white/10 bg-white/[0.035] p-4"
+                >
+                  <p className="text-sm text-secondary">{label}</p>
+                  <h3 className="mt-2 text-2xl font-bold tracking-tight">
+                    {value}
+                  </h3>
+                  <p className="mt-2 text-sm font-semibold text-emerald-400">
+                    {trend}
+                  </p>
+                </div>
+              ))}
             </div>
 
-            {/* BOTTOM */}
-            <div className="grid lg:grid-cols-[1fr_220px] gap-4">
-
-              {/* GRAPH */}
-              <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5">
-
-                <div className="flex justify-between items-center mb-8">
-                  <h3 className="text-2xl font-semibold">
-                    Business Growth
-                  </h3>
-
-                  <span className="text-secondary">
-                    This Year
-                  </span>
+            <div className="mt-3 grid gap-3 lg:grid-cols-[1fr_190px]">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-4">
+                <div className="mb-6 flex items-center justify-between gap-4">
+                  <h3 className="text-lg font-semibold">Business Growth</h3>
+                  <span className="text-sm text-secondary">This Year</span>
                 </div>
 
-                <div className="flex items-end gap-4 h-56">
-
-                  <div className="w-full bg-blue-900 rounded-t-xl h-16"></div>
-
-                  <div className="w-full bg-blue-700 rounded-t-xl h-24"></div>
-
-                  <div className="w-full bg-blue-800 rounded-t-xl h-20"></div>
-
-                  <div className="w-full bg-blue-500 rounded-t-xl h-36"></div>
-
-                  <div className="w-full bg-blue-700 rounded-t-xl h-28"></div>
-
-                  <div className="w-full bg-blue-400 rounded-t-xl h-44"></div>
-
-                  <div className="w-full bg-blue-600 rounded-t-xl h-32"></div>
-
+                <div className="flex h-40 items-end gap-2">
+                  {[44, 68, 56, 92, 76, 112, 84].map((height, index) => (
+                    <div
+                      key={index}
+                      className="w-full rounded-t-lg bg-gradient-to-t from-blue-700 to-blue-400"
+                      style={{ height }}
+                    />
+                  ))}
                 </div>
-
               </div>
 
-              {/* COMPLIANCE */}
-              <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5 flex flex-col justify-between">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-4">
+                <h3 className="text-lg font-semibold">Compliance</h3>
 
-                <div>
-
-                  <h3 className="text-2xl font-semibold mb-6">
-                    Compliance
-                  </h3>
-
-                  <div className="relative w-36 h-36 mx-auto mb-6">
-
-                    <div className="absolute inset-0 rounded-full border-[10px] border-blue-500/20"></div>
-
-                    <div className="absolute inset-0 rounded-full border-[10px] border-transparent border-t-blue-500 border-r-blue-400 rotate-45"></div>
-
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <h3 className="text-4xl font-bold">
-                        92%
-                      </h3>
-
-                      <p className="text-secondary text-sm">
-                        Compliant
-                      </p>
-                    </div>
-
+                <div className="relative mx-auto my-5 h-28 w-28">
+                  <div className="absolute inset-0 rounded-full border-[9px] border-blue-500/15" />
+                  <div className="absolute inset-0 rotate-45 rounded-full border-[9px] border-transparent border-r-blue-400 border-t-blue-500" />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <h3 className="text-3xl font-bold">92%</h3>
+                    <p className="text-xs text-secondary">Compliant</p>
                   </div>
-
                 </div>
 
-                <div className="space-y-4">
-
-                  <div className="flex items-center justify-between">
-                    <span>GST Returns</span>
-                    <span className="text-green-400">
-                      On Time
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span>Income Tax</span>
-                    <span className="text-green-400">
-                      On Time
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span>TDS Compliance</span>
-                    <span className="text-green-400">
-                      On Time
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span>ROC Filing</span>
-                    <span className="text-green-400">
-                      On Time
-                    </span>
-                  </div>
-
+                <div className="space-y-2 text-sm">
+                  {["GST Returns", "Income Tax", "TDS Compliance", "ROC Filing"].map(
+                    (item) => (
+                      <div
+                        key={item}
+                        className="flex items-center justify-between gap-3"
+                      >
+                        <span className="text-slate-300">{item}</span>
+                        <span className="font-semibold text-emerald-400">
+                          On Time
+                        </span>
+                      </div>
+                    )
+                  )}
                 </div>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
     </section>
   );

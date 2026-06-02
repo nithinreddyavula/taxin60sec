@@ -1,90 +1,79 @@
 import Link from "next/link";
 
+const quickLinks = [
+  { href: "/", label: "Home" },
+  { href: "/services", label: "Services" },
+  { href: "/about", label: "About Us" },
+  { href: "/contact", label: "Contact" },
+];
+
+const services = [
+  "GST Filing",
+  "Income Tax",
+  "Virtual CFO",
+  "Startup Services",
+];
+
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 mt-20">
-
-      <div className="container-main py-14">
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
-
-          {/* BRAND */}
+    <footer className="border-t border-white/10 bg-[#020817]">
+      <div className="container-main py-10 md:py-12">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr]">
           <div>
-
-            <h2 className="text-3xl font-bold mb-4">
+            <h2 className="text-2xl font-bold tracking-tight">
               Tax<span className="text-blue-500">60</span>Sec
             </h2>
-
-            <p className="text-secondary leading-8">
-              Helping businesses stay compliant,
-              save taxes and grow with confidence.
+            <p className="mt-3 max-w-sm text-sm leading-6 text-secondary">
+              Helping businesses stay compliant, save taxes and grow with
+              confidence.
             </p>
-
           </div>
 
-          {/* LINKS */}
           <div>
-
-            <h4 className="font-semibold text-xl mb-5">
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-200">
               Quick Links
             </h4>
-
-            <div className="flex flex-col gap-4 text-secondary">
-
-              <Link href="/">Home</Link>
-              <Link href="/services">Services</Link>
-              <Link href="/about">About Us</Link>
-              <Link href="/contact">Contact</Link>
-
+            <div className="mt-4 flex flex-col gap-2.5 text-sm text-secondary">
+              {quickLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="transition hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
-
           </div>
 
-          {/* SERVICES */}
           <div>
-
-            <h4 className="font-semibold text-xl mb-5">
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-200">
               Services
             </h4>
-
-            <div className="flex flex-col gap-4 text-secondary">
-
-              <p>GST Filing</p>
-              <p>Income Tax</p>
-              <p>Virtual CFO</p>
-              <p>Startup Services</p>
-
+            <div className="mt-4 flex flex-col gap-2.5 text-sm text-secondary">
+              {services.map((service) => (
+                <p key={service}>{service}</p>
+              ))}
             </div>
-
           </div>
 
-          {/* CONTACT */}
           <div>
-
-            <h4 className="font-semibold text-xl mb-5">
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-200">
               Contact
             </h4>
-
-            <div className="space-y-4 text-secondary">
-
-              <p>compliance@tax60sec.com</p>
-
+            <div className="mt-4 space-y-2.5 text-sm text-secondary">
+              <p>compliance@taxin60sec.com</p>
               <p>+91 7013734079</p>
-
-              <p>India</p>
-
+              <p>Online Consultation Across India</p>
             </div>
-
           </div>
-
         </div>
 
-        <div className="border-t border-white/5 mt-12 pt-8 text-center text-secondary">
-          © 2026 Tax60Sec. All rights reserved.
+        <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-secondary sm:flex-row sm:items-center sm:justify-between">
+          <p>Copyright 2026 Tax60Sec. All rights reserved.</p>
+          <p>Tax | Finance | Growth</p>
         </div>
-
       </div>
-
     </footer>
   );
 }

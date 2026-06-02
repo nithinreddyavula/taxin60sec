@@ -3,19 +3,22 @@ export default function WhatsAppButton() {
     <a
       href="https://wa.me/917013734079"
       target="_blank"
+      rel="noreferrer"
       className="
       fixed
-      bottom-5
-      right-5
+      bottom-4
+      right-4
       z-50
       bg-[#22C55E]
       hover:bg-[#16A34A]
       text-white
-      px-6
-      py-4
+      px-4
+      py-3
       rounded-full
-      font-semibold
-      shadow-2xl
+      text-sm
+      font-bold
+      shadow-xl
+      shadow-green-950/30
       transition
       "
     >

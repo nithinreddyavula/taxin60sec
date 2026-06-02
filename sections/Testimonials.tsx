@@ -1,3 +1,5 @@
+import { Star } from "lucide-react";
+
 const testimonials = [
   {
     name: "Rahul Mehta",
@@ -18,57 +20,33 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-20">
-
+    <section className="section-space">
       <div className="container-main">
-
-        <div className="text-center mb-14">
-
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            What Our Clients Say
-          </h2>
-
-          <p className="text-secondary text-lg">
-            Trusted by businesses across India.
-          </p>
-
+        <div className="section-header">
+          <p className="eyebrow">Testimonials</p>
+          <h2 className="section-title mt-3">What Our Clients Say</h2>
+          <p className="section-copy mt-3">Trusted by businesses across India.</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-          {testimonials.map((item, index) => (
-            <div
-              key={index}
-              className="card-dark p-8"
-            >
-
-              <div className="text-5xl text-blue-500/40 mb-5">
-                “
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {testimonials.map((item) => (
+            <div key={item.name} className="card-dark p-5">
+              <div className="mb-4 flex items-center gap-1 text-blue-300">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Star key={index} size={14} fill="currentColor" />
+                ))}
               </div>
 
-              <p className="text-secondary leading-8 mb-8">
-                {item.text}
-              </p>
+              <p className="text-sm leading-6 text-secondary">&quot;{item.text}&quot;</p>
 
-              <div>
-
-                <h4 className="font-semibold text-xl">
-                  {item.name}
-                </h4>
-
-                <p className="text-secondary mt-1">
-                  {item.role}
-                </p>
-
+              <div className="mt-5 border-t border-white/10 pt-4">
+                <h4 className="font-semibold">{item.name}</h4>
+                <p className="mt-1 text-sm text-secondary">{item.role}</p>
               </div>
-
             </div>
           ))}
-
         </div>
-
       </div>
-
     </section>
   );
 }

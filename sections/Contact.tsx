@@ -1,188 +1,98 @@
 "use client";
 
-import {
-  Phone,
-  Mail,
-  MapPin,
-} from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
+
+const contactItems = [
+  {
+    icon: Phone,
+    label: "Phone Number",
+    value: "+91 7013734079",
+  },
+  {
+    icon: Mail,
+    label: "Email Address",
+    value: "compliance@taxin60sec.com",
+  },
+  {
+    icon: MapPin,
+    label: "Availability",
+    value: "Online Consultation Across India",
+  },
+];
 
 export default function Contact() {
   return (
-    <section className="pt-10 pb-16 lg:pt-14 lg:pb-20">
-
+    <section id="contact" className="section-space">
       <div className="container-main">
-
-        <div className="grid lg:grid-cols-2 gap-10">
-
-          {/* LEFT SIDE */}
-          <div className="max-w-xl">
-
-            <p className="text-blue-400 uppercase tracking-[0.25em] text-sm mb-4">
-              Contact Us
-            </p>
-
-            <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-              Let’s Build Your{" "}
-              <span className="text-blue-500">
-                Business Smarter
-              </span>
+        <div className="grid items-start gap-8 lg:grid-cols-[0.9fr_0.8fr]">
+          <div>
+            <p className="eyebrow">Contact Us</p>
+            <h2 className="section-title mt-3">
+              Let&apos;s Build Your{" "}
+              <span className="text-blue-400">Business Smarter</span>
             </h2>
-
-            <p className="text-secondary text-lg leading-8 mb-10">
-              Get expert help with taxation, compliance,
-              business setup, financial reporting,
-              and growth strategy.
+            <p className="section-copy mt-4 max-w-2xl">
+              Get expert help with taxation, compliance, business setup,
+              financial reporting, and growth strategy.
             </p>
 
-            <div className="space-y-6">
+            <div className="mt-6 grid gap-3">
+              {contactItems.map((item) => {
+                const Icon = item.icon;
 
-              {/* PHONE */}
-              <div className="flex gap-4">
-
-                <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-blue-400" />
-                </div>
-
-                <div>
-                  <p className="text-secondary mb-1">
-                    Phone Number
-                  </p>
-
-                  <h3 className="text-2xl font-semibold">
-                    +91 7013734079
-                  </h3>
-                </div>
-
-              </div>
-
-              {/* EMAIL */}
-              <div className="flex gap-4">
-
-                <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-6 h-6 text-blue-400" />
-                </div>
-
-                <div>
-                  <p className="text-secondary mb-1">
-                    Email Address
-                  </p>
-
-                  <h3 className="text-xl sm:text-2xl font-semibold break-words">
-                    compliance@taxin60sec.com
-                  </h3>
-                </div>
-
-              </div>
-
-              {/* LOCATION */}
-              <div className="flex gap-4">
-
-                <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-blue-400" />
-                </div>
-
-                <div>
-                  <p className="text-secondary mb-1">
-                    Availability
-                  </p>
-
-                  <h3 className="text-xl sm:text-2xl font-semibold">
-                    Online Consultation Across India
-                  </h3>
-                </div>
-
-              </div>
-
+                return (
+                  <div
+                    key={item.label}
+                    className="flex gap-3 rounded-2xl border border-white/10 bg-white/[0.025] p-4"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-blue-500/15 bg-blue-500/10">
+                      <Icon className="h-5 w-5 text-blue-300" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-secondary">
+                        {item.label}
+                      </p>
+                      <h3 className="mt-1 break-words text-lg font-semibold">
+                        {item.value}
+                      </h3>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-
           </div>
 
-          {/* RIGHT SIDE FORM */}
-          <div className="max-w-md w-full">
+          <div className="card-dark w-full p-5 md:p-6">
+            <h3 className="text-2xl font-bold tracking-tight">
+              Book Free Consultation
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-secondary">
+              Fill out the form and our team will contact you shortly.
+            </p>
 
-            <div className="card-dark p-6">
-
-              <h3 className="text-3xl font-bold mb-3">
-                Book Free Consultation
-              </h3>
-
-              <p className="text-secondary mb-6">
-                Fill out the form and our team
-                will contact you shortly.
-              </p>
-
-              <form className="space-y-4">
-
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="
-                    w-full
-                    h-12
-                    rounded-xl
-                    bg-[#0B1220]
-                    border
-                    border-white/10
-                    px-4
-                    outline-none
-                    focus:border-blue-500
-                  "
-                />
-
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="
-                    w-full
-                    h-12
-                    rounded-xl
-                    bg-[#0B1220]
-                    border
-                    border-white/10
-                    px-4
-                    outline-none
-                    focus:border-blue-500
-                  "
-                />
-
-                <textarea
-                  rows={4}
-                  placeholder="Tell us about your requirements"
-                  className="
-                    w-full
-                    rounded-xl
-                    bg-[#0B1220]
-                    border
-                    border-white/10
-                    px-4
-                    py-4
-                    outline-none
-                    resize-none
-                    focus:border-blue-500
-                  "
-                />
-
-                <button
-                  className="
-                    btn-primary
-                    w-full
-                    h-12
-                    justify-center
-                  "
-                >
-                  Book Consultation
-                </button>
-
-              </form>
-
-            </div>
-
+            <form className="mt-5 space-y-3">
+              <input
+                type="text"
+                placeholder="Your Name"
+                className="input-dark h-11 px-3.5"
+              />
+              <input
+                type="email"
+                placeholder="Your Email"
+                className="input-dark h-11 px-3.5"
+              />
+              <textarea
+                rows={4}
+                placeholder="Tell us about your requirements"
+                className="input-dark min-h-28 resize-none px-3.5 py-3"
+              />
+              <button type="submit" className="btn-primary w-full">
+                Book Consultation
+              </button>
+            </form>
           </div>
-
         </div>
-
       </div>
-
     </section>
   );
 }

@@ -12,14 +12,22 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+type ContactLead = {
+  id: string | number;
+  name: string;
+  email: string;
+  message: string;
+  createdAt?: string;
+};
+
 export default function AdminPage() {
 
   const router = useRouter();
 
-  const [contacts, setContacts] = useState<any[]>([]);
+  const [contacts, setContacts] = useState<ContactLead[]>([]);
   const [search, setSearch] = useState("");
 
-  const chartData = contacts.map((contact: any) => ({
+  const chartData = contacts.map((contact) => ({
     date: contact.createdAt
       ? new Date(contact.createdAt).toLocaleDateString()
       : "Old",
@@ -40,7 +48,7 @@ export default function AdminPage() {
       "https://taxin60sec-backend-production.up.railway.app/api/contact"
     )
       .then((res) => res.json())
-      .then((data) => setContacts(data));
+      .then((data: ContactLead[]) => setContacts(data));
 
   }, [router]);
 
@@ -100,7 +108,7 @@ export default function AdminPage() {
             <h2 className="text-4xl font-bold mt-4">
 
               {
-                contacts.filter((contact: any) => {
+                contacts.filter((contact) => {
 
                   if (!contact.createdAt) return false;
 
@@ -205,12 +213,12 @@ export default function AdminPage() {
             <tbody>
 
               {contacts
-                .filter((contact: any) =>
+                .filter((contact) =>
                   contact.name
                     .toLowerCase()
                     .includes(search.toLowerCase())
                 )
-                .map((contact: any) => (
+                .map((contact) => (
 
                   <tr
                     key={contact.id}
@@ -251,7 +259,7 @@ export default function AdminPage() {
 
                           setContacts(
                             contacts.filter(
-                              (c: any) => c.id !== contact.id
+                              (c) => c.id !== contact.id
                             )
                           );
                         }}

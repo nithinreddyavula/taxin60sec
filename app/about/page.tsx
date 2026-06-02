@@ -1,82 +1,49 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import WhyChooseUs from "@/sections/WhyChooseUs";
+
+const metrics = [
+  ["500+", "Clients Served"],
+  ["10+", "Years Experience"],
+  ["24/7", "Support & Guidance"],
+];
 
 export default function AboutPage() {
-
   return (
-
-    <main className="bg-[#020817] text-white min-h-screen">
-
+    <main className="min-h-screen bg-[#020817] text-white">
       <Navbar />
 
-      <section className="pt-40 pb-24">
+      <section className="page-hero">
+        <div className="container-main">
+          <div className="grid items-end gap-8 lg:grid-cols-[1fr_0.8fr]">
+            <div>
+              <p className="eyebrow">About Us</p>
+              <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+                Building Modern Finance Solutions For Businesses
+              </h1>
+              <p className="section-copy mt-5 max-w-3xl">
+                Tax60Sec helps startups, creators, founders and businesses
+                simplify taxation, compliance and finance operations with modern
+                technology and expert consulting.
+              </p>
+            </div>
 
-        <div className="max-w-7xl mx-auto px-6">
-
-          <p className="text-blue-400 uppercase tracking-[0.3em] font-semibold">
-
-            About Us
-
-          </p>
-
-          <h1 className="mt-6 text-6xl font-bold leading-tight">
-
-            Building Modern Finance
-            <br />
-            Solutions For Businesses
-
-          </h1>
-
-          <p className="mt-8 max-w-3xl text-xl text-gray-300 leading-10">
-
-            Tax60Sec helps startups, creators,
-            founders and businesses simplify taxation,
-            compliance and finance operations with modern technology
-            and expert consulting.
-
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6 mt-20">
-
-            {
-              [
-                ["500+", "Clients Served"],
-                ["10+", "Years Experience"],
-                ["24/7", "Support & Guidance"],
-              ].map((item, i) => (
-
-                <div
-                  key={i}
-                  className="bg-white/5 border border-white/10 rounded-3xl p-10"
-                >
-
-                  <h2 className="text-5xl font-bold text-blue-500">
-
-                    {item[0]}
-
+            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+              {metrics.map(([value, label]) => (
+                <div key={label} className="card-dark p-4">
+                  <h2 className="text-3xl font-bold tracking-tight text-blue-400">
+                    {value}
                   </h2>
-
-                  <p className="mt-4 text-gray-300 text-lg">
-
-                    {item[1]}
-
-                  </p>
-
+                  <p className="mt-1 text-sm text-secondary">{label}</p>
                 </div>
-
-              ))
-            }
-
+              ))}
+            </div>
           </div>
-
         </div>
-
       </section>
 
+      <WhyChooseUs />
       <Footer />
-
     </main>
-
   );
-
 }
