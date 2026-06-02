@@ -1,121 +1,61 @@
 "use client";
 
-import {
-  ArrowRight,
-  BarChart3,
-  FileText,
-  Folder,
-  Home,
-  Receipt,
-} from "lucide-react";
-
-import {
-  Area,
-  AreaChart,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-  Cell,
-} from "recharts";
-
-const growthData = [
-  { month: "Jan", value: 12 },
-  { month: "Feb", value: 18 },
-  { month: "Mar", value: 15 },
-  { month: "Apr", value: 25 },
-  { month: "May", value: 22 },
-  { month: "Jun", value: 35 },
-  { month: "Jul", value: 30 },
-  { month: "Aug", value: 45 },
-  { month: "Sep", value: 40 },
-  { month: "Oct", value: 55 },
-  { month: "Nov", value: 48 },
-  { month: "Dec", value: 60 },
-];
-
-const complianceData = [
-  { name: "Completed", value: 92 },
-  { name: "Pending", value: 8 },
-];
+import Link from "next/link";
 
 export default function Hero() {
+
   return (
-    <section className="relative overflow-hidden bg-[#020817] text-white pt-24 lg:pt-32 pb-16 lg:pb-24">
 
-      {/* GLOW */}
-      <div className="absolute inset-0 overflow-hidden">
+    <section className="section-space">
 
-        <div className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] bg-blue-600/20 blur-[120px] rounded-full" />
+      <div className="container-main">
 
-        <div className="absolute bottom-[-150px] right-[-150px] w-[400px] h-[400px] bg-indigo-600/20 blur-[120px] rounded-full" />
-
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-10 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
 
           {/* LEFT */}
-          <div className="max-w-2xl">
+          <div>
 
             {/* BADGE */}
-            <div className="inline-flex items-center px-4 py-2 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 text-xs sm:text-sm font-medium">
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2 text-sm text-blue-400">
 
-              Modern Finance. Smart Compliance. Stronger Business.
+              Trusted by 500+ Businesses
 
             </div>
 
             {/* TITLE */}
-            <h1 className="mt-6 sm:mt-8 text-[42px] sm:text-[56px] lg:text-[64px] leading-[1.05] font-bold tracking-tight">
+            <h1 className="mt-6 text-4xl lg:text-5xl font-bold leading-[1.1] max-w-2xl">
 
-              All-in-One
-
+              All-in-One Finance
               <br />
-
-              <span className="text-blue-500">
-
-                Finance &
-
-              </span>
-
-              <br />
-
-              Tax Solutions
-
-              <br />
-
-              For Businesses
+              & Tax Solutions
 
             </h1>
 
             {/* DESC */}
-            <p className="mt-6 text-base sm:text-lg text-gray-300 leading-8 max-w-xl">
+            <p className="mt-5 text-base text-secondary leading-8 max-w-xl">
 
-              From GST to Global Compliance,
-              from Startup Registration to Virtual CFO —
-              we simplify finance so you can focus on growth.
+              We help startups, businesses and professionals
+              stay compliant, optimize taxes and simplify
+              financial operations with expert support.
 
             </p>
 
             {/* BUTTONS */}
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-4">
 
-              <a
-                href="/#contact"
-                className="h-14 px-7 rounded-2xl bg-blue-600 hover:bg-blue-500 transition flex items-center justify-center gap-3 text-white font-semibold shadow-xl shadow-blue-500/20"
+              <Link
+                href="/contact"
+                className="btn-primary"
               >
 
                 Book Consultation
 
-                <ArrowRight size={18} />
-
-              </a>
+              </Link>
 
               <a
                 href="https://wa.me/917013734079"
                 target="_blank"
-                className="h-14 px-7 rounded-2xl border border-white/10 hover:bg-white/10 transition flex items-center justify-center font-semibold"
+                className="btn-secondary"
               >
 
                 Chat on WhatsApp
@@ -124,255 +64,230 @@ export default function Hero() {
 
             </div>
 
-            {/* STATS */}
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-gray-400">
+            {/* TRUST METRICS */}
+            <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6">
 
-              <div>500+ Clients</div>
+              <div>
 
-              <div>10+ Years Experience</div>
+                <h3 className="text-2xl font-bold">
 
-              <div>24hr Response Time</div>
+                  500+
 
-              <div>CA & Ex-Big4 Team</div>
+                </h3>
+
+                <p className="text-sm text-secondary mt-1">
+
+                  Happy Clients
+
+                </p>
+
+              </div>
+
+              <div>
+
+                <h3 className="text-2xl font-bold">
+
+                  10+
+
+                </h3>
+
+                <p className="text-sm text-secondary mt-1">
+
+                  Years Experience
+
+                </p>
+
+              </div>
+
+              <div>
+
+                <h3 className="text-2xl font-bold">
+
+                  24hr
+
+                </h3>
+
+                <p className="text-sm text-secondary mt-1">
+
+                  Response Time
+
+                </p>
+
+              </div>
+
+              <div>
+
+                <h3 className="text-2xl font-bold">
+
+                  95%
+
+                </h3>
+
+                <p className="text-sm text-secondary mt-1">
+
+                  Compliance Rate
+
+                </p>
+
+              </div>
 
             </div>
 
           </div>
 
           {/* RIGHT */}
-          <div className="w-full">
+          <div className="card-dark p-6">
 
-            <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[28px] lg:rounded-[36px] p-4 lg:p-5 shadow-2xl shadow-blue-500/10">
+            {/* TOP CARDS */}
+            <div className="grid grid-cols-2 gap-4">
 
-              <div className="grid lg:grid-cols-[190px_1fr] gap-5">
+              <div className="rounded-2xl bg-[#111827] p-5 border border-white/5">
 
-                {/* SIDEBAR */}
-                <div className="hidden lg:block bg-[#0f172a] rounded-3xl p-5 border border-white/10">
+                <p className="text-sm text-secondary">
 
-                  <h3 className="text-2xl font-bold leading-tight">
+                  Total Revenue
 
-                    Business
-                    <br />
-                    Dashboard
+                </p>
 
-                  </h3>
+                <h3 className="mt-3 text-3xl font-bold">
 
-                  <div className="mt-8 space-y-4">
+                  ₹24,50,000
 
-                    {[
-                      { name: "Overview", icon: Home },
-                      { name: "Income", icon: BarChart3 },
-                      { name: "Expenses", icon: Receipt },
-                      { name: "Reports", icon: FileText },
-                      { name: "Documents", icon: Folder },
-                    ].map((item, i) => {
+                </h3>
 
-                      const Icon = item.icon;
+                <p className="mt-2 text-sm text-green-400">
 
-                      return (
-                        <div
-                          key={i}
-                          className={`flex items-center gap-3 px-4 py-4 rounded-2xl transition cursor-pointer ${
-                            i === 0
-                              ? "bg-blue-600"
-                              : "hover:bg-white/5"
-                          }`}
-                        >
+                  ↑ 18.6% this month
 
-                          <Icon size={18} />
+                </p>
 
-                          <span className="text-sm font-medium">
+              </div>
 
-                            {item.name}
+              <div className="rounded-2xl bg-[#111827] p-5 border border-white/5">
 
-                          </span>
+                <p className="text-sm text-secondary">
 
-                        </div>
-                      );
-                    })}
+                  Tax Savings
+
+                </p>
+
+                <h3 className="mt-3 text-3xl font-bold">
+
+                  ₹4,25,000
+
+                </h3>
+
+                <p className="mt-2 text-sm text-green-400">
+
+                  ↑ 22.4% this month
+
+                </p>
+
+              </div>
+
+            </div>
+
+            {/* GRAPH */}
+            <div className="mt-5 rounded-2xl bg-[#111827] border border-white/5 p-5">
+
+              <div className="flex items-center justify-between">
+
+                <h3 className="font-semibold">
+
+                  Business Growth
+
+                </h3>
+
+                <p className="text-sm text-secondary">
+
+                  This Year
+
+                </p>
+
+              </div>
+
+              <div className="mt-6 h-44 flex items-end gap-3">
+
+                <div className="w-full bg-blue-900 rounded-t-xl h-[20%]" />
+
+                <div className="w-full bg-blue-700 rounded-t-xl h-[35%]" />
+
+                <div className="w-full bg-blue-800 rounded-t-xl h-[28%]" />
+
+                <div className="w-full bg-blue-500 rounded-t-xl h-[60%]" />
+
+                <div className="w-full bg-blue-700 rounded-t-xl h-[42%]" />
+
+                <div className="w-full bg-blue-400 rounded-t-xl h-[78%]" />
+
+                <div className="w-full bg-blue-600 rounded-t-xl h-[52%]" />
+
+              </div>
+
+            </div>
+
+            {/* COMPLIANCE */}
+            <div className="mt-5 rounded-2xl bg-[#111827] border border-white/5 p-5">
+
+              <div className="flex items-center justify-between">
+
+                {/* DONUT */}
+                <div className="relative w-32 h-32">
+
+                  <div className="absolute inset-0 rounded-full border-[10px] border-blue-500/20" />
+
+                  <div className="absolute inset-0 rounded-full border-[10px] border-blue-500 border-t-transparent rotate-45" />
+
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+
+                    <h3 className="text-3xl font-bold">
+
+                      92%
+
+                    </h3>
+
+                    <p className="text-xs text-secondary">
+
+                      Compliant
+
+                    </p>
 
                   </div>
 
                 </div>
 
-                {/* MAIN */}
-                <div>
+                {/* LIST */}
+                <div className="space-y-3 text-sm">
 
-                  {/* TOP CARDS */}
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="flex items-center gap-3">
 
-                    {[
-                      ["Total Revenue", "₹48L+"],
-                      ["Total Profit", "₹12.4L"],
-                      ["Tax Savings", "₹3.2L"],
-                      ["Cash Flow", "₹8.7L"],
-                    ].map((item, i) => (
+                    <div className="w-2 h-2 rounded-full bg-green-400" />
 
-                      <div
-                        key={i}
-                        className="bg-[#0f172a] rounded-2xl p-4 border border-white/10"
-                      >
-
-                        <p className="text-xs text-gray-400 leading-5">
-
-                          {item[0]}
-
-                        </p>
-
-                        <h3 className="mt-3 text-2xl lg:text-[28px] font-bold leading-none">
-
-                          {item[1]}
-
-                        </h3>
-
-                        <p className="mt-3 text-green-400 text-xs">
-
-                          +12% vs last month
-
-                        </p>
-
-                      </div>
-
-                    ))}
+                    GST Returns
 
                   </div>
 
-                  {/* CHARTS */}
-                  <div className="grid grid-cols-1 lg:grid-cols-[2.3fr_1fr] gap-4 mt-4">
+                  <div className="flex items-center gap-3">
 
-                    {/* GRAPH */}
-                    <div className="bg-[#0f172a] rounded-2xl p-5 lg:p-6 border border-white/10">
+                    <div className="w-2 h-2 rounded-full bg-green-400" />
 
-                      <div className="flex items-center justify-between">
+                    Income Tax
 
-                        <h3 className="font-bold text-lg lg:text-xl">
+                  </div>
 
-                          Business Growth
+                  <div className="flex items-center gap-3">
 
-                        </h3>
+                    <div className="w-2 h-2 rounded-full bg-green-400" />
 
-                        <p className="text-sm text-gray-400">
+                    TDS Compliance
 
-                          This Year
+                  </div>
 
-                        </p>
+                  <div className="flex items-center gap-3">
 
-                      </div>
+                    <div className="w-2 h-2 rounded-full bg-green-400" />
 
-                      <div className="h-[220px] lg:h-[280px] mt-6">
-
-                        <ResponsiveContainer width="100%" height="100%">
-
-                          <AreaChart data={growthData}>
-
-                            <defs>
-
-                              <linearGradient
-                                id="color"
-                                x1="0"
-                                y1="0"
-                                x2="0"
-                                y2="1"
-                              >
-
-                                <stop
-                                  offset="5%"
-                                  stopColor="#3b82f6"
-                                  stopOpacity={0.8}
-                                />
-
-                                <stop
-                                  offset="95%"
-                                  stopColor="#3b82f6"
-                                  stopOpacity={0}
-                                />
-
-                              </linearGradient>
-
-                            </defs>
-
-                            <Tooltip />
-
-                            <Area
-                              type="monotone"
-                              dataKey="value"
-                              stroke="#3b82f6"
-                              strokeWidth={4}
-                              fillOpacity={1}
-                              fill="url(#color)"
-                            />
-
-                          </AreaChart>
-
-                        </ResponsiveContainer>
-
-                      </div>
-
-                    </div>
-
-                    {/* DONUT */}
-                    <div className="bg-[#0f172a] rounded-2xl p-5 border border-white/10 flex flex-col items-center justify-center">
-
-                      <h3 className="font-bold text-lg text-center">
-
-                        Compliance Status
-
-                      </h3>
-
-                      <div className="w-[160px] h-[160px] lg:w-[190px] lg:h-[190px] mt-4 relative">
-
-                        <ResponsiveContainer width="100%" height="100%">
-
-                          <PieChart>
-
-                            <Pie
-                              data={complianceData}
-                              innerRadius={58}
-                              outerRadius={82}
-                              paddingAngle={2}
-                              dataKey="value"
-                            >
-
-                              <Cell fill="#3b82f6" />
-
-                              <Cell fill="#1e293b" />
-
-                            </Pie>
-
-                          </PieChart>
-
-                        </ResponsiveContainer>
-
-                        {/* CENTER */}
-                        <div className="absolute inset-0 flex flex-col items-center justify-center">
-
-                          <h2 className="text-4xl lg:text-5xl font-bold">
-
-                            92%
-
-                          </h2>
-
-                          <p className="text-green-400 text-sm">
-
-                            Compliant
-
-                          </p>
-
-                        </div>
-
-                      </div>
-
-                      {/* STATUS */}
-                      <div className="mt-5 space-y-2 text-sm text-gray-300">
-
-                        <p>✓ GST</p>
-                        <p>✓ Income Tax</p>
-                        <p>✓ TDS</p>
-                        <p>✓ ROC</p>
-
-                      </div>
-
-                    </div>
+                    ROC Filing
 
                   </div>
 
@@ -389,5 +304,7 @@ export default function Hero() {
       </div>
 
     </section>
+
   );
+
 }

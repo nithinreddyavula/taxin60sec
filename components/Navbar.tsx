@@ -10,11 +10,11 @@ export default function Navbar() {
 
   return (
 
-    <header className="fixed top-0 left-0 w-full z-50 border-b border-white/10 bg-[#020817]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/5 bg-[#020817]/90 backdrop-blur-lg">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="container-main">
 
-        <div className="h-20 flex items-center justify-between">
+        <div className="h-16 flex items-center justify-between">
 
           {/* LOGO */}
           <Link
@@ -22,7 +22,7 @@ export default function Navbar() {
             className="flex items-center gap-3"
           >
 
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xl font-bold shadow-xl shadow-blue-500/20">
+            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-lg">
 
               T
 
@@ -30,15 +30,15 @@ export default function Navbar() {
 
             <div>
 
-              <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              <h2 className="text-2xl font-bold">
 
                 Tax<span className="text-blue-500">60</span>Sec
 
               </h2>
 
-              <p className="hidden sm:block text-[10px] tracking-[0.35em] text-gray-400 uppercase">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-gray-400">
 
-                Tax • Finance • Growth
+                Tax | Finance | Growth
 
               </p>
 
@@ -47,41 +47,25 @@ export default function Navbar() {
           </Link>
 
           {/* DESKTOP NAV */}
-          <nav className="hidden md:flex items-center gap-10 text-white font-medium">
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
 
-            <Link href="/" className="hover:text-blue-400 transition">
+            <Link href="/">Home</Link>
 
-              Home
+            <Link href="/services">Services</Link>
 
-            </Link>
+            <Link href="/about">About</Link>
 
-            <Link href="/services" className="hover:text-blue-400 transition">
-
-              Services
-
-            </Link>
-
-            <Link href="/about" className="hover:text-blue-400 transition">
-
-              About Us
-
-            </Link>
-
-            <Link href="/contact" className="hover:text-blue-400 transition">
-
-              Contact
-
-            </Link>
+            <Link href="/contact">Contact</Link>
 
           </nav>
 
-          {/* DESKTOP BUTTONS */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* CTA */}
+          <div className="hidden md:flex items-center gap-3">
 
             <a
               href="https://wa.me/917013734079"
               target="_blank"
-              className="px-6 py-3 rounded-2xl border border-white/10 text-white font-medium hover:bg-white/10 transition"
+              className="btn-secondary text-sm"
             >
 
               WhatsApp
@@ -90,7 +74,7 @@ export default function Navbar() {
 
             <Link
               href="/contact"
-              className="px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold shadow-xl shadow-blue-500/20"
+              className="btn-primary text-sm"
             >
 
               Book Consultation
@@ -99,14 +83,16 @@ export default function Navbar() {
 
           </div>
 
-          {/* MOBILE MENU BUTTON */}
+          {/* MOBILE */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center text-white bg-white/5"
+            className="md:hidden"
           >
 
             {
-              open ? <X size={24} /> : <Menu size={24} />
+              open
+                ? <X size={24} />
+                : <Menu size={24} />
             }
 
           </button>
@@ -119,74 +105,17 @@ export default function Navbar() {
       {
         open && (
 
-          <div className="md:hidden border-t border-white/10 bg-[#020817]/95 backdrop-blur-xl">
+          <div className="md:hidden border-t border-white/5 bg-[#020817]">
 
-            <div className="px-6 py-6 flex flex-col gap-5 text-white font-medium">
+            <div className="container-main py-6 flex flex-col gap-5">
 
-              <Link
-                href="/"
-                onClick={() => setOpen(false)}
-                className="hover:text-blue-400 transition"
-              >
+              <Link href="/">Home</Link>
 
-                Home
+              <Link href="/services">Services</Link>
 
-              </Link>
+              <Link href="/about">About</Link>
 
-              <Link
-                href="/services"
-                onClick={() => setOpen(false)}
-                className="hover:text-blue-400 transition"
-              >
-
-                Services
-
-              </Link>
-
-              <Link
-                href="/about"
-                onClick={() => setOpen(false)}
-                className="hover:text-blue-400 transition"
-              >
-
-                About Us
-
-              </Link>
-
-              <Link
-                href="/contact"
-                onClick={() => setOpen(false)}
-                className="hover:text-blue-400 transition"
-              >
-
-                Contact
-
-              </Link>
-
-              {/* MOBILE BUTTONS */}
-              <div className="flex flex-col gap-3 pt-4">
-
-                <a
-                  href="https://wa.me/917013734079"
-                  target="_blank"
-                  className="w-full text-center px-6 py-3 rounded-2xl border border-white/10 hover:bg-white/10 transition"
-                >
-
-                  WhatsApp
-
-                </a>
-
-                <Link
-                  href="/contact"
-                  onClick={() => setOpen(false)}
-                  className="w-full text-center px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 transition font-semibold"
-                >
-
-                  Book Consultation
-
-                </Link>
-
-              </div>
+              <Link href="/contact">Contact</Link>
 
             </div>
 
