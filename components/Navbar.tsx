@@ -6,135 +6,92 @@ export default function Navbar() {
 
   return (
 
-    <nav className="fixed top-0 left-0 w-full z-[999] backdrop-blur-xl bg-[#020817]/80 border-b border-white/10">
+    <header className="fixed top-0 left-0 w-full z-50 border-b border-white/10 bg-[#020817]/80 backdrop-blur-xl">
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-        <div className="flex items-center justify-between h-24">
+        <div className="h-20 flex items-center justify-between">
 
-          
- {/* LOGO */}
-<Link
-  href="/"
-  className="group cursor-pointer"
->
+          {/* LOGO */}
+          <Link
+            href="/"
+            className="flex items-center gap-4"
+          >
 
-  <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-2xl font-bold shadow-xl shadow-blue-500/20">
 
-    {/* PREMIUM ICON */}
-    <div className="relative">
+              T
 
-      {/* GLOW */}
-      <div className="absolute inset-0 bg-blue-500 blur-2xl opacity-40 rounded-2xl group-hover:opacity-70 transition duration-500" />
+            </div>
 
-      {/* ICON BOX */}
-      <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700 flex items-center justify-center border border-white/10 shadow-2xl shadow-blue-500/30 overflow-hidden">
+            <div>
 
-        {/* INNER DESIGN */}
-        <div className="absolute inset-0 opacity-20">
+              <h2 className="text-4xl font-bold text-white">
 
-          <div className="absolute top-2 left-2 w-6 h-6 border border-white/30 rounded-full" />
+                Tax<span className="text-blue-500">60</span>Sec
 
-          <div className="absolute bottom-2 right-2 w-4 h-4 bg-white/20 rounded-full" />
+              </h2>
 
-        </div>
+              <p className="text-xs tracking-[0.35em] text-gray-400 uppercase">
 
-        {/* TEXT */}
-        <span className="text-white font-extrabold text-2xl tracking-tight">
+                Tax • Finance • Growth
 
-          T
+              </p>
 
-        </span>
+            </div>
 
-      </div>
+          </Link>
 
-    </div>
+          {/* NAV LINKS */}
+          <nav className="hidden md:flex items-center gap-10 text-white font-medium">
 
-    {/* BRAND */}
-    <div>
+            <Link href="/" className="hover:text-blue-400 transition">
 
-      <h1 className="text-4xl font-extrabold tracking-tight leading-none">
-
-        <span className="text-white">
-          Tax
-        </span>
-
-        <span className="text-blue-500">
-          60
-        </span>
-
-        <span className="text-white">
-          Sec
-        </span>
-
-      </h1>
-
-      <p className="mt-1 text-[11px] tracking-[0.45em] uppercase text-gray-400 font-medium">
-
-        Tax • Finance • Growth
-
-      </p>
-
-    </div>
-
-  </div>
-
-</Link>
-
-          {/* MENU */}
-          <div className="hidden md:flex items-center gap-12 text-white font-medium">
-
-            <Link
-              href="/"
-              className="hover:text-blue-400 transition"
-            >
               Home
+
             </Link>
 
-            <Link
-              href="/services"
-              className="hover:text-blue-400 transition"
-            >
+            <Link href="/services" className="hover:text-blue-400 transition">
+
               Services
+
             </Link>
 
-            <Link
-              href="/about"
-              className="hover:text-blue-400 transition"
-            >
+            <Link href="/about" className="hover:text-blue-400 transition">
+
               About Us
+
             </Link>
 
-            <Link
-              href="/contact"
-              className="hover:text-blue-400 transition"
-            >
+            <Link href="/contact" className="hover:text-blue-400 transition">
+
               Contact
+
             </Link>
 
-          </div>
+          </nav>
 
           {/* BUTTONS */}
-          <div className="hidden md:flex items-center gap-5">
+          <div className="hidden md:flex items-center gap-4">
 
             <a
               href="https://wa.me/917013734079"
               target="_blank"
-              className="px-8 py-4 rounded-2xl border border-white/10 text-white hover:bg-white/10 transition"
+              className="px-6 py-3 rounded-2xl border border-white/10 text-white font-medium hover:bg-white/10 transition"
             >
 
               WhatsApp
 
             </a>
 
-            <a
-              href="#contact"
-              className="px-8 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold shadow-2xl shadow-blue-500/20"
+            <Link
+              href="/contact"
+              className="px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold shadow-xl shadow-blue-500/20"
             >
 
               Book Consultation
 
-            </a>
+            </Link>
 
           </div>
 
@@ -142,7 +99,8 @@ export default function Navbar() {
 
       </div>
 
-    </nav>
+    </header>
 
   );
+
 }

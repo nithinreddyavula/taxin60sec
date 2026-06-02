@@ -1,55 +1,81 @@
-export const metadata = {
-  title: "Services",
-};
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
 export default function ServicesPage() {
 
   const services = [
-    "GST Filing",
+    "GST Registration & Filing",
     "Income Tax Filing",
-    "Business Registration",
+    "TDS Compliance",
+    "Startup Registration",
+    "Virtual CFO",
     "ROC Compliance",
     "Audit & Assurance",
-    "Startup Consulting",
+    "Business Advisory",
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 py-24 px-6">
 
-      <div className="max-w-6xl mx-auto">
+    <main className="bg-[#020817] text-white min-h-screen">
 
-        <p className="uppercase tracking-[0.3em] text-sm text-gray-500 mb-4">
-          Our Services
-        </p>
+      <Navbar />
 
-        <h1 className="text-5xl font-bold mb-16">
-          Professional Tax & Compliance Services
-        </h1>
+      <section className="pt-40 pb-24">
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="max-w-7xl mx-auto px-6">
 
-          {services.map((service) => (
+          <p className="text-blue-400 uppercase tracking-[0.3em] font-semibold">
 
-            <div
-              key={service}
-              className="bg-white p-10 rounded-[30px] shadow hover:shadow-xl transition"
-            >
+            Services
 
-              <h2 className="text-2xl font-semibold">
-                {service}
-              </h2>
+          </p>
 
-              <p className="text-gray-600 mt-4 leading-relaxed">
-                Expert support and end-to-end assistance for {service.toLowerCase()}.
-              </p>
+          <h1 className="mt-6 text-6xl font-bold">
 
-            </div>
+            Complete Finance &
+            <br />
+            Tax Solutions
 
-          ))}
+          </h1>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-20">
+
+            {
+              services.map((service, i) => (
+
+                <div
+                  key={i}
+                  className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-blue-500/40 transition"
+                >
+
+                  <h3 className="text-2xl font-bold">
+
+                    {service}
+
+                  </h3>
+
+                  <p className="mt-4 text-gray-400 leading-8">
+
+                    Professional consulting and compliance support
+                    for modern businesses.
+
+                  </p>
+
+                </div>
+
+              ))
+            }
+
+          </div>
 
         </div>
 
-      </div>
+      </section>
 
-    </div>
+      <Footer />
+
+    </main>
+
   );
+
 }
