@@ -1,159 +1,109 @@
-"use client";
-
-import { motion } from "framer-motion";
 import {
-  BadgeCheck,
-  Clock3,
-  FileSpreadsheet,
-  Headphones,
-  ShieldCheck,
-  TrendingUp,
+  CheckCircle,
 } from "lucide-react";
 
-const features = [
-  {
-    icon: BadgeCheck,
-    title: "Expert Professionals",
-    desc: "Experienced tax and finance experts guiding your business growth.",
-  },
-  {
-    icon: Clock3,
-    title: "Fast Turnaround",
-    desc: "Quick response times and streamlined compliance processing.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Trusted & Secure",
-    desc: "Your financial data stays protected with complete confidentiality.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Growth Focused",
-    desc: "We help businesses scale smarter and maximize profits.",
-  },
-  {
-    icon: FileSpreadsheet,
-    title: "Modern Financial Systems",
-    desc: "Automation, dashboards, analytics & business reporting solutions.",
-  },
-  {
-    icon: Headphones,
-    title: "Dedicated Support",
-    desc: "Direct WhatsApp and consultation support whenever you need help.",
-  },
+const points = [
+  "Expert CA & Ex-Big4 Team",
+  "Technology-Driven Processes",
+  "Fast Response & Support",
+  "Transparent Pricing",
+  "Reliable Compliance",
 ];
 
 export default function WhyChooseUs() {
-
   return (
+    <section className="section-space overflow-hidden">
+      <div className="container-main">
 
-    <section className="relative py-32 bg-[#020817] overflow-hidden">
+        <div className="card-dark p-8 lg:p-12">
 
-      {/* GLOW */}
-      <div className="absolute inset-0 overflow-hidden">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-        <div className="absolute top-[-120px] left-[-120px] w-[350px] h-[350px] bg-blue-600/20 blur-[120px] rounded-full" />
+            <div>
 
-        <div className="absolute bottom-[-120px] right-[-120px] w-[350px] h-[350px] bg-indigo-600/20 blur-[120px] rounded-full" />
+              <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+                Why Choose Tax60Sec?
+              </h2>
 
-      </div>
+              <p className="text-secondary text-lg leading-8 mb-8">
+                We combine finance expertise with technology
+                to deliver faster, smarter and more reliable compliance.
+              </p>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+              <div className="space-y-5">
 
-        {/* TOP */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto"
-        >
+                {points.map((point, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-4"
+                  >
 
-          <p className="uppercase tracking-[0.3em] text-sm text-blue-400 font-semibold">
+                    <CheckCircle className="text-blue-400 w-6 h-6 flex-shrink-0" />
 
-            Why Choose Us
-
-          </p>
-
-          <h2 className="mt-5 text-5xl font-bold text-white leading-tight">
-
-            Built For
-            <span className="text-blue-500">
-              {" "}Modern Businesses
-            </span>
-
-          </h2>
-
-          <p className="mt-6 text-lg text-gray-300 leading-8">
-
-            We combine financial expertise,
-            automation, compliance strategy,
-            and personalized support to help
-            businesses grow confidently.
-
-          </p>
-
-        </motion.div>
-
-        {/* GRID */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-          {
-            features.map((item, index) => {
-
-              const Icon = item.icon;
-
-              return (
-
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.1,
-                  }}
-                  viewport={{ once: true }}
-                  className="group bg-white/5 border border-white/10 backdrop-blur-xl rounded-[30px] p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10 hover:border-blue-500/20 relative overflow-hidden"
-                >
-
-                  {/* GLOW */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition" />
-
-                  {/* ICON */}
-                  <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center">
-
-                    <Icon
-                      size={30}
-                      className="text-blue-400"
-                    />
+                    <p className="text-lg">
+                      {point}
+                    </p>
 
                   </div>
+                ))}
 
-                  <h3 className="mt-8 text-2xl font-bold text-white">
+              </div>
 
-                    {item.title}
+            </div>
 
+            <div className="card-dark p-8">
+
+              <div className="grid grid-cols-2 gap-6">
+
+                <div>
+                  <h3 className="text-4xl font-bold text-blue-500">
+                    500+
                   </h3>
 
-                  <p className="mt-4 text-gray-300 leading-7">
-
-                    {item.desc}
-
+                  <p className="text-secondary mt-2">
+                    Clients Served
                   </p>
+                </div>
 
-                </motion.div>
+                <div>
+                  <h3 className="text-4xl font-bold text-blue-500">
+                    10+
+                  </h3>
 
-              );
+                  <p className="text-secondary mt-2">
+                    Years Experience
+                  </p>
+                </div>
 
-            })
-          }
+                <div>
+                  <h3 className="text-4xl font-bold text-blue-500">
+                    24hr
+                  </h3>
+
+                  <p className="text-secondary mt-2">
+                    Response Time
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-4xl font-bold text-blue-500">
+                    95%
+                  </h3>
+
+                  <p className="text-secondary mt-2">
+                    Compliance Rate
+                  </p>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 
       </div>
-
     </section>
-
   );
 }

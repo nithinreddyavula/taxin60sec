@@ -1,171 +1,82 @@
-"use client";
-
-import Link from "next/link";
-
-import {
-  ArrowRight,
-  Briefcase,
-  Building2,
-  Calculator,
-  FileCheck,
-  Landmark,
-  ShieldCheck,
-} from "lucide-react";
-
-const services = [
-  {
-    title: "GST & Indirect Tax",
-    description:
-      "Registration, Returns, Refunds, LUT & Complete GST Compliance",
-    icon: Calculator,
-  },
-  {
-    title: "Direct Taxation",
-    description:
-      "ITR Filing, TDS Compliance, Tax Planning & Assessments",
-    icon: Landmark,
-  },
-  {
-    title: "Virtual CFO",
-    description:
-      "Financial Reporting, Cash Flow & Business Advisory",
-    icon: Briefcase,
-  },
-  {
-    title: "Startup Services",
-    description:
-      "Company Registration, ROC Compliance & Fundraising Support",
-    icon: Building2,
-  },
-  {
-    title: "Audit & Assurance",
-    description:
-      "Internal Audit, Statutory Audit & Due Diligence",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Finance Automation",
-    description:
-      "AI Dashboards, Workflow Automation & Smart Finance Systems",
-    icon: FileCheck,
-  },
-];
-
-export default function Services() {
-
+export default function About() {
   return (
+    <section className="section-space overflow-hidden">
+      <div className="container-main">
 
-    <section className="relative bg-[#020817] py-18 overflow-hidden">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-      {/* GLOW */}
-      <div className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] bg-blue-600/10 blur-[140px] rounded-full" />
+          <div>
+            <p className="text-blue-400 uppercase tracking-[0.3em] text-sm mb-4">
+              About Us
+            </p>
 
-      <div className="absolute bottom-[-150px] right-[-150px] w-[400px] h-[400px] bg-indigo-600/10 blur-[140px] rounded-full" />
+            <h2 className="text-4xl sm:text-5xl font-bold leading-tight mb-6">
+              Modern Finance Solutions For
+              Growing Businesses
+            </h2>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+            <p className="text-secondary text-lg leading-8 mb-6">
+              Tax60Sec helps startups, founders and businesses
+              simplify taxation, compliance and financial operations.
+            </p>
 
-        {/* TOP */}
-        <div className="max-w-3xl">
+            <p className="text-secondary text-lg leading-8">
+              From GST filing and income tax to virtual CFO services,
+              we deliver fast, reliable and technology-driven support.
+            </p>
+          </div>
 
-          <p className="text-blue-400 text-sm uppercase tracking-[0.35em] font-semibold">
+          <div className="card-dark p-8">
 
-            What We Do
+            <div className="grid grid-cols-2 gap-6">
 
-          </p>
+              <div>
+                <h3 className="text-4xl font-bold text-blue-500">
+                  500+
+                </h3>
 
-          <h2 className="mt-5 text-3xl lg:text-4xl sm:text-2xl lg:text-3xl lg:text-5xl font-bold text-white leading-tight">
+                <p className="text-secondary mt-2">
+                  Happy Clients
+                </p>
+              </div>
 
-            Modern Finance
-            <br />
-            Solutions For
-            <span className="text-blue-500">
-              {" "}Businesses
-            </span>
+              <div>
+                <h3 className="text-4xl font-bold text-blue-500">
+                  10+
+                </h3>
 
-          </h2>
+                <p className="text-secondary mt-2">
+                  Years Experience
+                </p>
+              </div>
 
-          <p className="mt-8 text-base text-gray-400 leading-9 max-w-2xl">
+              <div>
+                <h3 className="text-4xl font-bold text-blue-500">
+                  24hr
+                </h3>
 
-            We help startups, founders and modern businesses
-            simplify taxation, compliance and financial operations
-            with expert consulting and automation.
+                <p className="text-secondary mt-2">
+                  Response Time
+                </p>
+              </div>
 
-          </p>
+              <div>
+                <h3 className="text-4xl font-bold text-blue-500">
+                  95%
+                </h3>
 
-        </div>
+                <p className="text-secondary mt-2">
+                  Compliance Rate
+                </p>
+              </div>
 
-        {/* GRID */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            </div>
 
-          {
-            services.map((service, i) => {
-
-              const Icon = service.icon;
-
-              return (
-
-                <Link
-                  href="/services"
-                  key={i}
-                  className="group relative overflow-hidden rounded-[32px] bg-[#0b1220] border border-white/5 p-5 hover:border-blue-500/30 transition-all duration-300"
-                >
-
-                  {/* HOVER GLOW */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500">
-
-                    <div className="absolute top-[-80px] right-[-80px] w-[180px] h-[180px] bg-blue-500/10 blur-[80px] rounded-full" />
-
-                  </div>
-
-                  {/* ICON */}
-                  <div className="relative w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-
-                    <Icon
-                      size={30}
-                      className="text-blue-400"
-                    />
-
-                  </div>
-
-                  {/* CONTENT */}
-                  <div className="relative">
-
-                    <h3 className="mt-8 text-3xl font-bold text-white leading-tight">
-
-                      {service.title}
-
-                    </h3>
-
-                    <p className="mt-5 text-gray-400 leading-8 text-base">
-
-                      {service.description}
-
-                    </p>
-
-                    {/* CTA */}
-                    <div className="mt-8 flex items-center gap-3 text-blue-400 font-semibold group-hover:text-blue-300 transition">
-
-                      Learn More
-
-                      <ArrowRight size={18} />
-
-                    </div>
-
-                  </div>
-
-                </Link>
-
-              );
-
-            })
-          }
+          </div>
 
         </div>
 
       </div>
-
     </section>
-
   );
-
 }

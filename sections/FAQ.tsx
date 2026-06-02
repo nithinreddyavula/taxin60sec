@@ -1,138 +1,61 @@
-"use client";
-
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
-
 const faqs = [
   {
-    question: "What services does Tax60Sec provide?",
-    answer:
-      "We provide GST filing, income tax filing, startup registration, virtual CFO services, audit support, compliance management, and financial advisory solutions.",
+    q: "What services does Tax60Sec provide?",
+    a: "We provide GST filing, ITR filing, startup registration, audits, compliance and virtual CFO services.",
   },
   {
-    question: "How quickly can I get support?",
-    answer:
-      "Our team usually responds within a few hours through WhatsApp, email, or consultation booking.",
+    q: "Do you offer online consultation?",
+    a: "Yes. We provide online consultation services across India.",
   },
   {
-    question: "Do you work with startups and creators?",
-    answer:
-      "Yes. We work with startups, freelancers, YouTubers, e-commerce businesses, and growing companies.",
+    q: "How quickly do you respond?",
+    a: "Our average response time is within 24 hours.",
   },
   {
-    question: "Can I consult online?",
-    answer:
-      "Absolutely. We provide complete online consultation and support across India.",
+    q: "Do you help startups?",
+    a: "Yes. We help with company registration, ROC filing, taxation and compliance.",
   },
 ];
 
 export default function FAQ() {
-
-  const [active, setActive] = useState<number | null>(0);
-
   return (
+    <section className="section-space overflow-hidden">
+      <div className="container-main max-w-4xl">
 
-    <section className="relative py-32 bg-[#020817] overflow-hidden">
+        <div className="text-center mb-14">
 
-      {/* GLOW */}
-      <div className="absolute inset-0 overflow-hidden">
-
-        <div className="absolute top-[-120px] left-[-120px] w-[350px] h-[350px] bg-blue-600/20 blur-[120px] rounded-full" />
-
-      </div>
-
-      <div className="relative z-10 max-w-5xl mx-auto px-6">
-
-        {/* TOP */}
-        <div className="text-center">
-
-          <p className="uppercase tracking-[0.3em] text-sm text-blue-400 font-semibold">
-
-            FAQs
-
+          <p className="text-blue-400 uppercase tracking-[0.3em] text-sm mb-4">
+            FAQ
           </p>
 
-          <h2 className="mt-5 text-5xl font-bold text-white leading-tight">
-
-            Frequently Asked
-            <span className="text-blue-500">
-              {" "}Questions
-            </span>
-
+          <h2 className="text-4xl sm:text-5xl font-bold">
+            Frequently Asked Questions
           </h2>
 
-          <p className="mt-6 text-lg text-gray-300 leading-8 max-w-2xl mx-auto">
-
-            Everything you need to know
-            about our services and support.
-
-          </p>
-
         </div>
 
-        {/* FAQS */}
-        <div className="mt-20 space-y-6">
+        <div className="space-y-5">
 
-          {
-            faqs.map((faq, index) => (
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className="card-dark p-6"
+            >
 
-              <div
-                key={index}
-                className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[28px] overflow-hidden"
-              >
+              <h3 className="text-2xl font-semibold mb-4">
+                {faq.q}
+              </h3>
 
-                <button
-                  onClick={() =>
-                    setActive(
-                      active === index ? null : index
-                    )
-                  }
-                  className="w-full flex items-center justify-between px-8 py-7 text-left"
-                >
+              <p className="text-secondary leading-8">
+                {faq.a}
+              </p>
 
-                  <span className="text-xl font-semibold text-white">
-
-                    {faq.question}
-
-                  </span>
-
-                  <ChevronDown
-                    size={24}
-                    className={`text-blue-400 transition-transform duration-300 ${
-                      active === index
-                        ? "rotate-180"
-                        : ""
-                    }`}
-                  />
-
-                </button>
-
-                <div
-                  className={`transition-all duration-300 overflow-hidden ${
-                    active === index
-                      ? "max-h-[300px] pb-8 px-8"
-                      : "max-h-0"
-                  }`}
-                >
-
-                  <p className="text-gray-300 leading-8">
-
-                    {faq.answer}
-
-                  </p>
-
-                </div>
-
-              </div>
-
-            ))
-          }
+            </div>
+          ))}
 
         </div>
 
       </div>
-
     </section>
-
   );
 }
