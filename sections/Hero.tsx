@@ -6,7 +6,7 @@ export default function Hero() {
 
   return (
 
-    <section className="py-12 lg:py-20 overflow-hidden">
+    <section className="pt-8 pb-12 lg:pt-14 lg:pb-20 overflow-hidden">
 
       <div className="container-main">
 
@@ -41,11 +41,11 @@ export default function Hero() {
             </p>
 
             {/* BUTTONS */}
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
 
               <Link
                 href="/contact"
-                className="btn-primary w-full sm:w-auto"
+                className="btn-primary justify-center"
               >
 
                 Book Consultation →
@@ -55,7 +55,7 @@ export default function Hero() {
               <a
                 href="https://wa.me/917013734079"
                 target="_blank"
-                className="btn-secondary w-full sm:w-auto"
+                className="btn-secondary justify-center"
               >
 
                 Chat on WhatsApp
@@ -114,7 +114,7 @@ export default function Hero() {
           {/* RIGHT CARD */}
           <div className="card-dark overflow-hidden">
 
-            {/* TOP METRICS */}
+            {/* TOP */}
             <div className="grid grid-cols-2 border-b border-white/5">
 
               <div className="p-5 sm:p-6 border-r border-white/5">
@@ -163,7 +163,7 @@ export default function Hero() {
 
             </div>
 
-            {/* LOWER SECTION */}
+            {/* BOTTOM */}
             <div className="grid lg:grid-cols-2">
 
               {/* CHART */}

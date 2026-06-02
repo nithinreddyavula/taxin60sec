@@ -10,7 +10,7 @@ export default function Navbar() {
 
   return (
 
-    <header className="sticky top-0 z-50 border-b border-white/5 bg-[#020817]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/5 bg-[#020817]/90 backdrop-blur-xl">
 
       <div className="container-main">
 
@@ -30,13 +30,13 @@ export default function Navbar() {
 
             <div>
 
-              <h2 className="text-3xl font-bold tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
 
                 Tax<span className="text-blue-500">60</span>Sec
 
               </h2>
 
-              <p className="text-[11px] uppercase tracking-[0.35em] text-gray-400">
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-gray-400">
 
                 Tax | Finance | Growth
 
