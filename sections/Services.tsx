@@ -1,46 +1,50 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 import {
-  BadgeDollarSign,
+  Briefcase,
   Building2,
   Calculator,
-  FileSpreadsheet,
+  FileCheck,
+  Landmark,
   ShieldCheck,
-  TrendingUp,
 } from "lucide-react";
 
 const services = [
   {
-    icon: Calculator,
     title: "GST & Indirect Tax",
-    desc: "GST registration, returns, notices, refunds, LUT, and compliance.",
+    description:
+      "GST Registration, Returns, Notices, Refunds, LUT, Compliance",
+    icon: Calculator,
   },
   {
-    icon: BadgeDollarSign,
     title: "Direct Taxation",
-    desc: "ITR filing, tax planning, assessments, and TDS compliance.",
+    description:
+      "ITR Filing, Tax Planning, Assessment Support, TDS Compliance",
+    icon: Landmark,
   },
   {
-    icon: TrendingUp,
     title: "Virtual CFO",
-    desc: "Financial planning, budgeting, analytics, and advisory.",
+    description:
+      "MIS, Cash Flow, Budgeting, Financial Analysis, Advisory",
+    icon: Briefcase,
   },
   {
-    icon: Building2,
     title: "Startup Services",
-    desc: "Company registration, compliance, fundraising, and ESOP setup.",
+    description:
+      "Company Registration, Compliance, Fundraising Support",
+    icon: Building2,
   },
   {
-    icon: ShieldCheck,
     title: "Audit & Assurance",
-    desc: "Statutory audit, internal audit, due diligence, and compliance.",
+    description:
+      "Statutory Audit, Internal Audit, Due Diligence",
+    icon: ShieldCheck,
   },
   {
-    icon: FileSpreadsheet,
     title: "Finance Automation",
-    desc: "Accounting automation, dashboards, and reporting systems.",
+    description:
+      "Dashboard Setup, Process Automation, AI Solutions",
+    icon: FileCheck,
   },
 ];
 
@@ -48,110 +52,90 @@ export default function Services() {
 
   return (
 
-    <section className="relative py-32 bg-[#020817] overflow-hidden">
+    <section className="relative overflow-hidden bg-[#020817] py-24 text-white">
 
-      {/* GLOW */}
+      {/* BG GLOW */}
       <div className="absolute inset-0 overflow-hidden">
 
-        <div className="absolute top-[-120px] right-[-120px] w-[350px] h-[350px] bg-blue-600/20 blur-[120px] rounded-full" />
+        <div className="absolute top-[-120px] left-[-120px] w-[320px] h-[320px] bg-blue-600/10 blur-[120px] rounded-full" />
 
-        <div className="absolute bottom-[-120px] left-[-120px] w-[350px] h-[350px] bg-indigo-600/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-120px] right-[-120px] w-[320px] h-[320px] bg-indigo-600/10 blur-[120px] rounded-full" />
 
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
 
-        {/* TOP */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto"
-        >
+        {/* HEADING */}
+        <div className="text-center">
 
-          <p className="uppercase tracking-[0.3em] text-sm text-blue-400 font-semibold">
+          <p className="text-blue-400 uppercase tracking-[0.35em] text-sm font-semibold">
 
             What We Do
 
           </p>
 
-          <h2 className="mt-5 text-5xl font-bold text-white leading-tight">
+          <h2 className="mt-4 text-4xl sm:text-5xl font-bold">
 
-            Complete
-            <span className="text-blue-500">
-              {" "}Finance & Tax Solutions
-            </span>
+            Complete Finance & Tax Solutions
 
           </h2>
 
-          <p className="mt-6 text-lg text-gray-300 leading-8">
+          <p className="mt-6 text-lg text-gray-400 max-w-2xl mx-auto leading-8">
 
             Everything your business needs under one roof —
-            taxation, compliance, audits, financial reporting,
-            automation, and growth advisory.
+            from taxation and compliance to automation and growth strategy.
 
           </p>
 
-        </motion.div>
+        </div>
 
-        {/* GRID */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* CARDS */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
 
           {
-            services.map((service, index) => {
+            services.map((service, i) => {
 
               const Icon = service.icon;
 
               return (
 
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.1,
-                  }}
-                  viewport={{ once: true }}
-                  className="group bg-white/5 border border-white/10 backdrop-blur-xl rounded-[30px] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-blue-500/20 hover:shadow-2xl hover:shadow-blue-500/10 relative overflow-hidden"
+                <div
+                  key={i}
+                  className="group rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl hover:border-blue-500/40 hover:bg-white/[0.07] transition-all duration-300"
                 >
 
-                  {/* GLOW */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition" />
-
                   {/* ICON */}
-                  <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-2xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center">
 
                     <Icon
-                      size={30}
+                      size={28}
                       className="text-blue-400"
                     />
 
                   </div>
 
                   {/* TITLE */}
-                  <h3 className="mt-8 text-2xl font-bold text-white">
+                  <h3 className="mt-6 text-2xl font-bold">
 
                     {service.title}
 
                   </h3>
 
                   {/* DESC */}
-                  <p className="mt-4 text-gray-300 leading-7">
+                  <p className="mt-4 text-gray-400 leading-8">
 
-                    {service.desc}
+                    {service.description}
 
                   </p>
 
-                  {/* LINK */}
-                  <button className="mt-8 text-blue-400 font-semibold hover:text-blue-300 transition">
+                  {/* BUTTON */}
+                  <button className="mt-6 text-blue-400 font-semibold hover:text-blue-300 transition">
 
                     Know More →
 
                   </button>
 
-                </motion.div>
+                </div>
 
               );
 
@@ -165,4 +149,5 @@ export default function Services() {
     </section>
 
   );
+
 }
