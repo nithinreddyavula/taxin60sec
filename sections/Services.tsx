@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import {
   Briefcase,
   Building2,
@@ -54,7 +56,6 @@ export default function Services() {
 
     <section className="relative overflow-hidden bg-[#020817] py-24 text-white">
 
-      {/* BG GLOW */}
       <div className="absolute inset-0 overflow-hidden">
 
         <div className="absolute top-[-120px] left-[-120px] w-[320px] h-[320px] bg-blue-600/10 blur-[120px] rounded-full" />
@@ -65,7 +66,6 @@ export default function Services() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
 
-        {/* HEADING */}
         <div className="text-center">
 
           <p className="text-blue-400 uppercase tracking-[0.35em] text-sm font-semibold">
@@ -89,7 +89,6 @@ export default function Services() {
 
         </div>
 
-        {/* CARDS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
 
           {
@@ -99,12 +98,12 @@ export default function Services() {
 
               return (
 
-                <div
+                <Link
+                  href="/services"
                   key={i}
-                  className="group rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl hover:border-blue-500/40 hover:bg-white/[0.07] transition-all duration-300"
+                  className="group rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl hover:border-blue-500/40 hover:bg-white/[0.07] transition-all duration-300 block"
                 >
 
-                  {/* ICON */}
                   <div className="w-14 h-14 rounded-2xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center">
 
                     <Icon
@@ -114,28 +113,25 @@ export default function Services() {
 
                   </div>
 
-                  {/* TITLE */}
                   <h3 className="mt-6 text-2xl font-bold">
 
                     {service.title}
 
                   </h3>
 
-                  {/* DESC */}
                   <p className="mt-4 text-gray-400 leading-8">
 
                     {service.description}
 
                   </p>
 
-                  {/* BUTTON */}
-                  <button className="mt-6 text-blue-400 font-semibold hover:text-blue-300 transition">
+                  <span className="mt-6 inline-block text-blue-400 font-semibold hover:text-blue-300 transition">
 
                     Know More →
 
-                  </button>
+                  </span>
 
-                </div>
+                </Link>
 
               );
 

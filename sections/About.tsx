@@ -1,244 +1,171 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Link from "next/link";
+
 import {
-  CheckCircle2,
+  ArrowRight,
+  Briefcase,
+  Building2,
+  Calculator,
+  FileCheck,
+  Landmark,
   ShieldCheck,
-  TrendingUp,
-  Users2,
 } from "lucide-react";
 
-export default function About() {
+const services = [
+  {
+    title: "GST & Indirect Tax",
+    description:
+      "Registration, Returns, Refunds, LUT & Complete GST Compliance",
+    icon: Calculator,
+  },
+  {
+    title: "Direct Taxation",
+    description:
+      "ITR Filing, TDS Compliance, Tax Planning & Assessments",
+    icon: Landmark,
+  },
+  {
+    title: "Virtual CFO",
+    description:
+      "Financial Reporting, Cash Flow & Business Advisory",
+    icon: Briefcase,
+  },
+  {
+    title: "Startup Services",
+    description:
+      "Company Registration, ROC Compliance & Fundraising Support",
+    icon: Building2,
+  },
+  {
+    title: "Audit & Assurance",
+    description:
+      "Internal Audit, Statutory Audit & Due Diligence",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Finance Automation",
+    description:
+      "AI Dashboards, Workflow Automation & Smart Finance Systems",
+    icon: FileCheck,
+  },
+];
+
+export default function Services() {
 
   return (
 
-    <section className="relative py-32 bg-[#020817] overflow-hidden text-white">
+    <section className="relative bg-[#020817] py-28 overflow-hidden">
 
       {/* GLOW */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] bg-blue-600/10 blur-[140px] rounded-full" />
 
-        <div className="absolute top-[-200px] right-[-100px] w-[450px] h-[450px] bg-blue-600/20 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-150px] right-[-150px] w-[400px] h-[400px] bg-indigo-600/10 blur-[140px] rounded-full" />
 
-        <div className="absolute bottom-[-200px] left-[-100px] w-[450px] h-[450px] bg-indigo-600/20 blur-[120px] rounded-full" />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
 
-      </div>
+        {/* TOP */}
+        <div className="max-w-3xl">
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <p className="text-blue-400 text-sm uppercase tracking-[0.35em] font-semibold">
 
-        {/* LEFT CONTENT */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-
-          <p className="uppercase tracking-[0.3em] text-sm text-blue-400 font-semibold">
-
-            About Us
+            What We Do
 
           </p>
 
-          <h2 className="mt-6 text-5xl font-bold leading-tight">
+          <h2 className="mt-5 text-5xl sm:text-6xl font-bold text-white leading-tight">
 
-            We Simplify
-            <span className="text-blue-500">
-              {" "}Finance & Compliance
-            </span>
-
+            Modern Finance
             <br />
-
-            For Modern Businesses
+            Solutions For
+            <span className="text-blue-500">
+              {" "}Businesses
+            </span>
 
           </h2>
 
-          <p className="mt-8 text-lg text-gray-300 leading-8">
+          <p className="mt-8 text-lg text-gray-400 leading-9 max-w-2xl">
 
-            Tax60Sec helps startups, businesses, creators,
-            and professionals manage taxation, compliance,
-            audits, and financial growth with confidence.
-
-          </p>
-
-          <p className="mt-6 text-lg text-gray-400 leading-8">
-
-            Our mission is simple —
-            make finance stress-free,
-            fast, and transparent.
+            We help startups, founders and modern businesses
+            simplify taxation, compliance and financial operations
+            with expert consulting and automation.
 
           </p>
 
-          {/* FEATURES */}
-          <div className="mt-10 space-y-5">
+        </div>
 
-            <div className="flex items-start gap-4">
+        {/* GRID */}
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
-              <CheckCircle2
-                className="text-blue-400 mt-1"
-                size={24}
-              />
+          {
+            services.map((service, i) => {
 
-              <div>
+              const Icon = service.icon;
 
-                <h4 className="font-semibold text-lg">
-                  End-to-End Compliance
-                </h4>
+              return (
 
-                <p className="text-gray-400 mt-1">
-                  GST, Income Tax, ROC, Payroll & more.
-                </p>
+                <Link
+                  href="/services"
+                  key={i}
+                  className="group relative overflow-hidden rounded-[32px] bg-[#0b1220] border border-white/5 p-8 hover:border-blue-500/30 transition-all duration-300"
+                >
 
-              </div>
+                  {/* HOVER GLOW */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500">
 
-            </div>
+                    <div className="absolute top-[-80px] right-[-80px] w-[180px] h-[180px] bg-blue-500/10 blur-[80px] rounded-full" />
 
-            <div className="flex items-start gap-4">
+                  </div>
 
-              <ShieldCheck
-                className="text-blue-400 mt-1"
-                size={24}
-              />
+                  {/* ICON */}
+                  <div className="relative w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
 
-              <div>
+                    <Icon
+                      size={30}
+                      className="text-blue-400"
+                    />
 
-                <h4 className="font-semibold text-lg">
-                  Trusted Financial Guidance
-                </h4>
+                  </div>
 
-                <p className="text-gray-400 mt-1">
-                  Expert-backed decisions for sustainable growth.
-                </p>
+                  {/* CONTENT */}
+                  <div className="relative">
 
-              </div>
+                    <h3 className="mt-8 text-3xl font-bold text-white leading-tight">
 
-            </div>
+                      {service.title}
 
-            <div className="flex items-start gap-4">
+                    </h3>
 
-              <TrendingUp
-                className="text-blue-400 mt-1"
-                size={24}
-              />
+                    <p className="mt-5 text-gray-400 leading-8 text-lg">
 
-              <div>
+                      {service.description}
 
-                <h4 className="font-semibold text-lg">
-                  Growth-Focused Strategy
-                </h4>
+                    </p>
 
-                <p className="text-gray-400 mt-1">
-                  We help businesses optimize profits and operations.
-                </p>
+                    {/* CTA */}
+                    <div className="mt-8 flex items-center gap-3 text-blue-400 font-semibold group-hover:text-blue-300 transition">
 
-              </div>
+                      Learn More
 
-            </div>
+                      <ArrowRight size={18} />
 
-          </div>
+                    </div>
 
-        </motion.div>
+                  </div>
 
-        {/* RIGHT SIDE */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true }}
-          className="relative"
-        >
+                </Link>
 
-          <div className="relative bg-white/5 border border-white/10 backdrop-blur-xl rounded-[36px] p-8 shadow-2xl shadow-blue-500/10">
+              );
 
-            {/* TOP CARD */}
-            <div className="bg-[#0f172a] rounded-3xl p-8 border border-white/10">
+            })
+          }
 
-              <div className="flex items-center justify-between">
-
-                <div>
-
-                  <p className="text-gray-400">
-                    Client Satisfaction
-                  </p>
-
-                  <h3 className="mt-2 text-5xl font-bold">
-                    98%
-                  </h3>
-
-                </div>
-
-                <div className="w-20 h-20 rounded-3xl bg-blue-500/10 flex items-center justify-center">
-
-                  <Users2
-                    size={36}
-                    className="text-blue-400"
-                  />
-
-                </div>
-
-              </div>
-
-            </div>
-
-            {/* STATS */}
-            <div className="mt-6 grid grid-cols-2 gap-5">
-
-              <div className="bg-[#0f172a] border border-white/10 rounded-3xl p-6">
-
-                <h3 className="text-4xl font-bold text-blue-400">
-                  500+
-                </h3>
-
-                <p className="mt-3 text-gray-400">
-                  Happy Clients
-                </p>
-
-              </div>
-
-              <div className="bg-[#0f172a] border border-white/10 rounded-3xl p-6">
-
-                <h3 className="text-4xl font-bold text-blue-400">
-                  10+
-                </h3>
-
-                <p className="mt-3 text-gray-400">
-                  Years Experience
-                </p>
-
-              </div>
-
-              <div className="bg-[#0f172a] border border-white/10 rounded-3xl p-6">
-
-                <h3 className="text-4xl font-bold text-blue-400">
-                  24/7
-                </h3>
-
-                <p className="mt-3 text-gray-400">
-                  Support
-                </p>
-
-              </div>
-
-              <div className="bg-[#0f172a] border border-white/10 rounded-3xl p-6">
-
-                <h3 className="text-4xl font-bold text-blue-400">
-                  100%
-                </h3>
-
-                <p className="mt-3 text-gray-400">
-                  Transparency
-                </p>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </motion.div>
+        </div>
 
       </div>
 
     </section>
 
   );
+
 }
