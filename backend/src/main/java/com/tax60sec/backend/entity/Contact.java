@@ -3,6 +3,7 @@ package com.tax60sec.backend.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "contacts")
 public class Contact {
 
     @Id
@@ -15,13 +16,18 @@ public class Contact {
 
     private String phone;
 
-    @Column(length = 5000)
+    @Column(columnDefinition = "TEXT")
     private String message;
 
-    public Contact() {}
+    public Contact() {
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
