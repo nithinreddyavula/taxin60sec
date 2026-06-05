@@ -32,57 +32,70 @@ export default function Contact() {
 
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
+ const handleSubmit = async (
+  e: React.FormEvent<HTMLFormElement>
+) => {
+  e.preventDefault();
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const response = await fetch(
-        "https://taxin60sec-backend-production.up.railway.app/api/contact",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form),
-        }
-      );
+  try {
+    console.log("FORM DATA:", form);
 
-      const data = await response.json();
-
-      await emailjs.send(
-        "service_ac55cc6",
-        "template_9m7thq5",
-        {
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          message: form.message,
+    // Save to Render Backend
+    const response = await fetch(
+      "https://taxin60sec-backend.onrender.com/api/contact",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        "N1xUsD8z_7K1Ia69l"
-      );
+        body: JSON.stringify(form),
+      }
+    );
 
-      alert("Message Sent Successfully!");
-
-      setForm({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
-
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-      alert("Failed to send message");
-    } finally {
-      setLoading(false);
+    if (!response.ok) {
+      throw new Error("Backend request failed");
     }
-  };
 
+    const data = await response.json();
+
+    console.log("DATABASE SAVED:", data);
+
+    // Send Email
+    await emailjs.send(
+      "service_ac55cc6",
+      "template_0oql9a6",
+      {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        message: form.message,
+      },
+      "N1xUsD8z_7K1Ia69l"
+    );
+
+    alert("Message Sent Successfully!");
+
+    setForm({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    });
+
+  } catch (error: any) {
+    console.error("FULL ERROR:", error);
+
+    alert(
+      error?.text ||
+      error?.message ||
+      "Failed to send message"
+    );
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <section id="contact" className="section-space">
       <div className="container-main">
