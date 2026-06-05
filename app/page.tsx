@@ -1,29 +1,40 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
-import Hero from "../sections/Hero";
-import Services from "../sections/Services";
-import About from "../sections/About";
-import Contact from "../sections/Contact";
+import Hero from "@/sections/Hero";
+import Services from "@/sections/Services";
+import WhyChooseUs from "@/sections/WhyChooseUs";
 import Testimonials from "@/sections/Testimonials";
 import FAQ from "@/sections/FAQ";
-import WhyChooseUs from "@/sections/WhyChooseUs";
-import Stats from "@/sections/Stats";
-import MapSection from "@/sections/MapSection";
-export default function Home() {
+import Contact from "@/sections/Contact";
+
+
+export default function HomePage() {
   return (
-    <main>
+    <>
       <Navbar />
-      <Hero />
-      <Services />
-      <About />
-      <Contact />
-      <Stats />
-      <WhyChooseUs />
-      <Testimonials />
-      <FAQ />
-      <MapSection />
+
+      <main>
+
+        <Hero />
+
+        <Services />
+
+        <WhyChooseUs />
+
+        <Testimonials />
+
+        <FAQ />
+
+        <Contact />
+
+
+      </main>
+
       <Footer />
-    </main>
+
+      <WhatsAppButton />
+    </>
   );
 }
