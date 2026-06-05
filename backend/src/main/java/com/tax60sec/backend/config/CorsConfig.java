@@ -1,4 +1,4 @@
-package com.taxin60sec.backend.config;
+package com.tax60sec.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,11 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://taxin60sec.vercel.app")
+                        .allowedOrigins(
+                                "https://tax60sec.com",
+                                "https://www.tax60sec.com",
+                                "http://localhost:3000"
+                        )
                         .allowedMethods("*")
                         .allowedHeaders("*");
             }

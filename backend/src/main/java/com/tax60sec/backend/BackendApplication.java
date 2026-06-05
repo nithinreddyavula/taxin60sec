@@ -1,4 +1,4 @@
-package com.taxin60sec.backend;
+package com.tax60sec.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
