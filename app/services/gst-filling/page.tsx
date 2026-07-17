@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -47,9 +46,9 @@ export default function GSTFilingPage() {
             </ul>
           </div>
 
-          <Link href="/contact" className="btn-primary mt-6">
-            Book Consultation
-          </Link>
+          <a href={`https://wa.me/917013734079?text=${encodeURIComponent("Hello Tax60, I would like help with GST Filing. Service code: GST_FILING")}`} target="_blank" rel="noreferrer" className="btn-primary mt-6">
+            Continue on WhatsApp
+          </a>
         </div>
       </section>
 

@@ -70,6 +70,10 @@ export default function ServicesPage() {
                     {service.desc}
                   </p>
 
+                  <a className="btn-primary mt-5 w-full" target="_blank" rel="noreferrer" href={`https://wa.me/917013734079?text=${encodeURIComponent(`Hello Tax60, I would like help with ${service.title}. Service code: ${service.code}`)}>`}>
+                    Continue on WhatsApp
+                  </a>
+
                 </div>
               );
 

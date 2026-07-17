@@ -58,8 +58,8 @@ export default function Navbar() {
             >
               Chat on WhatsApp
             </a>
-            <Link href="/contact" className="btn-primary">
-              Book Consultation
+            <Link href="/intake" className="btn-primary">
+              Start your case
             </Link>
           </div>
 
@@ -98,11 +98,11 @@ export default function Navbar() {
                   WhatsApp
                 </a>
                 <Link
-                  href="/contact"
+                  href="/intake"
                   className="btn-primary"
                   onClick={() => setIsOpen(false)}
                 >
-                  Book Consultation
+                  Start your case
                 </Link>
               </div>
             </nav>

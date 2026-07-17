@@ -1,0 +1,16 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { api } from "@/lib/api";
+
+type TaxCase = { id: number; caseNumber: string; title: string; status: string; workflowStage: string; intakeSummary?: string };
+type Page<T> = { content: T[] };
+type Intake = { customerName: string; customerEmail: string; customerPhone: string; serviceName: string; taxCase: TaxCase; documents: { originalFilename: string; verificationStatus: string }[]; missingDocuments: { name: string }[]; timeline: { title: string; description?: string }[] };
+
+export default function CaCasesPage() {
+  const [cases, setCases] = useState<TaxCase[]>([]); const [selected, setSelected] = useState<Intake | null>(null); const [message, setMessage] = useState("");
+  const token = typeof window === "undefined" ? "" : localStorage.getItem("tax60-access-token") ?? "";
+  useEffect(() => { api<Page<TaxCase>>("/api/v1/ca/cases", {}, token).then((result) => setCases(result.content)).catch((error) => setMessage(error.message)); }, [token]);
+  async function openCase(id: number) { try { setSelected(await api<Intake>(`/api/v1/intake/cases/${id}`, {}, token)); } catch (error) { setMessage(error instanceof Error ? error.message : "Unable to load case"); } }
+  return <main className="min-h-screen bg-[#020817] p-6 text-white"><div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.8fr_1.2fr]"><section><p className="eyebrow">CA work queue</p><h1 className="mt-2 text-3xl font-bold">Assigned cases</h1><div className="mt-6 space-y-3">{cases.map((item) => <button key={item.id} onClick={() => openCase(item.id)} className="card-dark w-full p-4 text-left"><strong>{item.caseNumber}</strong><p>{item.title}</p><small className="text-secondary">{item.workflowStage} · {item.status}</small></button>)}</div></section><section className="card-dark p-6">{selected ? <><p className="eyebrow">Case review</p><h2 className="mt-2 text-2xl font-bold">{selected.taxCase.title}</h2><p className="mt-2 text-secondary">{selected.serviceName} · {selected.taxCase.workflowStage}</p><div className="mt-6 grid gap-5 md:grid-cols-2"><div><h3 className="font-bold">Customer</h3><p>{selected.customerName}</p><p>{selected.customerEmail}</p><p>{selected.customerPhone}</p></div><div><h3 className="font-bold">AI intake summary</h3><p className="text-secondary">{selected.taxCase.intakeSummary ?? "Intake is not complete."}</p></div><div><h3 className="font-bold">Uploaded documents</h3>{selected.documents.map((document) => <p key={document.originalFilename}>{document.originalFilename} — {document.verificationStatus}</p>)}</div><div><h3 className="font-bold">Missing documents</h3>{selected.missingDocuments.map((document) => <p key={document.name}>{document.name}</p>)}</div></div><div className="mt-6"><h3 className="font-bold">Timeline</h3>{selected.timeline.map((event, index) => <p key={index} className="mt-2 text-sm text-secondary">{event.title}{event.description ? ` — ${event.description}` : ""}</p>)}</div></> : <p className="text-secondary">Select an assigned case to review the customer, intake summary, documents, missing requirements, and timeline.</p>}{message && <p className="mt-4 text-red-300">{message}</p>}</section></div></main>;
+}
