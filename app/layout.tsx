@@ -4,6 +4,8 @@ import { Toaster } from "sonner";
 import "./globals.css";
 
 import WhatsAppButton from "@/components/WhatsAppButton";
+import QueryProvider from "@/components/QueryProvider";
+import AppProviders from "@/components/AppProviders";
 
 export const metadata: Metadata = {
   title: {
@@ -36,7 +38,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
 
-        {children}
+        <QueryProvider><AppProviders>{children}</AppProviders></QueryProvider>
 
         <WhatsAppButton />
 

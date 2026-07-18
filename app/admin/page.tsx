@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { ContactLead, ContactService } from "@/services/contact-service";
+import AppShell from "@/components/AppShell";
+import { request } from "@/services/client";
 
 import {
   LineChart,
@@ -12,20 +14,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-type ContactLead = {
-  id: string | number;
-  name: string;
-  email: string;
-  message: string;
-  createdAt?: string;
-};
-
 export default function AdminPage() {
-
-  const router = useRouter();
 
   const [contacts, setContacts] = useState<ContactLead[]>([]);
   const [search, setSearch] = useState("");
+  const [metrics, setMetrics] = useState<Record<string, number>>({});
 
   const chartData = contacts.map((contact) => ({
     date: contact.createdAt
@@ -35,25 +28,12 @@ export default function AdminPage() {
   }));
 
   useEffect(() => {
-
-    const isAuthenticated =
-      localStorage.getItem("admin-auth");
-
-    if (!isAuthenticated) {
-      router.push("/login");
-      return;
-    }
-
-    fetch(
-      "https://taxin60sec-backend-production.up.railway.app/api/contact"
-    )
-      .then((res) => res.json())
-      .then((data: ContactLead[]) => setContacts(data));
-
-  }, [router]);
+    ContactService.list().then(setContacts).catch(() => setContacts([]));
+    request<Record<string, number>>("/api/v1/admin/cases/dashboard").then(setMetrics).catch(() => setMetrics({}));
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
+    <AppShell roles={["ROLE_ADMIN"]}><div className="">
 
       <div className="max-w-7xl mx-auto">
 
@@ -72,15 +52,7 @@ export default function AdminPage() {
 
           </div>
 
-          <button
-            onClick={() => {
-              localStorage.removeItem("admin-auth");
-              router.push("/login");
-            }}
-            className="bg-black text-white px-6 py-3 rounded-full"
-          >
-            Logout
-          </button>
+          <p className="text-sm text-secondary">System overview and inquiry activity</p>
 
         </div>
 
@@ -89,12 +61,10 @@ export default function AdminPage() {
 
           <div className="bg-white p-8 rounded-[30px] shadow">
 
-            <p className="text-gray-500">
-              Total Leads
-            </p>
+            <p className="text-gray-500">Open cases</p>
 
             <h2 className="text-4xl font-bold mt-4">
-              {contacts.length}
+              {metrics.open ?? metrics.active ?? 0}
             </h2>
 
           </div>
@@ -250,12 +220,7 @@ export default function AdminPage() {
                       <button
                         onClick={async () => {
 
-                          await fetch(
-                            `https://taxin60sec-backend.onrender.com/api/contact/${contact.id}`,
-                            {
-                              method: "DELETE",
-                            }
-                          );
+                          await ContactService.remove(contact.id);
 
                           setContacts(
                             contacts.filter(
@@ -282,6 +247,6 @@ export default function AdminPage() {
 
       </div>
 
-    </div>
+    </div></AppShell>
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { Phone, Mail, MapPin } from "lucide-react";
+import { ContactService } from "@/services/contact-service";
 
 const contactItems = [
   {
@@ -40,27 +41,7 @@ export default function Contact() {
   setLoading(true);
 
   try {
-    console.log("FORM DATA:", form);
-
-    // Save to Render Backend
-    const response = await fetch(
-      "https://taxin60sec-backend.onrender.com/api/contact",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Backend request failed");
-    }
-
-    const data = await response.json();
-
-    console.log("DATABASE SAVED:", data);
+    await ContactService.create(form);
 
     // Send Email
     await emailjs.send(
@@ -84,12 +65,10 @@ export default function Contact() {
       message: "",
     });
 
-  } catch (error: any) {
-    console.error("FULL ERROR:", error);
-
+  } catch (error: unknown) {
     alert(
-      error?.text ||
-      error?.message ||
+      (error as { text?: string; message?: string })?.text ||
+      (error as { text?: string; message?: string })?.message ||
       "Failed to send message"
     );
   } finally {

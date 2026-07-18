@@ -1,0 +1,2 @@
+"use client";
+export default function GlobalError({ reset }: { error: Error & { digest?: string }; reset: () => void }) { return <html lang="en"><body className="grid min-h-screen place-items-center bg-[#020817] p-6 text-white"><div className="card-dark max-w-md p-7"><p className="eyebrow">Something went wrong</p><h1 className="mt-2 text-2xl font-bold">We couldn’t load this workspace.</h1><button className="btn-primary mt-5" onClick={reset}>Try again</button></div></body></html>; }

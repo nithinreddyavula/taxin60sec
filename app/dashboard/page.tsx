@@ -1,0 +1,17 @@
+"use client";
+
+import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowRight, CalendarClock, CircleCheck, FileWarning, Plus } from "lucide-react";
+import AppShell from "@/components/AppShell";
+import { CaseService } from "@/services/case-service";
+
+function Status({ value }: { value: string }) { return <span className="rounded-full bg-blue-500/10 px-2.5 py-1 text-xs font-bold text-blue-300">{value.replaceAll("_", " ")}</span>; }
+export default function DashboardPage() {
+  const { data, isLoading, error } = useQuery({ queryKey: ["cases"], queryFn: () => CaseService.list() });
+  const cases = data?.content ?? [];
+  return <AppShell roles={["ROLE_CLIENT"]}><div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p className="eyebrow">Client portal</p><h1 className="mt-2 text-3xl font-bold tracking-tight">Your tax work, in one place.</h1><p className="mt-2 text-secondary">Follow progress, upload requested documents, and stay ready for the next step.</p></div><Link href="/intake" className="btn-primary"><Plus size={18} /> Start a service</Link></div>
+    <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{[["Active cases", String(cases.length), CalendarClock], ["Documents needed", String(cases.reduce((sum, item) => sum + (item.status === "DOCUMENTS_PENDING" ? 1 : 0), 0)), FileWarning], ["Completed", String(cases.filter((item) => item.status === "COMPLETED").length), CircleCheck], ["Next action", cases[0]?.workflowStage?.replaceAll("_", " ") ?? "Start a case", ArrowRight]].map(([label, value, Icon]) => { const CardIcon = Icon as typeof CalendarClock; return <div key={label as string} className="card-dark p-5"><CardIcon className="text-blue-400" size={21} /><p className="mt-5 text-sm text-secondary">{label as string}</p><p className="mt-1 text-xl font-bold capitalize">{value as string}</p></div>; })}</section>
+    <section className="card-dark mt-6 overflow-hidden"><div className="flex items-center justify-between border-b border-white/10 p-5"><div><h2 className="font-bold">Recent cases</h2><p className="mt-1 text-sm text-secondary">Your latest requests and workflow status.</p></div><Link href="/intake" className="text-sm font-semibold text-blue-300">New case</Link></div>{isLoading ? <div className="space-y-3 p-5">{[1,2,3].map((id) => <div key={id} className="h-16 animate-pulse rounded-xl bg-white/5" />)}</div> : error ? <p className="p-5 text-sm text-red-300">{error.message}</p> : cases.length ? <div>{cases.map((item) => <Link key={item.id} href={`/cases/${item.id}`} className="flex flex-col gap-3 border-b border-white/10 p-5 transition hover:bg-white/[.025] sm:flex-row sm:items-center sm:justify-between"><div><p className="font-semibold">{item.title}</p><p className="mt-1 text-sm text-secondary">{item.caseNumber} · {item.workflowStage.replaceAll("_", " ")}</p></div><Status value={item.status} /></Link>)}</div> : <div className="p-8 text-center"><p className="font-semibold">No cases yet</p><p className="mt-2 text-sm text-secondary">Start a service and we’ll guide you through a secure intake.</p><Link href="/intake" className="btn-primary mt-5">Start your first case</Link></div>}</section>
+  </AppShell>;
+}
