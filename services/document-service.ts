@@ -1,12 +1,104 @@
-import { request } from "./client";
+import { client } from "./client";
 
-export type CaseDocument = { id: number; originalFilename: string; verificationStatus: string; uploadedAt?: string; url?: string };
+export type RequiredDocument = {
+  id: number;
+  name: string;
+  mandatory: boolean;
+  uploaded: boolean;
+};
+
+export type DocumentValidationResult = {
+  valid: boolean;
+  message: string;
+  missingDocuments: string[];
+};
 
 export const DocumentService = {
-  list: (caseId: number) => request<CaseDocument[]>(`/api/v1/cases/${caseId}/documents`),
-  create: (caseId: number, file: File, documentType = "OTHER") => request<CaseDocument>(`/api/v1/cases/${caseId}/documents`, "POST", {
-    originalFilename: file.name, documentType, mimeType: file.type || "application/octet-stream", fileSize: file.size,
-  }),
-  approve: (caseId: number, documentId: number) => request<CaseDocument>(`/api/v1/cases/${caseId}/documents/${documentId}/approve`, "POST"),
-  reject: (caseId: number, documentId: number, reason: string) => request<CaseDocument>(`/api/v1/cases/${caseId}/documents/${documentId}/reject`, "POST", { reason }),
+
+  async requiredDocuments(caseId: number) {
+
+    const response = await client.get(
+
+      `/api/v1/public/intake/cases/${caseId}/documents`
+
+    );
+
+    return response.data.data;
+
+  },
+
+  async upload(
+
+    caseId: number,
+
+    requiredDocumentId: number,
+
+    file: File
+
+  ) {
+
+    const form = new FormData();
+
+    form.append(
+
+      "requiredDocumentId",
+
+      requiredDocumentId.toString()
+
+    );
+
+    form.append(
+
+      "file",
+
+      file
+
+    );
+
+    const response = await client.post(
+
+      `/api/v1/public/intake/cases/${caseId}/documents`,
+
+      form,
+
+      {
+
+        headers: {
+
+          "Content-Type": "multipart/form-data",
+
+        },
+
+      }
+
+    );
+
+    return response.data.data;
+
+  },
+
+  async validate(caseId: number) {
+
+    const response = await client.get(
+
+      `/api/v1/public/intake/cases/${caseId}/documents/validate`
+
+    );
+
+    return response.data.data as DocumentValidationResult;
+
+  },
+
+  async submit(caseId: number) {
+
+    const response = await client.post(
+
+      `/api/v1/public/intake/cases/${caseId}/submit`
+
+    );
+
+    return response.data.data;
+
+  },
+
 };

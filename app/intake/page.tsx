@@ -1,181 +1,463 @@
 "use client";
-import { Suspense } from "react";
-import { FormEvent, useEffect, useState } from "react";
+
+import { Suspense, FormEvent, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { IntakeCase, OnboardingService, ServiceOffering } from "@/services/intake-service";
 
-function IntakeContent() { 
+import {
+  OnboardingService,
+  ServiceOffering,
+} from "@/services/intake-service";
+
+function IntakeContent() {
+
   const router = useRouter();
+
   const searchParams = useSearchParams();
+
+  const [loading, setLoading] = useState(true);
+
+  const [saving, setSaving] = useState(false);
+
+  const [services, setServices] = useState<ServiceOffering[]>([]);
+
   const [serviceId, setServiceId] = useState("");
-   const [services, setServices] = useState<ServiceOffering[]>([]); 
-   const [intake, setIntake] = useState<IntakeCase | null>(null);
-    const [answers, setAnswers] = useState<Record<string, string>>({}); 
-    const [loading, setLoading] = useState(true); const [saving, setSaving] = useState(false);
-useEffect(() => {
-  OnboardingService.services()
-    .then((page) => {
-      const loadedServices = page.items;
-      setServices(loadedServices);
 
-      const serviceIdParam = searchParams.get("id");
+  const [caseId, setCaseId] = useState<number | null>(null);
 
-if (serviceIdParam) {
+  const [questions, setQuestions] = useState<string[]>([]);
+
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+
+  const [fullName, setFullName] = useState("");
+
+  const [phone, setPhone] = useState("");
+
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+
+    async function load() {
+
+      try {
+
+        const loadedServices = await OnboardingService.services();
+
+setServices(loadedServices);
+
+const id = searchParams.get("id");
+
+if (id) {
+
   const selected = loadedServices.find(
-    (service) => String(service.id) === serviceIdParam
+    (service) => String(service.id) === id
   );
 
   if (selected) {
     setServiceId(String(selected.id));
   }
+
 }
-    })
-    .catch((error: Error) => toast.error(error.message))
-    .finally(() => setLoading(false));
-}, [searchParams]);  async function start() 
-{ setSaving(true);
-   try { const result = await OnboardingService.start(Number(serviceId)); setIntake(result); setAnswers(result.answers); toast.success("Your case is ready for a few questions."); } catch (error) { toast.error(error instanceof Error ? error.message : "Unable to start your case"); } finally { setSaving(false); } }
-  async function submit(event: FormEvent) 
-  { event.preventDefault(); if (!intake) return; setSaving(true); try { const result = await OnboardingService.saveAnswers(intake.taxCase.id, answers); setIntake(result); toast.success("Details saved. Your document checklist is ready."); router.push(`/cases/${result.taxCase.id}`); } catch (error) { toast.error(error instanceof Error ? error.message : "Unable to save your answers"); } finally { setSaving(false); } }
+      } catch (e) {
+
+        toast.error(
+
+          e instanceof Error
+
+            ? e.message
+
+            : "Unable to load services"
+
+        );
+
+      } finally {
+
+        setLoading(false);
+
+      }
+
+    }
+
+    load();
+
+  }, [searchParams]);
+
+  async function start() {
+
+    if (!serviceId) {
+
+      toast.error("Select a service");
+
+      return;
+
+    }
+
+    if (!fullName.trim()) {
+
+      toast.error("Enter your name");
+
+      return;
+
+    }
+
+    if (!phone.trim()) {
+
+      toast.error("Enter phone number");
+
+      return;
+
+    }
+
+    if (!email.trim()) {
+
+      toast.error("Enter email");
+
+      return;
+
+    }
+
+    setSaving(true);
+
+    try {
+
+      const result = await OnboardingService.start(
+
+        Number(serviceId),
+
+        fullName,
+
+        phone,
+
+        email
+
+      );
+
+      setCaseId(result.caseId);
+
+      setQuestions(result.questions);
+
+      setAnswers({});
+
+      toast.success("Case created successfully");
+
+    }
+
+    catch (e) {
+
+      toast.error(
+
+        e instanceof Error
+
+          ? e.message
+
+          : "Unable to create case"
+
+      );
+
+    }
+
+    finally {
+
+      setSaving(false);
+
+    }
+
+  }
+
+  async function submit(event: FormEvent) {
+
+    event.preventDefault();
+
+    if (!caseId) return;
+
+    setSaving(true);
+
+    try {
+
+      for (const question of questions) {
+
+        await OnboardingService.saveAnswer(
+
+          caseId,
+
+          question,
+
+          answers[question] ?? ""
+
+        );
+
+      }
+
+      toast.success("Answers saved");
+
+      router.push(
+
+        `/intake/${caseId}/documents`
+
+      );
+
+    }
+
+    catch (e) {
+
+      toast.error(
+
+        e instanceof Error
+
+          ? e.message
+
+          : "Unable to save answers"
+
+      );
+
+    }
+
+    finally {
+
+      setSaving(false);
+
+    }
+
+  }
   return (
-<>
-<Navbar />
+  <>
+    <Navbar />
 
-<main className="min-h-screen bg-[#020817] text-white">
-  <p className="eyebrow">New service</p>
-  <h1 className="mt-2 text-3xl font-bold">Tell us what you need.</h1><p className="mt-2 max-w-2xl text-secondary">We’ll create a secure case and tailor the questions and document checklist to your service.</p>
-  <section className="card-dark mt-8 max-w-3xl p-5 sm:p-7">{loading ? <div className="h-32 animate-pulse rounded-xl bg-white/5" /> : !intake ? <div className="space-y-5">
+    <main className="min-h-screen bg-[#020817] text-white">
 
-  {!searchParams.get("id") ? (
-    <label className="block text-sm font-semibold">
-      Select a service
+      <section className="mx-auto max-w-4xl px-6 py-16">
 
-      <select
-        className="input-dark mt-2 p-3"
-        value={serviceId}
-        onChange={(event) => setServiceId(event.target.value)}
-      >
-        <option value="">Choose a service</option>
+        <p className="text-sm uppercase tracking-widest text-cyan-400">
+          Tax60 Secure Intake
+        </p>
 
-        {services.map((service) => (
-          <option
-            key={service.id}
-            value={service.id}
-          >
-            {service.displayName}
-          </option>
-        ))}
-      </select>
-    </label>
-  ) : (
-    <div className="rounded-xl border border-green-500/20 bg-green-500/5 p-4">
-      <p className="text-sm text-secondary">
-        Selected Service
-      </p>
+        <h1 className="mt-2 text-4xl font-bold">
+          Start your application
+        </h1>
 
-      <h3 className="mt-1 text-lg font-semibold">
-        {services.find(
-          (service) => String(service.id) === serviceId
-        )?.displayName}
-      </h3>
-    </div>
-  )}
+        <p className="mt-3 max-w-2xl text-slate-400">
+          Complete a few questions and upload the required
+          documents. Your assigned CA will review everything
+          securely.
+        </p>
 
-  <button
-    disabled={!serviceId || saving}
-    className="btn-primary"
-    onClick={start}
-  >
-    {saving ? "Starting..." : "Continue"}
-  </button>
+        <div className="mt-10 rounded-2xl border border-white/10 bg-[#111827] p-8">
 
-</div>
- : (
+          {loading ? (
 
-<form
-  className="space-y-5"
-  onSubmit={submit}
->
+            <div className="space-y-4">
 
-  <div>
-    <p className="font-semibold">
-      A few details for your case
-    </p>
+              <div className="h-8 w-56 animate-pulse rounded bg-white/10" />
 
-    <p className="mt-1 text-sm text-secondary">
-      Your answers are saved securely and reviewed by the Tax60 team.
-    </p>
-  </div>
+              <div className="h-12 animate-pulse rounded bg-white/10" />
 
-  {intake.questions.map((question) => (
+              <div className="h-12 animate-pulse rounded bg-white/10" />
 
-    <label
-      key={question}
-      className="block text-sm font-semibold"
-    >
-      {question}
+              <div className="h-12 animate-pulse rounded bg-white/10" />
 
-      <textarea
-        required
-        className="input-dark mt-2 min-h-24 p-3"
-        value={answers[question] ?? ""}
-        onChange={(event) =>
-          setAnswers({
-            ...answers,
-            [question]: event.target.value,
-          })
-        }
-      />
+            </div>
 
-    </label>
+          ) : !caseId ? (
 
-  ))}
+            <div className="space-y-6">
 
-  <button
-    disabled={saving}
-    className="btn-primary"
-  >
-    {saving ? "Saving..." : "Save & view documents"}
-  </button>
+              {!searchParams.get("id") && (
 
-  {intake.missingDocuments.length > 0 && (
+                <div>
 
-    <div className="rounded-xl border border-amber-300/20 bg-amber-300/5 p-4">
+                  <label className="mb-2 block text-sm font-medium">
 
-      <p className="font-semibold text-amber-100">
-        Document checklist
-      </p>
+                    Select Service
 
-      <ul className="mt-2 list-inside list-disc text-sm text-secondary">
+                  </label>
 
-        {intake.missingDocuments.map((document) => (
+                  <select
+                    value={serviceId}
+                    onChange={(e) => setServiceId(e.target.value)}
+                    className="w-full rounded-xl border border-white/10 bg-[#020817] p-3"
+                  >
 
-          <li key={document.name}>
-            {document.name}
-          </li>
+                    <option value="">
+                      Choose Service
+                    </option>
 
-        ))}
+                    {services.map((service) => (
 
-      </ul>
+                      <option
+                        key={service.id}
+                        value={service.id}
+                      >
 
-    </div>
+                        {service.displayName}
 
-  )}
+                      </option>
 
-</form>
+                    ))}
 
-)}
-</section>
+                  </select>
 
-</main>
+                </div>
 
-<Footer />
-</>
+              )}
+
+              <div>
+
+                <label className="mb-2 block text-sm font-medium">
+
+                  Full Name
+
+                </label>
+
+                <input
+                  className="w-full rounded-xl border border-white/10 bg-[#020817] p-3"
+                  value={fullName}
+                  onChange={(e) =>
+                    setFullName(e.target.value)
+                  }
+                  placeholder="Enter your full name"
+                />
+
+              </div>
+
+              <div>
+
+                <label className="mb-2 block text-sm font-medium">
+
+                  Mobile Number
+
+                </label>
+
+                <input
+                  className="w-full rounded-xl border border-white/10 bg-[#020817] p-3"
+                  value={phone}
+                  onChange={(e) =>
+                    setPhone(e.target.value)
+                  }
+                  placeholder="9876543210"
+                />
+
+              </div>
+
+              <div>
+
+                <label className="mb-2 block text-sm font-medium">
+
+                  Email
+
+                </label>
+
+                <input
+                  type="email"
+                  className="w-full rounded-xl border border-white/10 bg-[#020817] p-3"
+                  value={email}
+                  onChange={(e) =>
+                    setEmail(e.target.value)
+                  }
+                  placeholder="example@gmail.com"
+                />
+
+              </div>
+
+              <button
+                disabled={saving}
+                onClick={start}
+                className="mt-4 w-full rounded-xl bg-cyan-500 px-6 py-3 font-semibold text-black transition hover:bg-cyan-400 disabled:opacity-50"
+              >
+
+                {saving
+                  ? "Creating Case..."
+                  : "Continue"}
+
+              </button>
+
+            </div>
+
+          ) : (
+
+            <form
+              onSubmit={submit}
+              className="space-y-6"
+            >
+
+              <div>
+
+                <h2 className="text-2xl font-bold">
+
+                  Answer these questions
+
+                </h2>
+
+                <p className="mt-2 text-slate-400">
+
+                  Your responses help our CA understand
+                  your case before reviewing documents.
+
+                </p>
+
+              </div>
+
+              {questions.map((question) => (
+
+                <div key={question}>
+
+                  <label className="mb-2 block font-medium">
+
+                    {question}
+
+                  </label>
+
+                  <textarea
+                    required
+                    rows={4}
+                    className="w-full rounded-xl border border-white/10 bg-[#020817] p-3"
+                    value={answers[question] ?? ""}
+                    onChange={(e) =>
+                      setAnswers({
+
+                        ...answers,
+
+                        [question]: e.target.value,
+
+                      })
+                    }
+                  />
+
+                </div>
+
+              ))}
+
+              <button
+                disabled={saving}
+                className="w-full rounded-xl bg-cyan-500 px-6 py-3 font-semibold text-black transition hover:bg-cyan-400 disabled:opacity-50"
+              >
+
+                {saving
+
+                  ? "Saving..."
+
+                  : "Continue to Document Upload"}
+
+              </button>
+
+            </form>
+
+          )}
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <Footer />
+
+  </>
 );
 }
+
 export default function IntakePage() {
   return (
     <Suspense
