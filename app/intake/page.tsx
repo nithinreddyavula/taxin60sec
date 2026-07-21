@@ -1,11 +1,12 @@
 "use client";
+import { Suspense } from "react";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import AppShell from "@/components/AppShell";
 import { IntakeCase, OnboardingService, ServiceOffering } from "@/services/intake-service";
 
-export default function IntakePage() {
+function IntakeContent() { 
   const router = useRouter();
   const searchParams = useSearchParams();
   const [serviceId, setServiceId] = useState("");
@@ -163,4 +164,17 @@ if (serviceIdParam) {
 )}
 </section>
 </AppShell>;
+}
+export default function IntakePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
+      <IntakeContent />
+    </Suspense>
+  );
 }
