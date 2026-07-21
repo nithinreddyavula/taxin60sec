@@ -18,7 +18,7 @@ function IntakeContent() {
 useEffect(() => {
   OnboardingService.services()
     .then((page) => {
-      const loadedServices = page.content;
+      const loadedServices = page.items;
       setServices(loadedServices);
 
       const serviceIdParam = searchParams.get("id");
