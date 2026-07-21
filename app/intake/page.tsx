@@ -3,7 +3,8 @@ import { Suspense } from "react";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import AppShell from "@/components/AppShell";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { IntakeCase, OnboardingService, ServiceOffering } from "@/services/intake-service";
 
 function IntakeContent() { 
@@ -39,7 +40,12 @@ if (serviceIdParam) {
    try { const result = await OnboardingService.start(Number(serviceId)); setIntake(result); setAnswers(result.answers); toast.success("Your case is ready for a few questions."); } catch (error) { toast.error(error instanceof Error ? error.message : "Unable to start your case"); } finally { setSaving(false); } }
   async function submit(event: FormEvent) 
   { event.preventDefault(); if (!intake) return; setSaving(true); try { const result = await OnboardingService.saveAnswers(intake.taxCase.id, answers); setIntake(result); toast.success("Details saved. Your document checklist is ready."); router.push(`/cases/${result.taxCase.id}`); } catch (error) { toast.error(error instanceof Error ? error.message : "Unable to save your answers"); } finally { setSaving(false); } }
-  return <AppShell roles={["ROLE_CLIENT"]}><p className="eyebrow">New service</p>
+  return (
+<>
+<Navbar />
+
+<main className="min-h-screen bg-[#020817] text-white">
+  <p className="eyebrow">New service</p>
   <h1 className="mt-2 text-3xl font-bold">Tell us what you need.</h1><p className="mt-2 max-w-2xl text-secondary">We’ll create a secure case and tailor the questions and document checklist to your service.</p>
   <section className="card-dark mt-8 max-w-3xl p-5 sm:p-7">{loading ? <div className="h-32 animate-pulse rounded-xl bg-white/5" /> : !intake ? <div className="space-y-5">
 
@@ -163,7 +169,12 @@ if (serviceIdParam) {
 
 )}
 </section>
-</AppShell>;
+
+</main>
+
+<Footer />
+</>
+);
 }
 export default function IntakePage() {
   return (
