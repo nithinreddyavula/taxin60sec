@@ -41,45 +41,47 @@ function IntakeContent() {
   useEffect(() => {
 
     async function load() {
+  try {
+    const loadedServices = await OnboardingService.services();
 
-      try {
+    console.log("Loaded Services:", loadedServices);
+    console.log("Is Array:", Array.isArray(loadedServices));
 
-        const loadedServices = await OnboardingService.services();
-
-setServices(loadedServices);
-
-const id = searchParams.get("id");
-
-if (id) {
-
-  const selected = loadedServices.find(
-    (service) => String(service.id) === id
-  );
-
-  if (selected) {
-    setServiceId(String(selected.id));
-  }
-
-}
-      } catch (e) {
-
-        toast.error(
-
-          e instanceof Error
-
-            ? e.message
-
-            : "Unable to load services"
-
-        );
-
-      } finally {
-
-        setLoading(false);
-
-      }
-
+    if (!Array.isArray(loadedServices)) {
+      throw new Error("Services API did not return an array.");
     }
+
+    setServices(loadedServices);
+
+    const id = searchParams.get("id");
+
+    console.log("URL Service ID:", id);
+
+    if (id) {
+      const selected = loadedServices.find(
+        (service) => String(service.id) === id
+      );
+
+      console.log("Selected Service:", selected);
+
+      if (selected) {
+        setServiceId(String(selected.id));
+      } else {
+        toast.error(`Service ${id} not found`);
+      }
+    }
+  } catch (e) {
+    console.error(e);
+
+    toast.error(
+      e instanceof Error
+        ? e.message
+        : "Unable to load services"
+    );
+  } finally {
+    setLoading(false);
+  }
+}
 
     load();
 
