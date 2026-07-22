@@ -45,7 +45,7 @@ export const services = [
     desc: "Statutory Audit, Internal Audit & Due Diligence.",
   },
   {
-    id: 6,
+    id: 8,
     code: "FINANCE_AUTOMATION",
     icon: Landmark,
     title: "Finance Automation",

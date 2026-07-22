@@ -81,7 +81,7 @@ export const OnboardingService = {
       {
         serviceOfferingId,
         fullName,
-        phone,
+        phoneNumber: phone,
         email,
       }
     ),
