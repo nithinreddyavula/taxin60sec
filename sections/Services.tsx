@@ -10,35 +10,35 @@ import {
 
 export const services = [
   {
-    id: 1,
+    id: 3,
     code: "GST_FILING",
     icon: Calculator,
     title: "GST Filing",
     desc: "GST Registration, Returns, Refunds, LUT & Compliance.",
   },
   {
-    id: 2,
+    id: 4,
     code: "INCOME_TAX",
     icon: FileText,
     title: "Income Tax",
     desc: "ITR Filing, Tax Planning, TDS & Assessment Support.",
   },
   {
-    id: 3,
+    id: 5,
     code: "STARTUP_SERVICES",
     icon: Building2,
     title: "Startup Services",
     desc: "Company Registration, ROC Compliance & Fundraising.",
   },
   {
-    id: 4,
+    id: 6,
     code: "VIRTUAL_CFO",
     icon: Briefcase,
     title: "Virtual CFO",
     desc: "Financial Reporting, Cash Flow Management & Advisory.",
   },
   {
-    id: 5,
+    id: 7,
     code: "AUDIT_ASSURANCE",
     icon: ShieldCheck,
     title: "Audit & Assurance",
