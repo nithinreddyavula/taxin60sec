@@ -45,6 +45,12 @@ function IntakeContent() {
     const response = await OnboardingService.services();
 
 const loadedServices = response.items;
+console.table(
+  loadedServices.map((s) => ({
+    id: s.id,
+    name: s.displayName,
+  }))
+);
 
 setServices(loadedServices);
 
