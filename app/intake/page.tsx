@@ -42,16 +42,11 @@ function IntakeContent() {
 
     async function load() {
   try {
-    const loadedServices = await OnboardingService.services();
+    const response = await OnboardingService.services();
 
-    console.log("Loaded Services:", loadedServices);
-    console.log("Is Array:", Array.isArray(loadedServices));
+const loadedServices = response.items;
 
-    if (!Array.isArray(loadedServices)) {
-      throw new Error("Services API did not return an array.");
-    }
-
-    setServices(loadedServices);
+setServices(loadedServices);
 
     const id = searchParams.get("id");
 

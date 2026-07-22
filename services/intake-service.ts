@@ -46,6 +46,13 @@ export type ResumeResponse = {
   answers: Record<string, string>;
   questions: string[];
 };
+export type PageResponse<T> = {
+  items: T[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+};
 
 export const OnboardingService = {
 
@@ -54,8 +61,8 @@ export const OnboardingService = {
    */
 
   services: () =>
-    request<ServiceOffering[]>(
-      "/api/v1/services?active=true"
+    request<PageResponse<ServiceOffering>>(
+        "/api/v1/services?active=true"
     ),
 
   /*
