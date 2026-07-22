@@ -91,36 +91,34 @@ export const OnboardingService = {
    */
 
   saveAnswer: (
-    caseId: number,
-    question: string,
-    answer: string
-  ) =>
-    request(
-      "/api/v1/public/intake/answers",
-      "POST",
-      {
-        caseId,
-        question,
-        answer,
-      }
-    ),
+  caseId: number,
+  question: string,
+  answer: string
+) =>
+  request(
+    `/api/v1/public/intake/cases/${caseId}/answers`,
+    "POST",
+    {
+      question,
+      answer,
+    }
+  ),
 
   /*
    * NEXT QUESTION
    */
 
   nextQuestion: (
-    caseId: number,
-    answer: string
-  ) =>
-    request(
-      "/api/v1/public/intake/next",
-      "POST",
-      {
-        caseId,
-        answer,
-      }
-    ),
+  caseId: number,
+  answer: string
+) =>
+  request(
+    `/api/v1/public/intake/cases/${caseId}/next`,
+    "POST",
+    {
+      answer,
+    }
+  ),
 
   /*
    * RESUME
