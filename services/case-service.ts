@@ -1,6 +1,6 @@
 import { request } from "./client";
 export type CaseItem = { id:number; caseNumber:string; title:string; status:string; workflowStage:string; intakeSummary?:string };
-export type Page<T> = { content:T[]; totalElements:number; totalPages:number };
+export type Page<T> = { items:T[]; totalElements:number; totalPages:number };
 export type TimelineEvent = { id?: number; title: string; description?: string; createdAt: string; eventType?: string };
 export type OnboardingSummary = { summary?: string; missingDocuments?: { name?: string; documentName?: string }[]; price?: number; amount?: number; workflow?: { stage?: string; status?: string } };
 export const CaseService = {
