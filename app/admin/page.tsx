@@ -57,6 +57,12 @@ export default function AdminPage() {
     leads: 1,
   }));
 
+  const openCases =
+    (metrics.intake ?? 0) +
+    (metrics.documentCollection ?? 0) +
+    (metrics.caReview ?? 0) +
+    (metrics.inProgress ?? 0);
+
   useEffect(() => {
     ContactService.list().then(setContacts).catch(() => setContacts([]));
     request<Record<string, number>>("/api/v1/admin/cases/dashboard").then(setMetrics).catch(() => setMetrics({}));
@@ -117,7 +123,7 @@ export default function AdminPage() {
             <p className="text-gray-500">Open cases</p>
 
             <h2 className="text-4xl font-bold mt-4">
-              {metrics.open ?? metrics.active ?? 0}
+              {openCases}
             </h2>
 
           </div>
@@ -165,39 +171,6 @@ export default function AdminPage() {
               }
 
             </h2>
-
-          </div>
-
-        </div>
-
-        {/* CHART */}
-        <div className="bg-white p-8 rounded-[30px] shadow mb-10">
-
-          <h2 className="text-2xl font-bold mb-6">
-            Lead Analytics
-          </h2>
-
-          <div className="h-[300px]">
-
-            <ResponsiveContainer width="100%" height="100%">
-
-              <LineChart data={chartData}>
-
-                <XAxis dataKey="date" />
-
-                <YAxis />
-
-                <Tooltip />
-
-                <Line
-                  type="monotone"
-                  dataKey="leads"
-                  strokeWidth={3}
-                />
-
-              </LineChart>
-
-            </ResponsiveContainer>
 
           </div>
 
@@ -308,6 +281,43 @@ export default function AdminPage() {
             </div>
 
           </div>
+        </div>
+
+        {/* CHART */}
+        <div className="bg-white p-8 rounded-[30px] shadow mb-10">
+
+          <h2 className="text-2xl font-bold mb-6">
+            Lead Analytics
+          </h2>
+
+          {chartData.length === 0 ? (
+            <p className="text-gray-500 text-sm">No lead activity yet — the chart will populate once inquiries come in.</p>
+          ) : (
+            <div className="h-[300px]">
+
+              <ResponsiveContainer width="100%" height="100%">
+
+                <LineChart data={chartData}>
+
+                  <XAxis dataKey="date" />
+
+                  <YAxis allowDecimals={false} />
+
+                  <Tooltip />
+
+                  <Line
+                    type="monotone"
+                    dataKey="leads"
+                    strokeWidth={3}
+                  />
+
+                </LineChart>
+
+              </ResponsiveContainer>
+
+            </div>
+          )}
+
         </div>
 
         {/* SEARCH */}

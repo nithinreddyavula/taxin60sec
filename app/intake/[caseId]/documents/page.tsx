@@ -169,24 +169,6 @@ async function submit() {
 
     try {
 
-        const remaining = documents.filter(
-
-            (doc) => doc.mandatory && !doc.uploaded
-
-        );
-
-        if (remaining.length > 0) {
-
-            toast.error(
-
-                "Please upload all required documents."
-
-            );
-
-            return;
-
-        }
-
         const validation =
 
             await OnboardingService.validateDocuments(caseId);
