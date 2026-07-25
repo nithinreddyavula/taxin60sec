@@ -15,43 +15,25 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   async function login() {
-    console.log("Login button clicked");
+  console.log("1. Login started");
 
-    setLoading(true);
-    setMessage("");
+  try {
+    const auth = await AuthService.login(email, password);
+    console.log("2. Login API success", auth);
 
-    try {
-      console.log("Calling login API...");
-      console.log("Email:", email);
+    setSession(auth);
+    console.log("3. Session stored");
 
-      const auth = await AuthService.login(email, password);
+    const isCa = auth.user.roles.some(r => r.name === "ROLE_CA");
+    console.log("4. Redirecting...", isCa ? "/ca/cases" : "/dashboard");
 
-      console.log("API Response:", auth);
+    router.push(isCa ? "/ca/cases" : "/dashboard");
 
-      setSession(auth);
-
-      const isCa = auth.user.roles.some(
-        (role) => role.name === "ROLE_CA"
-      );
-
-      console.log(
-        "Redirecting to:",
-        isCa ? "/ca/cases" : "/dashboard"
-      );
-
-      router.push(isCa ? "/ca/cases" : "/dashboard");
-    } catch (error) {
-      console.error("Login Error:", error);
-
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "Login failed"
-      );
-    } finally {
-      setLoading(false);
-    }
+    console.log("5. router.push executed");
+  } catch (e) {
+    console.error("LOGIN ERROR", e);
   }
+}
 
   return (
     <div className="min-h-screen bg-[#020817] px-6 text-white flex items-center justify-center">
