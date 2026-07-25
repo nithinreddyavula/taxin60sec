@@ -8,7 +8,15 @@ const AppContext = createContext<AppContextValue | null>(null);
 const SESSION_EVENT = "tax60:session-changed";
 const subscribe = (notify: () => void) => { window.addEventListener(SESSION_EVENT, notify); window.addEventListener("tax60:unauthorized", notify); return () => { window.removeEventListener(SESSION_EVENT, notify); window.removeEventListener("tax60:unauthorized", notify); }; };
 const serverSnapshot = () => null;
-const getUserSnapshot = () => { const saved = localStorage.getItem("tax60-user"); try { return saved ? JSON.parse(saved) as AuthUser : null; } catch { return null; } };
+let cachedRaw: string | null = null;
+let cachedUser: AuthUser | null = null;
+const getUserSnapshot = () => {
+  const saved = localStorage.getItem("tax60-user");
+  if (saved === cachedRaw) return cachedUser; // same reference -> stops the infinite-loop crash
+  cachedRaw = saved;
+  try { cachedUser = saved ? (JSON.parse(saved) as AuthUser) : null; } catch { cachedUser = null; }
+  return cachedUser;
+};
 const getReadySnapshot = () => true;
 const getServerReadySnapshot = () => false;
 
