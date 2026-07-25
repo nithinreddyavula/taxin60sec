@@ -15,25 +15,21 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   async function login() {
-  console.log("1. Login started");
+    if (loading) return; // guard against double-click / double-submit
+    setLoading(true);
+    setMessage("");
 
-  try {
-    const auth = await AuthService.login(email, password);
-    console.log("2. Login API success", auth);
+    try {
+      const auth = await AuthService.login(email, password);
+      setSession(auth);
 
-    setSession(auth);
-    console.log("3. Session stored");
-
-    const isCa = auth.user.roles.some(r => r.name === "ROLE_CA");
-    console.log("4. Redirecting...", isCa ? "/ca/cases" : "/dashboard");
-
-    router.push(isCa ? "/ca/cases" : "/dashboard");
-
-    console.log("5. router.push executed");
-  } catch (e) {
-    console.error("LOGIN ERROR", e);
+      const isCa = auth.user.roles.includes("ROLE_CA");
+      router.push(isCa ? "/ca/cases" : "/dashboard");
+    } catch (e) {
+      setMessage(e instanceof Error ? e.message : "Login failed. Please try again.");
+      setLoading(false);
+    }
   }
-}
 
   return (
     <div className="min-h-screen bg-[#020817] px-6 text-white flex items-center justify-center">
