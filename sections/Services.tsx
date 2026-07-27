@@ -6,6 +6,7 @@ import {
   Briefcase,
   ShieldCheck,
   Landmark,
+  Globe,
 } from "lucide-react";
 
 export const services = [
@@ -15,6 +16,7 @@ export const services = [
     icon: Calculator,
     title: "GST Filing",
     desc: "GST Registration, Returns, Refunds, LUT & Compliance.",
+    priceFrom: "₹999",
   },
   {
     id: 4,
@@ -22,6 +24,7 @@ export const services = [
     icon: FileText,
     title: "Income Tax",
     desc: "ITR Filing, Tax Planning, TDS & Assessment Support.",
+    priceFrom: "₹499",
   },
   {
     id: 5,
@@ -29,6 +32,7 @@ export const services = [
     icon: Building2,
     title: "Startup Services",
     desc: "Company Registration, ROC Compliance & Fundraising.",
+    priceFrom: "₹4,999",
   },
   {
     id: 6,
@@ -36,6 +40,7 @@ export const services = [
     icon: Briefcase,
     title: "Virtual CFO",
     desc: "Financial Reporting, Cash Flow Management & Advisory.",
+    priceFrom: "₹15,000",
   },
   {
     id: 7,
@@ -43,6 +48,7 @@ export const services = [
     icon: ShieldCheck,
     title: "Audit & Assurance",
     desc: "Statutory Audit, Internal Audit & Due Diligence.",
+    priceFrom: "₹10,000",
   },
   {
     id: 8,
@@ -50,6 +56,16 @@ export const services = [
     icon: Landmark,
     title: "Finance Automation",
     desc: "Automate Workflows, Build Dashboards & Save Time.",
+    priceFrom: "₹20,000",
+  },
+  {
+    id: null,
+    code: "NRI_TAXATION",
+    icon: Globe,
+    title: "NRI Taxation & Advisory",
+    desc: "Indian tax filing, DTAA benefits, NRE/NRO guidance & fund repatriation for NRIs.",
+    priceFrom: "₹4,999",
+    priceFromUsd: "$60",
   },
 ];
 
@@ -69,7 +85,7 @@ export default function Services() {
 
             return (
               <article
-                key={service.id}
+                key={service.code}
                 className="card-dark p-6"
               >
                 <Icon
@@ -85,8 +101,15 @@ export default function Services() {
                   {service.desc}
                 </p>
 
+                <p className="mt-3 text-sm font-semibold text-blue-400">
+                  Starting {service.priceFrom}
+                  {service.priceFromUsd
+                    ? ` (approx. ${service.priceFromUsd})`
+                    : ""}
+                </p>
+
                 <Link
-                  href={`/intake?id=${service.id}`}
+                  href={service.id ? `/intake?id=${service.id}` : "/intake"}
                   className="btn-primary mt-5 block w-full text-center"
                 >
                   Get Started

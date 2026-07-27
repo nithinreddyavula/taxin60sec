@@ -50,7 +50,7 @@ export default function ServicesPage() {
 
               return (
                 <div
-                  key={service.title}
+                  key={service.code}
                   className="card-dark p-6"
                 >
 
@@ -71,8 +71,15 @@ export default function ServicesPage() {
                     {service.desc}
                   </p>
 
+                  <p className="mt-3 text-sm font-semibold text-blue-400">
+                    Starting {service.priceFrom}
+                    {service.priceFromUsd
+                      ? ` (approx. ${service.priceFromUsd})`
+                      : ""}
+                  </p>
+
                  <Link
-  href={`/intake?id=${service.id}`}
+  href={service.id ? `/intake?id=${service.id}` : "/intake"}
   className="btn-primary mt-5 block w-full text-center"
 >
   Get Started
