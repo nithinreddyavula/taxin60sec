@@ -1,15 +1,20 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ReferralShareBlock from "@/components/ReferralShareBlock";
 
-export default function SuccessPage() {
+function SuccessContent() {
 
     const params = useParams();
+    const searchParams = useSearchParams();
 
     const caseId = params.caseId;
+    const referralCode = searchParams.get("referralCode");
+    const referralLink = searchParams.get("referralLink");
 
     return (
         <>
@@ -61,22 +66,34 @@ export default function SuccessPage() {
 
                         </div>
 
+                        {referralCode && referralLink && (
+                            <div className="mt-8 text-left">
+                                <ReferralShareBlock
+                                    referralCode={referralCode}
+                                    referralShareUrl={referralLink}
+                                    title="Know someone who needs this?"
+                                    description="Share your link - you both get rewarded when they become a client."
+                                />
+                            </div>
+                        )}
+
                         <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
 
                             <Link
-                                href="/"
-                                className="rounded-xl bg-cyan-500 px-8 py-3 font-semibold text-black"
-                            >
-                                Back to Home
-                            </Link>
+    href="/"
+    className="rounded-xl bg-cyan-500 px-8 py-3 font-semibold text-black"
+>
+    Back to Home
+</Link>
 
-                            <a
-                                href="https://wa.me/917013734079"
-                                target="_blank"
-                                className="rounded-xl border border-white/10 px-8 py-3"
-                            >
-                                Contact on WhatsApp
-                            </a>
+<a
+    href="https://wa.me/917013734079"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="rounded-xl border border-white/10 px-8 py-3"
+>
+    Contact on WhatsApp
+</a>
 
                         </div>
 
@@ -91,4 +108,12 @@ export default function SuccessPage() {
         </>
     );
 
+}
+
+export default function SuccessPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-[#020817]" />}>
+            <SuccessContent />
+        </Suspense>
+    );
 }

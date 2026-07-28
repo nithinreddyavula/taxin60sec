@@ -1,15 +1,17 @@
 "use client";
 
 import AppShell from "@/components/AppShell";
+import ComplianceScoreWidget from "@/components/ComplianceScoreWidget";
 
 export default function DashboardPage() {
-  console.log("Dashboard rendered");
-
   return (
     <AppShell roles={["ROLE_CLIENT"]}>
-      <h1 style={{ color: "white", fontSize: "32px" }}>
-        Dashboard Works
-      </h1>
+      <p className="eyebrow">Overview</p>
+      <h1 className="mt-2 text-3xl font-bold">Your dashboard</h1>
+
+      <div className="mt-6">
+        <ComplianceScoreWidget />
+      </div>
     </AppShell>
   );
 }

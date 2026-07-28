@@ -83,6 +83,10 @@ export const OnboardingService = {
         fullName,
         phoneNumber: phone,
         email,
+        referralCode:
+          typeof window !== "undefined"
+            ? localStorage.getItem("tax60-referral-code") ?? undefined
+            : undefined,
       }
     ),
 
@@ -158,7 +162,7 @@ export const OnboardingService = {
   submitCase: (
     caseId: number
   ) =>
-    request(
+    request<{ referralCode: string; referralShareUrl: string }>(
       `/api/v1/public/intake/cases/${caseId}/submit`,
       "POST"
     ),

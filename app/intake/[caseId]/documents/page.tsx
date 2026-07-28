@@ -181,11 +181,24 @@ async function submit() {
 
         }
 
+
+
         await OnboardingService.submitCase(caseId);
 
         toast.success("Application submitted successfully.");
 
         router.push(`/intake/${caseId}/success`);
+
+        const submission = await OnboardingService.submitCase(caseId);
+
+        toast.success("Application submitted successfully.");
+
+        const params = new URLSearchParams({
+            referralCode: submission.referralCode,
+            referralLink: submission.referralShareUrl,
+        });
+
+        router.push(`/intake/${caseId}/success?${params.toString()}`);
 
     }
 

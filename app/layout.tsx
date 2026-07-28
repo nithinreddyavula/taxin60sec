@@ -6,6 +6,7 @@ import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import QueryProvider from "@/components/QueryProvider";
 import AppProviders from "@/components/AppProviders";
+import ReferralCapture from "@/components/ReferralCapture";
 
 export const metadata: Metadata = {
   title: {
@@ -39,6 +40,8 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
 
         <QueryProvider><AppProviders>{children}</AppProviders></QueryProvider>
+
+        <ReferralCapture />
 
         <WhatsAppButton />
 
