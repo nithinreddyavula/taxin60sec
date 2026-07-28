@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import GuaranteeBadge from "@/components/GuaranteeBadge";
 
 const heroStats = [
   ["500+", "Happy Clients"],
   ["10+", "Years Experience"],
-  ["24hr", "Response Time"],
+  ["60sec", "Confirmed Response"],
   ["95%", "Compliance Rate"],
 ];
 
@@ -15,8 +16,8 @@ export default function Hero() {
       <div className="container-main">
         <div className="grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
-            <div className="mb-5 inline-flex items-center rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1.5 text-xs font-semibold text-blue-300">
-              Trusted by 500+ Businesses
+            <div className="mb-5">
+              <GuaranteeBadge />
             </div>
 
             <h1 className="max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl">

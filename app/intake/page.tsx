@@ -124,6 +124,8 @@ setServices(loadedServices);
 
     setSaving(true);
 
+    const startedAt = Date.now();
+
     try {
 
       const result = await OnboardingService.start(
@@ -144,7 +146,12 @@ setServices(loadedServices);
 
       setAnswers({});
 
-      toast.success("Case created successfully");
+      const elapsedSeconds = Math.max(
+        1,
+        Math.round((Date.now() - startedAt) / 1000)
+      );
+
+      toast.success(`Confirmed in ${elapsedSeconds}s — check your email/WhatsApp`);
 
     }
 
