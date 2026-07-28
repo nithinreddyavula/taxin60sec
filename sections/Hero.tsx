@@ -1,16 +1,35 @@
 "use client";
 
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import GuaranteeBadge from "@/components/GuaranteeBadge";
-
-const heroStats = [
-  ["500+", "Happy Clients"],
-  ["10+", "Years Experience"],
-  ["60sec", "Confirmed Response"],
-  ["95%", "Compliance Rate"],
-];
+import { StatsService } from "@/services/stats-service";
 
 export default function Hero() {
+  const dashboardQuery = useQuery({
+    queryKey: ["public-dashboard-stats"],
+    queryFn: () => StatsService.dashboard(),
+    staleTime: 5 * 60 * 1000,
+    retry: false,
+  });
+  const responseQuery = useQuery({
+    queryKey: ["public-response-stats"],
+    queryFn: () => StatsService.responseTime(),
+    staleTime: 5 * 60 * 1000,
+    retry: false,
+  });
+
+  const clients = dashboardQuery.data?.totalClients;
+  const complianceRate = dashboardQuery.data?.complianceRatePercentage;
+  const avgResponse = responseQuery.data?.averageResponseSeconds;
+
+  const heroStats: [string, string][] = [
+    [clients && clients > 0 ? `${clients}+` : "500+", "Happy Clients"],
+    ["10+", "Years Experience"],
+    [avgResponse != null ? `${avgResponse}s` : "60sec", "Confirmed Response"],
+    [complianceRate != null ? `${complianceRate}%` : "95%", "Compliance Rate"],
+  ];
+
   return (
     <section className="overflow-hidden py-10 md:py-14">
       <div className="container-main">
@@ -34,7 +53,7 @@ export default function Hero() {
               <Link href="/contact" className="btn-primary">
                 Book Consultation
               </Link>
-              <a
+              
                 href="https://wa.me/917013734079"
                 target="_blank"
                 rel="noreferrer"
@@ -107,7 +126,9 @@ export default function Hero() {
                   <div className="absolute inset-0 rounded-full border-[9px] border-blue-500/15" />
                   <div className="absolute inset-0 rotate-45 rounded-full border-[9px] border-transparent border-r-blue-400 border-t-blue-500" />
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <h3 className="text-3xl font-bold">92%</h3>
+                    <h3 className="text-3xl font-bold">
+                      {complianceRate != null ? `${complianceRate}%` : "92%"}
+                    </h3>
                     <p className="text-xs text-secondary">Compliant</p>
                   </div>
                 </div>

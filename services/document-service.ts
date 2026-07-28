@@ -33,7 +33,9 @@ export const DocumentService = {
 
     requiredDocumentId: number,
 
-    file: File
+    file: File,
+
+    onProgress?: (percent: number) => void
 
   ) {
 
@@ -66,6 +68,16 @@ export const DocumentService = {
         headers: {
 
           "Content-Type": "multipart/form-data",
+
+        },
+
+        onUploadProgress: (event) => {
+
+          if (onProgress && event.total) {
+
+            onProgress(Math.round((event.loaded * 100) / event.total));
+
+          }
 
         },
 
