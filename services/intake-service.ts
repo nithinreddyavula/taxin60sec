@@ -87,6 +87,10 @@ export const OnboardingService = {
           typeof window !== "undefined"
             ? localStorage.getItem("tax60-referral-code") ?? undefined
             : undefined,
+        healthCheckLeadId:
+          typeof window !== "undefined" && localStorage.getItem("tax60-health-check-lead-id")
+            ? Number(localStorage.getItem("tax60-health-check-lead-id"))
+            : undefined,
       }
     ),
 

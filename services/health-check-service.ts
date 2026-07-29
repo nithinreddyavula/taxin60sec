@@ -20,6 +20,17 @@ export type HealthCheckResult = {
   recommendations: HealthCheckRecommendation[];
 };
 
+export type HealthCheckLead = {
+  id: number;
+  email?: string;
+  phoneNumber?: string;
+  userType: string;
+  score: number;
+  statusLabel: string;
+  converted: boolean;
+  createdAt: string;
+};
+
 export const HealthCheckService = {
   evaluate: (userType: string, answers: Record<string, boolean>) =>
     request<HealthCheckResult>(
@@ -29,21 +40,22 @@ export const HealthCheckService = {
     ),
 
   captureLead: (
-    email: string,
-    phoneNumber: string,
     userType: string,
-    result: HealthCheckResult
+    result: HealthCheckResult,
+    options?: { leadId?: number; email?: string; phoneNumber?: string }
   ) =>
-    request<void>(
+    request<HealthCheckLead>(
       "/api/v1/public/intake/health-check/capture",
       "POST",
       {
-        email,
-        phoneNumber,
+        leadId: options?.leadId,
+        email: options?.email ?? "",
+        phoneNumber: options?.phoneNumber ?? "",
         userType,
         score: result.score,
         statusLabel: result.statusLabel,
         issuesSummary: result.issues.map((i) => i.title).join(", "),
+        triggeredCodes: result.recommendations.map((r) => r.code),
       }
     ),
 };

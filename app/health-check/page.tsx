@@ -54,6 +54,7 @@ export default function HealthCheckPage() {
   const [loading, setLoading] = useState(false);
   const [leadEmail, setLeadEmail] = useState("");
   const [capturing, setCapturing] = useState(false);
+  const [leadId, setLeadId] = useState<number | null>(null);
 
   function selectType(type: string) {
     setUserType(type);
@@ -71,9 +72,23 @@ export default function HealthCheckPage() {
       const res = await HealthCheckService.evaluate(userType, answers);
       setResult(res);
       setStep("results");
+
+      try {
+        const lead = await HealthCheckService.captureLead(userType, res);
+        setLeadId(lead.id);
+      } catch {
+        // Silent capture is best-effort — the quiz still works without it.
+      }
     } finally {
       setLoading(false);
     }
+  }
+
+  function fixWithTax60(serviceId: number) {
+    if (leadId != null && typeof window !== "undefined") {
+      localStorage.setItem("tax60-health-check-lead-id", String(leadId));
+    }
+    router.push(`/intake?id=${serviceId}`);
   }
 
   const questions = QUESTIONS[userType] ?? [];
@@ -83,7 +98,11 @@ export default function HealthCheckPage() {
     if (!result || !leadEmail.trim()) return;
     setCapturing(true);
     try {
-      await HealthCheckService.captureLead(leadEmail.trim(), "", userType, result);
+      const lead = await HealthCheckService.captureLead(userType, result, {
+        leadId: leadId ?? undefined,
+        email: leadEmail.trim(),
+      });
+      setLeadId(lead.id);
       toast.success("Results sent to your email");
     } catch {
       toast.error("Unable to send results right now");
@@ -205,7 +224,7 @@ export default function HealthCheckPage() {
                         </p>
                       </div>
                       <button
-                        onClick={() => router.push(`/intake?id=${rec.serviceId}`)}
+                        onClick={() => fixWithTax60(rec.serviceId)}
                         className="btn-primary shrink-0"
                       >
                         Fix with Tax60
@@ -217,14 +236,14 @@ export default function HealthCheckPage() {
 
               {result.issues.length === 0 && (
                 <p className="text-secondary text-center">
-                  You're in good shape! We'll keep monitoring your obligations.
+                  You&apos;re in good shape! We&apos;ll keep monitoring your obligations.
                 </p>
               )}
 
               <div className="card-dark p-5">
                 <p className="font-semibold mb-1">Not ready yet?</p>
                 <p className="text-sm text-secondary mb-3">
-                  Get these results emailed to you so you don't lose them.
+                  Get these results emailed to you so you don&apos;t lose them.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-2">
                   <input
