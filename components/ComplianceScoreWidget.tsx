@@ -93,9 +93,19 @@ export default function ComplianceScoreWidget() {
                 {statusIcon(item.status)}
                 <span className="font-semibold">{item.title}</span>
               </div>
-              <span className="text-xs text-secondary">
-                {item.status.replace("_", " ")} · due {new Date(item.dueDate).toLocaleDateString()}
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-secondary">
+                  {item.status.replace("_", " ")} · due {new Date(item.dueDate).toLocaleDateString()}
+                </span>
+                {item.status !== "COMPLETED" && item.recommendedServiceId && (
+                  <Link
+                    href={`/intake?id=${item.recommendedServiceId}`}
+                    className="text-xs font-semibold text-blue-400 shrink-0"
+                  >
+                    Fix
+                  </Link>
+                )}
+              </div>
             </div>
           ))}
         </div>

@@ -50,8 +50,8 @@ export default function Hero() {
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Link href="/contact" className="btn-primary">
-                Book Consultation
+              <Link href="/health-check" className="btn-primary">
+                Take Free Tax Health Check
               </Link>
               
                 href="https://wa.me/917013734079"

@@ -1,5 +1,5 @@
 import { request } from "./client";
-export type CaseItem = { id:number; caseNumber:string; title:string; status:string; workflowStage:string; intakeSummary?:string; firstResponseAt?:string; responseSeconds?:number; slaMet?:boolean };
+export type CaseItem = { id:number; caseNumber:string; title:string; status:string; workflowStage:string; intakeSummary?:string; firstResponseAt?:string; responseSeconds?:number; slaMet?:boolean; clientName?:string; clientEmail?:string; clientPhone?:string };
 export type Page<T> = { items:T[]; totalElements:number; totalPages:number };
 export type TimelineEvent = { id?: number; title: string; description?: string; createdAt: string; eventType?: string };
 export type OnboardingSummary = { summary?: string; missingDocuments?: { name?: string; documentName?: string }[]; price?: number; amount?: number; workflow?: { stage?: string; status?: string } };

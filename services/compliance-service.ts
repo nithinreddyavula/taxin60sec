@@ -6,6 +6,7 @@ export type ComplianceItem = {
   title: string;
   dueDate: string;
   status: string;
+  recommendedServiceId: number | null;
 };
 
 export type ComplianceScore = {
