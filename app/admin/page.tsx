@@ -50,6 +50,10 @@ export default function AdminPage() {
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailError, setDetailError] = useState("");
 
+  const [caList, setCaList] = useState<{ id: number; fullName: string; email: string }[]>([]);
+  const [assigning, setAssigning] = useState(false);
+  const [selectedCaId, setSelectedCaId] = useState("");
+
   const chartData = contacts.map((contact) => ({
     date: contact.createdAt
       ? new Date(contact.createdAt).toLocaleDateString()
@@ -70,7 +74,23 @@ export default function AdminPage() {
       .then(setCases)
       .catch(() => setCases([]))
       .finally(() => setCasesLoading(false));
+    request<{ id: number; fullName: string; email: string }[]>("/api/v1/admin/cas")
+      .then(setCaList)
+      .catch(() => setCaList([]));
   }, []);
+
+  async function assignCa(caseId: number) {
+    if (!selectedCaId) return;
+    setAssigning(true);
+    try {
+      await request(`/api/v1/admin/business-cases/${caseId}/assign`, "PUT", { caUserId: Number(selectedCaId) });
+      setSelectedCase((prev) => (prev ? { ...prev, status: "CA_ASSIGNED" } : prev));
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Unable to assign CA");
+    } finally {
+      setAssigning(false);
+    }
+  }
 
   async function openCase(caseId: number) {
     setDetailLoading(true);
@@ -254,6 +274,32 @@ export default function AdminPage() {
                     <p><span className="text-gray-400">Phone: </span>{selectedCase.phone || "Not provided"}</p>
                     <p><span className="text-gray-400">Status: </span>{selectedCase.status}</p>
                     <p><span className="text-gray-400">Intake completed: </span>{selectedCase.intakeCompleted ? "Yes" : "No"}</p>
+                  </div>
+
+                  <div className="mt-5 rounded-xl border border-gray-200 p-4">
+                    <p className="text-xs uppercase tracking-widest text-gray-400 font-bold mb-2">Assign to CA</p>
+                    <div className="flex gap-2">
+                      <select
+                        value={selectedCaId}
+                        onChange={(e) => setSelectedCaId(e.target.value)}
+                        className="flex-1 rounded-lg border border-gray-300 p-2 text-sm"
+                      >
+                        <option value="">Select a CA...</option>
+                        {caList.map((ca) => (
+                          <option key={ca.id} value={ca.id}>{ca.fullName} ({ca.email})</option>
+                        ))}
+                      </select>
+                      <button
+                        onClick={() => assignCa(selectedCase.caseId)}
+                        disabled={!selectedCaId || assigning}
+                        className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-50"
+                      >
+                        {assigning ? "Assigning..." : "Assign"}
+                      </button>
+                    </div>
+                    {caList.length === 0 && (
+                      <p className="mt-2 text-xs text-gray-400">No CA accounts found — create a user with the CA role first.</p>
+                    )}
                   </div>
 
                   {selectedCase.intakeSummary && (
