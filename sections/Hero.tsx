@@ -5,6 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import GuaranteeBadge from "@/components/GuaranteeBadge";
 import { StatsService } from "@/services/stats-service";
 
+const SAMPLE_ISSUES: { title: string; severity: "HIGH" | "MEDIUM" }[] = [
+  { title: "GST return overdue by 4 days", severity: "HIGH" },
+  { title: "Advance tax not paid for Q2", severity: "HIGH" },
+  { title: "ROC annual filing pending", severity: "MEDIUM" },
+];
+
 export default function Hero() {
   const dashboardQuery = useQuery({
     queryKey: ["public-dashboard-stats"],
@@ -27,7 +33,7 @@ export default function Hero() {
     [clients && clients > 0 ? `${clients}+` : "500+", "Happy Clients"],
     ["10+", "Years Experience"],
     [avgResponse != null ? `${avgResponse}s` : "60sec", "Confirmed Response"],
-    [complianceRate != null ? `${complianceRate}%` : "95%", "Compliance Rate"],
+    [complianceRate != null ? `${complianceRate}%` : "95%", "Client Compliance Rate"],
   ];
 
   return (
@@ -40,29 +46,22 @@ export default function Hero() {
             </div>
 
             <h1 className="max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl">
-              All-in-One Finance & Tax Solutions
+              Know your tax health.
+              <br />
+              Fix it in one place.
             </h1>
 
             <p className="section-copy mt-5 max-w-2xl">
-              We help startups, businesses and professionals stay compliant,
-              optimize taxes and simplify financial operations with expert
-              support.
+              Take a free 60-second check to see exactly what&apos;s pending —
+              GST, income tax, TDS, ROC — then let our CAs handle it while
+              you track every step.
             </p>
 
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-  <Link href="/health-check" className="btn-primary">
-    Take Free Tax Health Check
-  </Link>
-
-  <a
-    href="https://wa.me/917013734079"
-    target="_blank"
-    rel="noreferrer"
-    className="btn-secondary"
-  >
-    Chat on WhatsApp
-  </a>
-</div>
+            <div className="mt-7">
+              <Link href="/health-check" className="btn-primary">
+                Take Free Tax Health Check
+              </Link>
+            </div>
 
             <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {heroStats.map(([value, label]) => (
@@ -81,76 +80,72 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="card-dark p-4 md:p-5">
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                ["Total Revenue", "INR 24,50,000", "+18.6% vs last month"],
-                ["Tax Savings", "INR 4,25,000", "+22.4% vs last month"],
-              ].map(([label, value, trend]) => (
+          <div className="card-dark p-5 md:p-6">
+            <div className="flex items-center justify-between">
+              <p className="eyebrow">Sample result</p>
+              <span className="rounded-full bg-white/5 px-3 py-1 text-[0.7rem] font-semibold text-secondary">
+                Ready in 60 sec
+              </span>
+            </div>
+
+            <h3 className="mt-2 text-lg font-semibold">
+              Your Tax Health Score
+            </h3>
+
+            <div className="mt-5 flex items-center gap-5">
+              <div className="relative h-28 w-28 shrink-0">
+                <div className="absolute inset-0 rounded-full border-[9px] border-amber-500/15" />
+                <div className="absolute inset-0 -rotate-45 rounded-full border-[9px] border-transparent border-t-amber-400 border-r-amber-400" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-3xl font-bold">58</span>
+                  <span className="text-[0.65rem] text-secondary">/100</span>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-amber-400">
+                  Needs attention
+                </p>
+                <p className="mt-1 text-sm text-secondary">
+                  3 actions are keeping this score down.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-2.5 border-t border-white/10 pt-5">
+              {SAMPLE_ISSUES.map((issue) => (
                 <div
-                  key={label}
-                  className="rounded-2xl border border-white/10 bg-white/[0.035] p-4"
+                  key={issue.title}
+                  className="flex items-center gap-2.5 text-sm"
                 >
-                  <p className="text-sm text-secondary">{label}</p>
-                  <h3 className="mt-2 text-2xl font-bold tracking-tight">
-                    {value}
-                  </h3>
-                  <p className="mt-2 text-sm font-semibold text-emerald-400">
-                    {trend}
-                  </p>
+                  <span
+                    className={`h-2 w-2 shrink-0 rounded-full ${
+                      issue.severity === "HIGH" ? "bg-red-400" : "bg-yellow-400"
+                    }`}
+                  />
+                  <span className="text-slate-300">{issue.title}</span>
                 </div>
               ))}
             </div>
 
-            <div className="mt-3 grid gap-3 lg:grid-cols-[1fr_190px]">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-4">
-                <div className="mb-6 flex items-center justify-between gap-4">
-                  <h3 className="text-lg font-semibold">Business Growth</h3>
-                  <span className="text-sm text-secondary">This Year</span>
-                </div>
-
-                <div className="flex h-40 items-end gap-2">
-                  {[44, 68, 56, 92, 76, 112, 84].map((height, index) => (
-                    <div
-                      key={index}
-                      className="w-full rounded-t-lg bg-gradient-to-t from-blue-700 to-blue-400"
-                      style={{ height }}
-                    />
-                  ))}
-                </div>
+            <div className="mt-6 flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.035] p-4">
+              <div>
+                <p className="text-sm font-semibold">GST Filing</p>
+                <p className="text-xs text-secondary">
+                  From ₹2,999 · 2 day turnaround
+                </p>
               </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-4">
-                <h3 className="text-lg font-semibold">Compliance</h3>
-
-                <div className="relative mx-auto my-5 h-28 w-28">
-                  <div className="absolute inset-0 rounded-full border-[9px] border-blue-500/15" />
-                  <div className="absolute inset-0 rotate-45 rounded-full border-[9px] border-transparent border-r-blue-400 border-t-blue-500" />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <h3 className="text-3xl font-bold">
-                      {complianceRate != null ? `${complianceRate}%` : "92%"}
-                    </h3>
-                    <p className="text-xs text-secondary">Compliant</p>
-                  </div>
-                </div>
-
-                <div className="space-y-2 text-sm">
-                  {["GST Returns", "Income Tax", "TDS Compliance", "ROC Filing"].map(
-                    (item) => (
-                      <div
-                        key={item}
-                        className="flex items-center justify-between gap-3"
-                      >
-                        <span className="text-slate-300">{item}</span>
-                        <span className="font-semibold text-emerald-400">
-                          On Time
-                        </span>
-                      </div>
-                    )
-                  )}
-                </div>
-              </div>
+              <Link
+                href="/health-check"
+                className="btn-primary shrink-0 !px-4 !py-2 !text-xs"
+              >
+                Fix with Tax60
+              </Link>
             </div>
+
+            <p className="mt-4 text-center text-xs text-secondary">
+              This is a sample — take the free check to see your own score.
+            </p>
           </div>
         </div>
       </div>
