@@ -50,18 +50,19 @@ export default function Hero() {
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Link href="/health-check" className="btn-primary">
-  Take Free Tax Health Check
-</Link>
+  <Link href="/health-check" className="btn-primary">
+    Take Free Tax Health Check
+  </Link>
 
-  href="https://wa.me/917013734079"
-  target="_blank"
-  rel="noreferrer"
-  className="btn-secondary"
->
-  Chat on WhatsApp
-</a>
-            </div>
+  <a
+    href="https://wa.me/917013734079"
+    target="_blank"
+    rel="noreferrer"
+    className="btn-secondary"
+  >
+    Chat on WhatsApp
+  </a>
+</div>
 
             <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {heroStats.map(([value, label]) => (
