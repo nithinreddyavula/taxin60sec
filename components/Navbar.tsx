@@ -7,7 +7,7 @@ import { useState } from "react";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/health-check", label: "Free Tax Score" },
+  { href: "/health-check", label: "Free Tax Health Check" },
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact" },
 ];
@@ -59,8 +59,8 @@ export default function Navbar() {
             >
               Chat on WhatsApp
             </a>
-            <Link href="/intake" className="btn-primary">
-              Start your case
+            <Link href="/health-check" className="btn-primary">
+              Free Tax Health Check
             </Link>
           </div>
 
@@ -99,11 +99,11 @@ export default function Navbar() {
                   WhatsApp
                 </a>
                 <Link
-                  href="/intake"
+                  href="/health-check"
                   className="btn-primary"
                   onClick={() => setIsOpen(false)}
                 >
-                  Start your case
+                  Free Tax Health Check
                 </Link>
               </div>
             </nav>

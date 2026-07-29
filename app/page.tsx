@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 import Hero from "@/sections/Hero";
+import DeadlinesWidget from "@/sections/DeadlinesWidget";
 import Services from "@/sections/Services";
 import WhyChooseUs from "@/sections/WhyChooseUs";
 import Testimonials from "@/sections/Testimonials";
@@ -18,6 +19,8 @@ export default function HomePage() {
       <main>
 
         <Hero />
+
+        <DeadlinesWidget />
 
         <Services />
 

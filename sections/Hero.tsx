@@ -30,11 +30,10 @@ export default function Hero() {
   const avgResponse = responseQuery.data?.averageResponseSeconds;
 
   const heroStats: [string, string][] = [
-    [clients && clients > 0 ? `${clients}+` : "500+", "Happy Clients"],
-    ["10+", "Years Experience"],
+    [clients && clients > 0 ? `${clients}+` : "New", "Happy Clients"],
     [avgResponse != null ? `${avgResponse}s` : "60sec", "Confirmed Response"],
-    [complianceRate != null ? `${complianceRate}%` : "95%", "Client Compliance Rate"],
-  ];
+    [complianceRate != null ? `${complianceRate}%` : "—", "Client Compliance Rate"],
+  ].filter(([value]) => value !== "—") as [string, string][];
 
   return (
     <section className="overflow-hidden py-10 md:py-14">
@@ -63,7 +62,7 @@ export default function Hero() {
               </Link>
             </div>
 
-            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
               {heroStats.map(([value, label]) => (
                 <div
                   key={label}
