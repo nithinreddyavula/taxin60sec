@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import AppShell from "@/components/AppShell";
 import ComplianceScoreWidget from "@/components/ComplianceScoreWidget";
 import ReferralCard from "@/components/ReferralCard";
+import TierBadge from "@/components/TierBadge";
 
 export default function DashboardPage() {
   return (
@@ -12,24 +12,8 @@ export default function DashboardPage() {
       <h1 className="mt-2 text-3xl font-bold">Your dashboard</h1>
 
       <div className="mt-6 space-y-6">
+        <TierBadge />
         <ComplianceScoreWidget />
-
-        <Link href="/vault" className="card-dark flex items-center justify-between p-5">
-          <div>
-            <p className="font-semibold">Document Vault</p>
-            <p className="text-sm text-secondary">All your submitted documents, organized by year</p>
-          </div>
-          <span className="btn-secondary shrink-0">Open Vault</span>
-        </Link>
-
-        <Link href="/nri/repatriation" className="card-dark flex items-center justify-between p-5">
-          <div>
-            <p className="font-semibold">NRI Repatriation Tracker</p>
-            <p className="text-sm text-secondary">Track fund repatriation against your yearly limit</p>
-          </div>
-          <span className="btn-secondary shrink-0">Open Tracker</span>
-        </Link>
-
         <ReferralCard />
       </div>
     </AppShell>
