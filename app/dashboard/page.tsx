@@ -22,6 +22,14 @@ export default function DashboardPage() {
           <span className="btn-secondary shrink-0">Open Vault</span>
         </Link>
 
+        <Link href="/nri/repatriation" className="card-dark flex items-center justify-between p-5">
+          <div>
+            <p className="font-semibold">NRI Repatriation Tracker</p>
+            <p className="text-sm text-secondary">Track fund repatriation against your yearly limit</p>
+          </div>
+          <span className="btn-secondary shrink-0">Open Tracker</span>
+        </Link>
+
         <ReferralCard />
       </div>
     </AppShell>
