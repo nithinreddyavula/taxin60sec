@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BriefcaseBusiness, ChevronRight, ClipboardList, LayoutDashboard, LogOut, Menu, ShieldCheck, UserRound, X } from "lucide-react";
+import { Bell, BriefcaseBusiness, Calendar, ChevronRight, ClipboardList, CreditCard, LayoutDashboard, LogOut, Menu, ShieldCheck, UserRound, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAppSession } from "./AppProviders";
 
-const clientLinks = [{ href: "/dashboard", label: "Overview", icon: LayoutDashboard }, { href: "/intake", label: "Start a service", icon: BriefcaseBusiness }, { href: "/dashboard", label: "My cases", icon: ClipboardList }, { href: "/profile", label: "Profile", icon: UserRound }];
+const clientLinks = [{ href: "/dashboard", label: "Overview", icon: LayoutDashboard }, { href: "/my-services", label: "My Services", icon: BriefcaseBusiness }, { href: "/calendar", label: "Tax Calendar", icon: Calendar }, { href: "/vault", label: "Documents Vault", icon: ClipboardList }, { href: "/notices", label: "Notices", icon: Bell }, { href: "/payments", label: "Payments", icon: CreditCard }, { href: "/profile", label: "Profile", icon: UserRound }];
 const caLinks = [{ href: "/ca/cases", label: "Work queue", icon: ClipboardList }, { href: "/profile", label: "Profile", icon: UserRound }];
 const adminLinks = [{ href: "/admin", label: "System overview", icon: LayoutDashboard }, { href: "/ca/cases", label: "Case queue", icon: ClipboardList }, { href: "/profile", label: "Profile", icon: UserRound }];
 
