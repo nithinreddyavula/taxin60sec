@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AuthService } from "@/services/auth-service";
 import { useAppSession } from "@/components/AppProviders";
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
+  const params = useSearchParams();
   const { setSession } = useAppSession();
 
   const [email, setEmail] = useState("");
@@ -23,6 +25,12 @@ export default function LoginPage() {
       const auth = await AuthService.login(email, password);
       setSession(auth);
 
+      const next = params.get("next");
+      if (next) {
+        router.push(next);
+        return;
+      }
+
       const isCa = auth.user.roles.includes("ROLE_CA");
       router.push(isCa ? "/ca/cases" : "/dashboard");
     } catch (e) {
@@ -30,6 +38,10 @@ export default function LoginPage() {
       setLoading(false);
     }
   }
+
+  const registerHref = params.get("next")
+    ? `/register?next=${encodeURIComponent(params.get("next")!)}`
+    : "/register";
 
   return (
     <div className="min-h-screen bg-[#020817] px-6 text-white flex items-center justify-center">
@@ -74,8 +86,23 @@ export default function LoginPage() {
               {message}
             </p>
           )}
+
+          <p className="text-center text-sm text-secondary">
+            New to Tax60?{" "}
+            <Link href={registerHref} className="font-semibold text-emerald-400 hover:text-emerald-300">
+              Create an account
+            </Link>
+          </p>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginContent />
+    </Suspense>
   );
 }

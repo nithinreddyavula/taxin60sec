@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AuthService } from "@/services/auth-service";
 import { useAppSession } from "@/components/AppProviders";
 
-export default function RegisterPage() {
+function RegisterContent() {
   const router = useRouter();
+  const params = useSearchParams();
   const { setSession } = useAppSession();
 
   const [fullName, setFullName] = useState("");
@@ -25,12 +26,18 @@ export default function RegisterPage() {
     try {
       const auth = await AuthService.register(fullName, email, phoneNumber, password);
       setSession(auth);
-      router.push("/dashboard");
+
+      const next = params.get("next");
+      router.push(next ?? "/dashboard");
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "Registration failed. Please try again.");
       setLoading(false);
     }
   }
+
+  const loginHref = params.get("next")
+    ? `/login?next=${encodeURIComponent(params.get("next")!)}`
+    : "/login";
 
   return (
     <div className="min-h-screen bg-[#020817] px-6 text-white flex items-center justify-center">
@@ -79,7 +86,7 @@ export default function RegisterPage() {
             Must be 8+ characters with uppercase, lowercase, a number, and a special character.
           </p>
 
-          {message && <p className="text-sm text-red-400">{message}</p>}
+          {message && <p className="text-sm text-red-300">{message}</p>}
 
           <button
             onClick={register}
@@ -91,12 +98,20 @@ export default function RegisterPage() {
 
           <p className="text-center text-sm text-secondary">
             Already have an account?{" "}
-            <Link href="/login" className="font-semibold text-blue-400 hover:text-blue-300">
+            <Link href={loginHref} className="font-semibold text-emerald-400 hover:text-emerald-300">
               Log in
             </Link>
           </p>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={null}>
+      <RegisterContent />
+    </Suspense>
   );
 }

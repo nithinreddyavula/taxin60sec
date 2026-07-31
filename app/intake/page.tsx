@@ -12,11 +12,15 @@ import {
   ServiceOffering,
 } from "@/services/intake-service";
 
+import { useAppSession } from "@/components/AppProviders";
+
 function IntakeContent() {
 
   const router = useRouter();
 
   const searchParams = useSearchParams();
+
+  const { user, ready } = useAppSession();
 
   const [loading, setLoading] = useState(true);
 
@@ -37,6 +41,14 @@ function IntakeContent() {
   const [phone, setPhone] = useState("");
 
   const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    if (!ready) return;
+    if (!user) {
+      const currentUrl = `${window.location.pathname}${window.location.search}`;
+      router.replace(`/login?next=${encodeURIComponent(currentUrl)}`);
+    }
+  }, [ready, user, router]);
 
   useEffect(() => {
 
@@ -232,6 +244,15 @@ setServices(loadedServices);
     }
 
   }
+
+  if (!ready || !user) {
+    return (
+      <main className="min-h-screen bg-[#020817] p-6 text-white">
+        <div className="mx-auto mt-24 h-40 max-w-5xl animate-pulse rounded-2xl bg-white/5" />
+      </main>
+    );
+  }
+
   return (
   <>
     <Navbar />
@@ -240,7 +261,7 @@ setServices(loadedServices);
 
       <section className="mx-auto max-w-4xl px-6 py-16">
 
-        <p className="text-sm uppercase tracking-widest text-cyan-400">
+        <p className="text-sm uppercase tracking-widest text-emerald-400">
           Tax60 Secure Intake
         </p>
 
@@ -374,7 +395,7 @@ setServices(loadedServices);
               <button
                 disabled={saving}
                 onClick={start}
-                className="mt-4 w-full rounded-xl bg-cyan-500 px-6 py-3 font-semibold text-black transition hover:bg-cyan-400 disabled:opacity-50"
+                className="mt-4 w-full rounded-xl bg-emerald-500 px-6 py-3 font-semibold text-white transition hover:bg-emerald-400 disabled:opacity-50"
               >
 
                 {saving
@@ -441,7 +462,7 @@ setServices(loadedServices);
 
               <button
                 disabled={saving}
-                className="w-full rounded-xl bg-cyan-500 px-6 py-3 font-semibold text-black transition hover:bg-cyan-400 disabled:opacity-50"
+                className="w-full rounded-xl bg-emerald-500 px-6 py-3 font-semibold text-white transition hover:bg-emerald-400 disabled:opacity-50"
               >
 
                 {saving

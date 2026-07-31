@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useAppSession } from "./AppProviders";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -14,6 +15,7 @@ const navLinks = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAppSession();
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#020817]/90 backdrop-blur-xl">
@@ -51,17 +53,17 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <a
-              href="https://wa.me/917013734079"
-              target="_blank"
-              rel="noreferrer"
-              className="btn-secondary"
-            >
-              Chat on WhatsApp
-            </a>
-
+            {user ? (
+              <Link href="/dashboard" className="btn-secondary">
+                Dashboard
+              </Link>
+            ) : (
+              <Link href="/login" className="btn-secondary">
+                Log in
+              </Link>
+            )}
             <Link href="/health-check" className="btn-primary">
-              Free Tax Health Check
+              Get Started Free
             </Link>
           </div>
 
@@ -91,21 +93,29 @@ export default function Navbar() {
               ))}
 
               <div className="grid gap-2 border-t border-white/10 pt-2 sm:grid-cols-2">
-                <a
-                  href="https://wa.me/917013734079"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-secondary"
-                >
-                  WhatsApp
-                </a>
-
+                {user ? (
+                  <Link
+                    href="/dashboard"
+                    className="btn-secondary"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="btn-secondary"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Log in
+                  </Link>
+                )}
                 <Link
                   href="/health-check"
                   className="btn-primary"
                   onClick={() => setIsOpen(false)}
                 >
-                  Free Tax Health Check
+                  Get Started Free
                 </Link>
               </div>
             </nav>
