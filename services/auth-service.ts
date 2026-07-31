@@ -1,7 +1,13 @@
 import { request } from "./client";
 
 export type UserRole = "ROLE_CLIENT" | "ROLE_CA" | "ROLE_ADMIN";
-export type AuthUser = { id?: number; name?: string; email?: string; roles: UserRole[] };
+export type AuthUser = {
+  id?: number;
+  fullName?: string;
+  email?: string;
+  phoneNumber?: string;
+  roles: UserRole[];
+};
 export type AuthSession = { accessToken: string; refreshToken: string; user: AuthUser };
 
 export const AuthService = {

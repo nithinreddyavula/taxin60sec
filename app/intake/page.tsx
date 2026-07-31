@@ -50,6 +50,15 @@ function IntakeContent() {
     }
   }, [ready, user, router]);
 
+  // We already know who this is - pre-fill from the session instead of
+  // making a just-registered/just-logged-in user retype their own details.
+  useEffect(() => {
+    if (!user) return;
+    setFullName((prev) => prev || user.fullName || "");
+    setPhone((prev) => prev || user.phoneNumber || "");
+    setEmail((prev) => prev || user.email || "");
+  }, [user]);
+
   useEffect(() => {
 
     async function load() {
@@ -333,6 +342,10 @@ setServices(loadedServices);
                 </div>
 
               )}
+
+              <p className="text-sm text-slate-400">
+                Confirm your details below — pre-filled from your account.
+              </p>
 
               <div>
 
