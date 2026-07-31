@@ -24,13 +24,13 @@ export default function Navbar() {
             className="flex min-w-0 items-center gap-3"
             onClick={() => setIsOpen(false)}
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 text-lg font-bold shadow-lg shadow-blue-500/20">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 text-lg font-bold shadow-lg shadow-emerald-500/20">
               T
             </div>
 
             <div className="min-w-0">
               <h2 className="text-xl font-bold leading-none tracking-tight sm:text-2xl">
-                Tax<span className="text-blue-500">60</span>Sec
+                Tax<span className="text-emerald-500">60</span>Sec
               </h2>
               <p className="mt-1 hidden text-[0.62rem] font-semibold tracking-[0.22em] text-secondary sm:block">
                 TAX | FINANCE | GROWTH
@@ -59,6 +59,7 @@ export default function Navbar() {
             >
               Chat on WhatsApp
             </a>
+
             <Link href="/health-check" className="btn-primary">
               Free Tax Health Check
             </Link>
@@ -98,6 +99,7 @@ export default function Navbar() {
                 >
                   WhatsApp
                 </a>
+
                 <Link
                   href="/health-check"
                   className="btn-primary"
