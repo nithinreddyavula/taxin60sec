@@ -18,7 +18,7 @@ export default function ProfilePage() {
             <UserRound size={26} className="text-emerald-600" />
           </div>
           <div>
-            <p className="text-lg font-bold text-slate-900">{user?.name ?? "Not provided"}</p>
+            <p className="text-lg font-bold text-slate-900">{user?.fullName ?? "Not provided"}</p>
             <p className="text-sm text-slate-500">
               {user?.roles?.map((role) => role.replace("ROLE_", "")).join(", ")}
             </p>
