@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { User, Briefcase, Globe, Building2, CheckCircle2, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
@@ -11,10 +12,10 @@ import {
 } from "@/services/health-check-service";
 
 const USER_TYPES = [
-  { value: "INDIVIDUAL", label: "Individual" },
-  { value: "FREELANCER", label: "Freelancer" },
-  { value: "BUSINESS", label: "Business" },
-  { value: "NRI", label: "NRI" },
+  { value: "INDIVIDUAL", label: "Individual", desc: "Salary, Investments, House Property", icon: User },
+  { value: "FREELANCER", label: "Freelancer", desc: "Consultant, Creator, Self-employed", icon: Briefcase },
+  { value: "NRI", label: "NRI", desc: "Living Abroad, Income in India", icon: Globe },
+  { value: "BUSINESS", label: "Business", desc: "Companies, LLP, Partnership", icon: Building2 },
 ];
 
 const QUESTIONS: Record<string, { key: string; text: string }[]> = {
@@ -39,10 +40,29 @@ const QUESTIONS: Record<string, { key: string; text: string }[]> = {
   ],
 };
 
-function scoreColor(score: number) {
-  if (score >= 85) return "text-green-400";
-  if (score >= 60) return "text-yellow-400";
-  return "text-red-400";
+const STEPS = ["About You", "Income Details", "Assets & Investments", "Review"];
+
+function ScoreGauge({ score }: { score: number }) {
+  const radius = 54;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (score / 100) * circumference;
+  const color = score >= 85 ? "#16A34A" : score >= 60 ? "#F59E0B" : "#DC2626";
+
+  return (
+    <div className="relative flex h-36 w-36 items-center justify-center">
+      <svg className="h-36 w-36 -rotate-90" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r={radius} fill="none" stroke="#E5E7EB" strokeWidth="10" />
+        <circle
+          cx="60" cy="60" r={radius} fill="none" stroke={color} strokeWidth="10"
+          strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round"
+        />
+      </svg>
+      <div className="absolute flex flex-col items-center">
+        <span className="text-3xl font-bold text-slate-900">{score}</span>
+        <span className="text-xs text-slate-400">/100</span>
+      </div>
+    </div>
+  );
 }
 
 export default function HealthCheckPage() {
@@ -53,8 +73,9 @@ export default function HealthCheckPage() {
   const [result, setResult] = useState<HealthCheckResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [leadEmail, setLeadEmail] = useState("");
+  const [leadPhone, setLeadPhone] = useState("");
   const [capturing, setCapturing] = useState(false);
-  const [leadId, setLeadId] = useState<number | null>(null);
+  const [captured, setCaptured] = useState(false);
 
   function selectType(type: string) {
     setUserType(type);
@@ -72,37 +93,22 @@ export default function HealthCheckPage() {
       const res = await HealthCheckService.evaluate(userType, answers);
       setResult(res);
       setStep("results");
-
-      try {
-        const lead = await HealthCheckService.captureLead(userType, res);
-        setLeadId(lead.id);
-      } catch {
-        // Silent capture is best-effort — the quiz still works without it.
-      }
+    } catch {
+      toast.error("Unable to run the check right now");
     } finally {
       setLoading(false);
     }
   }
 
-  function fixWithTax60(serviceId: number) {
-    if (leadId != null && typeof window !== "undefined") {
-      localStorage.setItem("tax60-health-check-lead-id", String(leadId));
-    }
-    router.push(`/intake?id=${serviceId}`);
-  }
-
-  const questions = QUESTIONS[userType] ?? [];
-  const allAnswered = questions.every((q) => answers[q.key] !== undefined);
-
   async function captureResults() {
     if (!result || !leadEmail.trim()) return;
     setCapturing(true);
     try {
-      const lead = await HealthCheckService.captureLead(userType, result, {
-        leadId: leadId ?? undefined,
+      await HealthCheckService.captureLead(userType, result, {
         email: leadEmail.trim(),
+        phoneNumber: leadPhone.trim(),
       });
-      setLeadId(lead.id);
+      setCaptured(true);
       toast.success("Results sent to your email");
     } catch {
       toast.error("Unable to send results right now");
@@ -111,157 +117,260 @@ export default function HealthCheckPage() {
     }
   }
 
+  const questions = QUESTIONS[userType] ?? [];
+  const allAnswered = questions.every((q) => answers[q.key] !== undefined);
+  const currentStepIndex = step === "type" ? 0 : step === "questions" ? 1 : 3;
+  const monitoredAreas = questions.length + 4;
+  const compliant = result ? monitoredAreas - result.issues.length : 0;
+  const onTimePercent = result ? Math.round((compliant / monitoredAreas) * 100) : 0;
+
   return (
-    <main className="min-h-screen bg-[#020817] text-white">
+    <main className="min-h-screen bg-[#f4f6f8] text-slate-900">
       <Navbar />
 
-      <section className="pt-16 pb-20">
-        <div className="container-main max-w-2xl">
+      <section className="pb-20 pt-12">
+        <div className="mx-auto max-w-3xl px-4">
 
-          <p className="text-blue-400 uppercase tracking-[0.3em] text-sm">
-            Free Tax Health Check
-          </p>
-
-          <h1 className="mt-3 text-4xl font-bold tracking-tight">
-            Find out where you stand — in under a minute
-          </h1>
+          <div className="mb-10 flex items-center justify-center gap-2 sm:gap-4">
+            {STEPS.map((label, i) => (
+              <div key={label} className="flex items-center gap-2 sm:gap-4">
+                <div className="flex flex-col items-center gap-1.5">
+                  <div
+                    className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
+                      i < currentStepIndex
+                        ? "bg-emerald-600 text-white"
+                        : i === currentStepIndex
+                        ? "bg-emerald-600 text-white ring-4 ring-emerald-100"
+                        : "bg-slate-200 text-slate-500"
+                    }`}
+                  >
+                    {i < currentStepIndex ? <CheckCircle2 size={16} /> : i + 1}
+                  </div>
+                  <span className="hidden text-xs font-medium text-slate-500 sm:block">{label}</span>
+                </div>
+                {i < STEPS.length - 1 && (
+                  <div className={`h-0.5 w-6 sm:w-12 ${i < currentStepIndex ? "bg-emerald-600" : "bg-slate-200"}`} />
+                )}
+              </div>
+            ))}
+          </div>
 
           {step === "type" && (
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {USER_TYPES.map((t) => (
-                <button
-                  key={t.value}
-                  onClick={() => selectType(t.value)}
-                  className="card-dark p-6 text-left text-xl font-semibold hover:border-blue-500/40 transition"
-                >
-                  {t.label}
-                </button>
-              ))}
+            <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+              <h1 className="text-center text-2xl font-bold text-slate-900">
+                Let&apos;s Check Your Tax Health
+              </h1>
+              <p className="mt-2 text-center text-slate-500">
+                Answer a few simple questions. It&apos;s free!
+              </p>
+
+              <p className="mt-8 mb-3 text-sm font-semibold text-slate-700">
+                What best describes you?
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {USER_TYPES.map((t) => {
+                  const Icon = t.icon;
+                  return (
+                    <button
+                      key={t.value}
+                      onClick={() => selectType(t.value)}
+                      className="flex items-start gap-3 rounded-xl border border-slate-200 p-4 text-left transition hover:border-emerald-400 hover:bg-emerald-50/50"
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-50">
+                        <Icon size={20} className="text-emerald-600" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-slate-900">{t.label}</p>
+                        <p className="text-xs text-slate-500">{t.desc}</p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <p className="mt-6 text-center text-xs text-slate-400">
+                Takes less than 2 minutes · 100% secure, your data is safe with us
+              </p>
             </div>
           )}
 
           {step === "questions" && (
-            <div className="mt-8 space-y-4">
-              {questions.map((q) => (
-                <div key={q.key} className="card-dark p-5">
-                  <p className="mb-3 text-secondary">{q.text}</p>
-                  <div className="flex gap-3">
-                    <button
-                      onClick={() => answer(q.key, true)}
-                      className={`px-5 py-2 rounded-lg font-medium ${
-                        answers[q.key] === true
-                          ? "bg-blue-600 text-white"
-                          : "bg-white/5 text-secondary"
-                      }`}
-                    >
-                      Yes
-                    </button>
-                    <button
-                      onClick={() => answer(q.key, false)}
-                      className={`px-5 py-2 rounded-lg font-medium ${
-                        answers[q.key] === false
-                          ? "bg-blue-600 text-white"
-                          : "bg-white/5 text-secondary"
-                      }`}
-                    >
-                      No
-                    </button>
+            <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+              <h1 className="text-2xl font-bold text-slate-900">A few quick questions</h1>
+              <p className="mt-1 text-slate-500">This helps us spot what needs attention.</p>
+
+              <div className="mt-6 space-y-3">
+                {questions.map((q) => (
+                  <div key={q.key} className="rounded-xl border border-slate-200 p-4">
+                    <p className="mb-3 text-sm font-medium text-slate-700">{q.text}</p>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => answer(q.key, true)}
+                        className={`rounded-lg px-5 py-2 text-sm font-semibold transition ${
+                          answers[q.key] === true
+                            ? "bg-emerald-600 text-white"
+                            : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        }`}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        onClick={() => answer(q.key, false)}
+                        className={`rounded-lg px-5 py-2 text-sm font-semibold transition ${
+                          answers[q.key] === false
+                            ? "bg-emerald-600 text-white"
+                            : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        }`}
+                      >
+                        No
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
 
               <button
                 onClick={seeResults}
                 disabled={!allAnswered || loading}
-                className="btn-primary w-full mt-2 disabled:opacity-50"
+                className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-50"
               >
                 {loading ? "Checking..." : "See my Tax Health Score"}
+                {!loading && <ArrowRight size={18} />}
               </button>
             </div>
           )}
 
           {step === "results" && result && (
-            <div className="mt-8 space-y-5">
+            <div className="space-y-5">
 
-              <div className="card-dark p-6 text-center">
-                <p className="text-sm text-secondary mb-1">Your tax health score</p>
-                <p className={`text-5xl font-bold ${scoreColor(result.score)}`}>
-                  {result.score}
-                  <span className="text-lg text-secondary">/100</span>
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+                <p className="text-center text-sm font-semibold uppercase tracking-wide text-slate-400">
+                  We&apos;ve Analyzed Your Profile
                 </p>
-                <p className="mt-2 text-secondary">{result.statusLabel}</p>
-              </div>
+                <h1 className="mt-1 text-center text-2xl font-bold text-slate-900">
+                  Here&apos;s what we found
+                </h1>
 
-              {result.issues.length > 0 && (
-                <div className="card-dark p-5">
-                  <p className="font-semibold mb-3">
-                    {result.issues.length} action{result.issues.length === 1 ? "" : "s"} need attention
-                  </p>
-                  <ul className="space-y-2">
-                    {result.issues.map((issue, i) => (
-                      <li key={i} className="flex items-center gap-2 text-sm">
-                        <span
-                          className={`h-2 w-2 rounded-full ${
-                            issue.severity === "HIGH" ? "bg-red-400" : "bg-yellow-400"
-                          }`}
-                        />
-                        {issue.title}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="mt-6 flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-center">
+                  <ScoreGauge score={result.score} />
+
+                  <div className="flex-1 sm:max-w-sm">
+                    {result.issues.length > 0 ? (
+                      <>
+                        <p className="mb-2 text-sm font-bold text-red-600">
+                          {result.issues.length} action{result.issues.length === 1 ? "" : "s"} need your attention
+                        </p>
+                        <div className="space-y-2">
+                          {result.issues.map((issue, i) => (
+                            <div key={i} className="flex items-center gap-2 rounded-lg bg-slate-50 px-3 py-2 text-sm">
+                              <span
+                                className={`h-2 w-2 shrink-0 rounded-full ${
+                                  issue.severity === "HIGH" ? "bg-red-500" : "bg-yellow-500"
+                                }`}
+                              />
+                              <span className="text-slate-700">{issue.title}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <p className="text-slate-600">
+                        You&apos;re in great shape! No urgent actions right now.
+                      </p>
+                    )}
+                  </div>
                 </div>
-              )}
+
+                <div className="mt-8 grid grid-cols-2 gap-3 border-t border-slate-100 pt-6 sm:grid-cols-4">
+                  <div className="text-center">
+                    <p className="text-xl font-bold text-slate-900">{monitoredAreas}</p>
+                    <p className="text-xs text-slate-500">Monitored Areas</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xl font-bold text-red-600">{result.issues.length}</p>
+                    <p className="text-xs text-slate-500">Action Needed</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xl font-bold text-emerald-600">{compliant}</p>
+                    <p className="text-xs text-slate-500">Compliant</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xl font-bold text-slate-900">{onTimePercent}%</p>
+                    <p className="text-xs text-slate-500">On-time Compliance</p>
+                  </div>
+                </div>
+              </div>
 
               {result.recommendations.length > 0 && (
-                <div className="space-y-3">
-                  <p className="font-semibold">Recommended for you</p>
-                  {result.recommendations.map((rec) => (
-                    <div key={rec.code} className="card-dark p-5 flex items-center justify-between">
-                      <div>
-                        <p className="font-semibold">{rec.displayName}</p>
-                        <p className="text-sm text-secondary">
-                          Starting ₹{Number(rec.priceFrom).toLocaleString("en-IN")} · {rec.turnaroundDays} day turnaround
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => fixWithTax60(rec.serviceId)}
-                        className="btn-primary shrink-0"
+                <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+                  <h2 className="text-center text-xl font-bold text-slate-900">
+                    Recommended for You
+                  </h2>
+                  <p className="mt-1 text-center text-sm text-slate-500">
+                    Based on your Tax Health Score
+                  </p>
+
+                  <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {result.recommendations.map((rec, i) => (
+                      <div
+                        key={rec.code}
+                        className={`relative rounded-xl border p-5 ${
+                          i === 0 ? "border-emerald-400 ring-1 ring-emerald-400" : "border-slate-200"
+                        }`}
                       >
-                        Fix with Tax60
-                      </button>
-                    </div>
-                  ))}
+                        {i === 0 && (
+                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-emerald-600 px-3 py-0.5 text-xs font-bold text-white">
+                            MOST RECOMMENDED
+                          </span>
+                        )}
+                        <p className="mt-1 font-bold text-slate-900">{rec.displayName}</p>
+                        <p className="mt-3 text-2xl font-bold text-slate-900">
+                          ₹{Number(rec.priceFrom).toLocaleString("en-IN")}
+                        </p>
+                        <p className="text-xs text-slate-500">{rec.turnaroundDays} day turnaround</p>
+                        <button
+                          onClick={() => router.push(`/intake?id=${rec.serviceId}`)}
+                          className="mt-4 w-full rounded-lg bg-emerald-600 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
+                        >
+                          Select Service
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
-              {result.issues.length === 0 && (
-                <p className="text-secondary text-center">
-                  You&apos;re in good shape! We&apos;ll keep monitoring your obligations.
-                </p>
-              )}
-
-              <div className="card-dark p-5">
-                <p className="font-semibold mb-1">Not ready yet?</p>
-                <p className="text-sm text-secondary mb-3">
-                  Get these results emailed to you so you don&apos;t lose them.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <input
-                    type="email"
-                    value={leadEmail}
-                    onChange={(e) => setLeadEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    className="flex-1 rounded-lg bg-white/5 border border-white/10 px-4 py-2 text-sm"
-                  />
-                  <button
-                    onClick={captureResults}
-                    disabled={!leadEmail.trim() || capturing}
-                    className="btn-secondary shrink-0 disabled:opacity-50"
-                  >
-                    {capturing ? "Sending..." : "Email my results"}
-                  </button>
+              {!captured && (
+                <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                  <p className="font-semibold text-slate-900">Not ready yet?</p>
+                  <p className="mb-3 text-sm text-slate-500">
+                    Get these results emailed to you so you don&apos;t lose them.
+                  </p>
+                  <div className="flex flex-col gap-2 sm:flex-row">
+                    <input
+                      type="email"
+                      value={leadEmail}
+                      onChange={(e) => setLeadEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      className="flex-1 rounded-lg border border-slate-200 px-4 py-2 text-sm"
+                    />
+                    <input
+                      type="tel"
+                      value={leadPhone}
+                      onChange={(e) => setLeadPhone(e.target.value)}
+                      placeholder="Phone (optional)"
+                      className="flex-1 rounded-lg border border-slate-200 px-4 py-2 text-sm"
+                    />
+                    <button
+                      onClick={captureResults}
+                      disabled={!leadEmail.trim() || capturing}
+                      className="shrink-0 rounded-lg border border-emerald-600 px-5 py-2 text-sm font-semibold text-emerald-600 transition hover:bg-emerald-50 disabled:opacity-50"
+                    >
+                      {capturing ? "Sending..." : "Email my results"}
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
 
             </div>
           )}
