@@ -85,7 +85,7 @@ export default function Contact() {
 
             <h2 className="section-title mt-3">
               Let&apos;s Build Your{" "}
-              <span className="text-blue-400">
+              <span className="text-emerald-600">
                 Business Smarter
               </span>
             </h2>
@@ -103,10 +103,10 @@ export default function Contact() {
                 return (
                   <div
                     key={item.label}
-                    className="flex gap-3 rounded-2xl border border-white/10 bg-white/[0.025] p-4"
+                    className="flex gap-3 rounded-2xl border border-slate-100 bg-white p-4"
                   >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-blue-500/15 bg-blue-500/10">
-                      <Icon className="h-5 w-5 text-blue-300" />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50">
+                      <Icon className="h-5 w-5 text-emerald-600" />
                     </div>
 
                     <div className="min-w-0">
@@ -114,7 +114,7 @@ export default function Contact() {
                         {item.label}
                       </p>
 
-                      <h3 className="mt-1 break-words text-lg font-semibold">
+                      <h3 className="mt-1 break-words text-lg font-semibold text-slate-900">
                         {item.value}
                       </h3>
                     </div>
@@ -126,7 +126,7 @@ export default function Contact() {
 
           <div className="card-dark w-full p-5 md:p-6">
 
-            <h3 className="text-2xl font-bold tracking-tight">
+            <h3 className="text-2xl font-bold tracking-tight text-slate-900">
               Book Free Consultation
             </h3>
 

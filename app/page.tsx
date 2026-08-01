@@ -1,6 +1,10 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import FeatureStrip from "@/components/FeatureStrip";
+import Metrics from "@/components/Metrics";
+import TrustBadges from "@/components/TrustBadges";
+import CtaBanner from "@/components/CtaBanner";
 
 import Hero from "@/sections/Hero";
 import DeadlinesWidget from "@/sections/DeadlinesWidget";
@@ -20,11 +24,19 @@ export default function HomePage() {
 
         <Hero />
 
-        <DeadlinesWidget />
+        <FeatureStrip />
+
+        <Metrics />
 
         <Services />
 
         <WhyChooseUs />
+
+        <TrustBadges />
+
+        <CtaBanner />
+
+        <DeadlinesWidget />
 
         <Testimonials />
 

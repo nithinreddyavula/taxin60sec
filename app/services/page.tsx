@@ -26,7 +26,7 @@ export default function ServicesPage() {
 
           <div className="max-w-3xl">
 
-            <p className="text-blue-400 uppercase tracking-[0.3em] text-sm">
+            <p className="text-emerald-600 uppercase tracking-[0.3em] text-sm font-semibold">
               Services
             </p>
 
@@ -49,7 +49,7 @@ export default function ServicesPage() {
 
               <div
                 key={service}
-                className="rounded-2xl border border-slate-200 bg-white/[0.03] p-4 text-sm font-semibold text-slate-600"
+                className="rounded-2xl border border-slate-200 bg-white p-4 text-sm font-semibold text-slate-600"
               >
                 {service}
               </div>

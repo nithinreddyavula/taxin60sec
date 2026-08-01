@@ -15,7 +15,7 @@ export default function GuaranteeBadge() {
   const hasLiveData = (data?.sampleSize ?? 0) > 0 && data?.averageResponseSeconds != null;
 
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2 text-sm font-medium text-blue-400">
+    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/70 px-4 py-1.5 text-xs font-semibold text-emerald-700">
       <Zap size={16} />
       {hasLiveData
         ? `Real average: ${data!.averageResponseSeconds}s response, ${data!.slaMetPercentage}% within 60s`

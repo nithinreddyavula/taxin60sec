@@ -86,7 +86,7 @@ function RegisterContent() {
             Must be 8+ characters with uppercase, lowercase, a number, and a special character.
           </p>
 
-          {message && <p className="text-sm text-red-300">{message}</p>}
+          {message && <p className="text-sm text-red-600">{message}</p>}
 
           <button
             onClick={register}
@@ -98,7 +98,7 @@ function RegisterContent() {
 
           <p className="text-center text-sm text-secondary">
             Already have an account?{" "}
-            <Link href={loginHref} className="font-semibold text-emerald-400 hover:text-emerald-300">
+            <Link href={loginHref} className="font-semibold text-emerald-600 hover:text-emerald-700">
               Log in
             </Link>
           </p>

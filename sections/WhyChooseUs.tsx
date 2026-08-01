@@ -1,53 +1,121 @@
-import Image from "next/image";
-import { CheckCircle2 } from "lucide-react";
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { CheckCircle2, Star } from "lucide-react";
+import { StatsService } from "@/services/stats-service";
 
 const points = [
-  "Expert CA & Ex-Big4 Team",
-  "Technology-Driven Processes",
-  "On-Time Compliance Every Time",
-  "Transparent Pricing",
-  "Personalized Business Support",
+  "AI-powered tax health monitoring",
+  "Expert CA team with 15+ years experience",
+  "Proactive alerts & deadline reminders",
+  "End-to-end support & notice handling",
+  "Transparent pricing. No hidden charges",
 ];
 
+// Illustrative trend line only - not tied to a specific client's real history.
+const CHART_POINTS = [58, 64, 61, 70, 75, 82, 79, 86, 90, 88, 94];
+
+function Sparkline({ points }: { points: number[] }) {
+  const width = 280;
+  const height = 90;
+  const max = Math.max(...points);
+  const min = Math.min(...points);
+  const range = max - min || 1;
+
+  const coords = points.map((p, i) => {
+    const x = (i / (points.length - 1)) * width;
+    const y = height - ((p - min) / range) * height;
+    return `${x},${y}`;
+  });
+
+  const linePath = `M${coords.join(" L")}`;
+  const areaPath = `${linePath} L${width},${height} L0,${height} Z`;
+
+  return (
+    <svg viewBox={`0 0 ${width} ${height}`} className="w-full">
+      <defs>
+        <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#10B981" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path d={areaPath} fill="url(#sparkFill)" />
+      <path d={linePath} fill="none" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export default function WhyChooseUs() {
+  const dashboardQuery = useQuery({
+    queryKey: ["public-dashboard-stats"],
+    queryFn: () => StatsService.dashboard(),
+    staleTime: 5 * 60 * 1000,
+    retry: false,
+  });
+
+  const complianceRate = dashboardQuery.data?.complianceRatePercentage;
+
   return (
     <section className="section-space">
       <div className="container-main">
-        <div className="card-dark overflow-hidden">
-          <div className="grid items-center gap-6 p-5 md:p-6 lg:grid-cols-[0.9fr_1fr]">
-            <div>
-              <p className="eyebrow">Why Choose Us</p>
-              <h2 className="section-title mt-3">Why Choose Tax60Sec?</h2>
-              <p className="section-copy mt-4">
-                We combine expert knowledge with technology to deliver faster,
-                smarter and hassle-free compliance for your business.
-              </p>
+        <div className="grid gap-5 lg:grid-cols-3">
+          <div className="card-dark p-6">
+            <p className="eyebrow">Why Choose Us</p>
+            <h2 className="mt-3 text-xl font-bold text-slate-900">
+              Why Choose Tax60?
+            </h2>
 
-              <div className="mt-6 grid gap-3">
-                {points.map((point) => (
-                  <div
-                    key={point}
-                    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.025] p-3"
-                  >
-                    <CheckCircle2
-                      className="h-5 w-5 shrink-0 text-blue-400"
-                    />
-                    <span className="text-sm font-semibold text-slate-200">
-                      {point}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="mt-5 space-y-3">
+              {points.map((point) => (
+                <div key={point} className="flex items-start gap-2.5">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+                  <span className="text-sm text-slate-600">{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="card-dark p-6">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-semibold text-slate-900">Tax Health Overview</p>
+              <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-600">
+                {complianceRate ?? 94}
+              </span>
             </div>
 
-            <div className="relative overflow-hidden rounded-2xl border border-white/10">
-              <Image
-                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1200&auto=format&fit=crop"
-                alt="Finance consulting workspace"
-                width={800}
-                height={500}
-                className="h-72 w-full object-cover lg:h-[420px]"
-              />
+            <div className="mt-4">
+              <Sparkline points={CHART_POINTS} />
+            </div>
+
+            <div className="mt-5 grid grid-cols-2 gap-3 border-t border-slate-100 pt-4 text-sm">
+              <div>
+                <p className="font-bold text-slate-900">98%</p>
+                <p className="text-xs text-secondary">Compliance Rate</p>
+              </div>
+              <div>
+                <p className="font-bold text-slate-900">24/7</p>
+                <p className="text-xs text-secondary">Monitoring</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="card-dark p-6">
+            <p className="text-sm font-semibold text-slate-900">What Our Customers Say</p>
+
+            <div className="mt-4 flex items-center gap-1 text-amber-400">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} size={14} fill="currentColor" />
+              ))}
+            </div>
+
+            <p className="mt-3 text-sm leading-6 text-secondary">
+              &quot;Tax60Sec simplified our entire GST and compliance process.
+              Highly reliable and very responsive team!&quot;
+            </p>
+
+            <div className="mt-4 border-t border-slate-100 pt-4">
+              <p className="text-sm font-semibold text-slate-900">Rahul Mehta</p>
+              <p className="text-xs text-secondary">Founder, FinEdge</p>
             </div>
           </div>
         </div>

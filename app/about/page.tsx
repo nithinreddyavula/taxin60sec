@@ -31,7 +31,7 @@ export default function AboutPage() {
             <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
               {metrics.map(([value, label]) => (
                 <div key={label} className="card-dark p-4">
-                  <h2 className="text-3xl font-bold tracking-tight text-blue-400">
+                  <h2 className="text-3xl font-bold tracking-tight text-emerald-600">
                     {value}
                   </h2>
                   <p className="mt-1 text-sm text-secondary">{label}</p>

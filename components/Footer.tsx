@@ -20,8 +20,8 @@ export default function Footer() {
       <div className="container-main py-10 md:py-12">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr]">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight">
-              Tax<span className="text-blue-500">60</span>Sec
+            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+              Tax<span className="text-emerald-600">60</span>Sec
             </h2>
             <p className="mt-3 max-w-sm text-sm leading-6 text-secondary">
               Helping businesses stay compliant, save taxes and grow with

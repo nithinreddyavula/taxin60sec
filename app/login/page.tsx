@@ -82,14 +82,14 @@ function LoginContent() {
           </button>
 
           {message && (
-            <p className="text-sm text-red-300">
+            <p className="text-sm text-red-600">
               {message}
             </p>
           )}
 
           <p className="text-center text-sm text-secondary">
             New to Tax60?{" "}
-            <Link href={registerHref} className="font-semibold text-emerald-400 hover:text-emerald-300">
+            <Link href={registerHref} className="font-semibold text-emerald-600 hover:text-emerald-700">
               Create an account
             </Link>
           </p>

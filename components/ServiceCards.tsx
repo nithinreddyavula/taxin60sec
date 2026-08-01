@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
+  ArrowRight,
   Calculator,
   FileText,
   Building2,
@@ -49,42 +50,49 @@ export default function ServiceCards() {
 
   if (loading) {
     return (
-      <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {[...Array(6)].map((_, i) => (
-          <div key={i} className="card-dark p-6 animate-pulse h-48" />
+          <div key={i} className="card-dark h-40 animate-pulse p-6" />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+    <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {services.map((service) => {
         const Icon = ICONS[service.icon] ?? FileText;
         const isNri = service.category === "NRI";
 
         return (
-          <article key={service.code} className="card-dark p-6">
-            <Icon className="text-blue-400" size={28} />
+          <Link
+            key={service.code}
+            href={`/intake?id=${service.id}`}
+            className="card-dark group flex flex-col p-5 transition hover:-translate-y-0.5 hover:shadow-lg"
+          >
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50">
+              <Icon className="text-emerald-600" size={20} />
+            </div>
 
-            <h3 className="mt-5 text-xl font-bold">{service.displayName}</h3>
+            <h3 className="mt-4 text-base font-bold text-slate-900">
+              {service.displayName}
+            </h3>
 
-            <p className="mt-2 text-secondary">{service.description}</p>
-
-            <p className="mt-3 text-sm font-semibold text-blue-400">
-              Starting {formatInr(service.basePrice)}
-              {isNri
-                ? ` (approx. ${formatUsdEstimate(service.basePrice)})`
-                : ""}
+            <p className="mt-1.5 line-clamp-2 text-sm text-secondary">
+              {service.description}
             </p>
 
-            <Link
-              href={`/intake?id=${service.id}`}
-              className="btn-primary mt-5 block w-full text-center"
-            >
-              Get Started
-            </Link>
-          </article>
+            <div className="mt-4 flex items-center justify-between">
+              <p className="text-sm font-semibold text-emerald-600">
+                From {formatInr(service.basePrice)}
+                {isNri ? ` (approx. ${formatUsdEstimate(service.basePrice)})` : ""}
+              </p>
+              <ArrowRight
+                size={16}
+                className="text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-emerald-600"
+              />
+            </div>
+          </Link>
         );
       })}
     </div>

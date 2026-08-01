@@ -31,7 +31,7 @@ export default function Testimonials() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((item) => (
             <div key={item.name} className="card-dark p-5">
-              <div className="mb-4 flex items-center gap-1 text-blue-300">
+              <div className="mb-4 flex items-center gap-1 text-amber-400">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <Star key={index} size={14} fill="currentColor" />
                 ))}
@@ -39,8 +39,8 @@ export default function Testimonials() {
 
               <p className="text-sm leading-6 text-secondary">&quot;{item.text}&quot;</p>
 
-              <div className="mt-5 border-t border-white/10 pt-4">
-                <h4 className="font-semibold">{item.name}</h4>
+              <div className="mt-5 border-t border-slate-100 pt-4">
+                <h4 className="font-semibold text-slate-900">{item.name}</h4>
                 <p className="mt-1 text-sm text-secondary">{item.role}</p>
               </div>
             </div>
