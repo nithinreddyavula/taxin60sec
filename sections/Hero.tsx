@@ -16,31 +16,42 @@ export default function Hero() {
   const complianceRate = dashboardQuery.data?.complianceRatePercentage ?? 94;
 
   return (
-    <section className="relative overflow-hidden py-14 md:py-20">
-      {/* Decorative city-skyline backdrop */}
+    <section className="relative overflow-hidden py-10 md:py-14">
+      {/* Ambient glow — soft and subtle, not a colored blob */}
+      <div
+        className="pointer-events-none absolute -left-32 top-0 h-72 w-72 rounded-full bg-emerald-500/10 blur-[130px]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute right-0 top-1/4 h-72 w-72 rounded-full bg-teal-400/8 blur-[130px]"
+        aria-hidden="true"
+      />
+
+      {/* Decorative city-skyline accent — small, faint, contained to the bottom edge */}
       <svg
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-72 w-full opacity-30"
-        viewBox="0 0 1200 300"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-40 w-full opacity-20 md:h-52"
+        viewBox="0 0 1200 200"
         preserveAspectRatio="none"
         aria-hidden="true"
       >
         <defs>
           <linearGradient id="skylineFade" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0%" stopColor="#10b981" stopOpacity="0.35" />
+            <stop offset="0%" stopColor="#10b981" stopOpacity="0.5" />
             <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
           </linearGradient>
         </defs>
         {[
-          [40, 120], [120, 190], [200, 90], [280, 220], [360, 150],
-          [440, 240], [520, 110], [600, 200], [680, 160], [760, 230],
-          [840, 100], [920, 180], [1000, 140], [1080, 210], [1150, 130],
+          [20, 70], [90, 110], [160, 55], [230, 140], [300, 90],
+          [370, 150], [440, 65], [510, 120], [580, 170], [650, 100],
+          [720, 60], [790, 130], [860, 85], [930, 150], [1000, 75],
+          [1070, 105], [1140, 60],
         ].map(([x, h], i) => (
-          <rect key={i} x={x} y={300 - h} width="46" height={h} fill="url(#skylineFade)" />
+          <rect key={i} x={x} y={200 - h} width="56" height={h} fill="url(#skylineFade)" />
         ))}
       </svg>
 
       <div className="container-main relative">
-        <div className="grid items-start gap-8 lg:grid-cols-[1.15fr_1.4fr]">
+        <div className="grid items-start gap-6 lg:grid-cols-[1.15fr_1.4fr]">
           {/* Left: headline */}
           <div>
             <div className="mb-5 flex flex-wrap gap-2">
@@ -85,15 +96,15 @@ export default function Hero() {
           </div>
 
           {/* Right: Tax Health Score + Tax Overview, side by side */}
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div className="card-dark p-6">
-              <p className="flex items-center gap-1.5 text-sm font-medium text-secondary">
+          <div className="grid gap-4 sm:grid-cols-[0.85fr_1.15fr]">
+            <div className="card-dark p-5">
+              <p className="flex items-center gap-1.5 text-xs font-medium text-secondary">
                 Your Tax Health Score
               </p>
 
-              <div className="mt-4 flex items-center gap-5">
-                <div className="relative h-24 w-24 shrink-0">
-                  <svg viewBox="0 0 100 100" className="h-24 w-24 -rotate-90">
+              <div className="mt-3 flex items-center gap-4">
+                <div className="relative h-20 w-20 shrink-0">
+                  <svg viewBox="0 0 100 100" className="h-20 w-20 -rotate-90">
                     <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" />
                     <circle
                       cx="50"
@@ -108,52 +119,81 @@ export default function Hero() {
                     />
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-2xl font-bold text-white">
+                    <span className="text-xl font-bold text-white">
                       {complianceRate}
-                      <span className="text-sm font-medium text-slate-500">/100</span>
+                      <span className="text-xs font-medium text-slate-500">/100</span>
                     </span>
                   </div>
                 </div>
-                <p className="flex items-center gap-1.5 text-sm font-semibold text-emerald-400">
+                <p className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
                   <span className="h-2 w-2 rounded-full bg-emerald-400" /> Excellent
                 </p>
               </div>
 
-              <div className="mt-5 rounded-xl border border-white/8 bg-white/[.03] p-3 text-sm text-slate-300">
+              <div className="mt-3 rounded-xl border border-white/8 bg-white/[.03] p-2.5 text-xs text-slate-300">
                 You&apos;re doing great! 🎉 We found{" "}
                 <span className="font-semibold text-amber-400">2 areas</span> that
                 need your attention.
               </div>
 
-              <Link href="/health-check" className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-white/12 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5">
+              <Link href="/health-check" className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-white/12 py-2 text-xs font-semibold text-slate-200 transition hover:bg-white/5">
                 View Full Report
-                <ArrowRight size={15} />
+                <ArrowRight size={13} />
               </Link>
             </div>
 
-            <div className="card-dark p-6">
-              <p className="text-sm font-semibold text-white">Tax Overview</p>
-              <div className="mt-4 grid grid-cols-2 auto-rows-fr gap-3">
-                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-3">
-                  <p className="flex items-center gap-1.5 text-xs text-secondary"><Calendar size={13} /> Upcoming Deadlines</p>
-                  <p className="mt-1 text-xl font-bold text-white">09</p>
-                  <p className="text-[11px] text-secondary">This Month</p>
+            <div className="card-dark p-5">
+              <p className="text-xs font-semibold text-white">Tax Overview</p>
+              <div className="mt-3 grid grid-cols-2 auto-rows-fr gap-2.5">
+                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-2.5">
+                  <p className="flex items-center gap-1.5 text-[11px] text-secondary"><Calendar size={12} /> Upcoming Deadlines</p>
+                  <p className="mt-0.5 text-lg font-bold text-white">09</p>
+                  <p className="text-[10px] text-secondary">This Month</p>
                 </div>
-                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-3">
-                  <p className="flex items-center gap-1.5 text-xs text-secondary"><TrendingUp size={13} /> Potential Savings</p>
-                  <p className="mt-1 text-xl font-bold text-white">₹24,800</p>
-                  <p className="text-[11px] text-secondary">Identify Now</p>
+                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-2.5">
+                  <p className="flex items-center gap-1.5 text-[11px] text-secondary"><TrendingUp size={12} /> Potential Savings</p>
+                  <p className="mt-0.5 text-lg font-bold text-white">₹24,800</p>
+                  <p className="text-[10px] text-secondary">Identify Now</p>
                 </div>
-                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-3">
-                  <p className="flex items-center gap-1.5 text-xs text-secondary"><FileText size={13} /> Active Services</p>
-                  <p className="mt-1 text-xl font-bold text-white">03</p>
-                  <p className="text-[11px] text-secondary">In Progress</p>
+                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-2.5">
+                  <p className="flex items-center gap-1.5 text-[11px] text-secondary"><FileText size={12} /> Active Services</p>
+                  <p className="mt-0.5 text-lg font-bold text-white">03</p>
+                  <p className="text-[10px] text-secondary">In Progress</p>
                 </div>
-                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-3">
-                  <p className="flex items-center gap-1.5 text-xs text-secondary"><ShieldCheck size={13} /> Tax Compliance</p>
-                  <p className="mt-1 text-xl font-bold text-white">98%</p>
-                  <p className="text-[11px] text-secondary">On Track</p>
+                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-2.5">
+                  <p className="flex items-center gap-1.5 text-[11px] text-secondary"><ShieldCheck size={12} /> Tax Compliance</p>
+                  <p className="mt-0.5 text-lg font-bold text-white">98%</p>
+                  <p className="text-[10px] text-secondary">On Track</p>
                 </div>
+              </div>
+
+              <div className="mt-4 flex items-center justify-between">
+                <p className="text-xs font-semibold text-white">Recent Activity</p>
+                <Link href="/notices" className="text-[11px] font-semibold text-emerald-400">
+                  View All
+                </Link>
+              </div>
+
+              <div className="mt-2.5 space-y-2">
+                {[
+                  { label: "ITR Filing FY 23-24", status: "Completed", tone: "text-emerald-400" },
+                  { label: "GST Return Jul 2024", status: "Due in 8 days", tone: "text-amber-400" },
+                  { label: "TDS Compliance Q1", status: "Completed", tone: "text-emerald-400" },
+                  { label: "Document Uploaded", status: "2 days ago", tone: "text-secondary" },
+                ].map((activity) => (
+                  <div
+                    key={activity.label}
+                    className="flex items-center justify-between rounded-lg border border-white/8 bg-white/[.03] px-2.5 py-2"
+                  >
+                    <span className="flex items-center gap-2 text-[11px] text-slate-300">
+                      <FileText size={12} className="text-secondary" />
+                      {activity.label}
+                    </span>
+                    <span className={`text-[10px] font-semibold ${activity.tone}`}>
+                      {activity.status}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
