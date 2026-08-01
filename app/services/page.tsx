@@ -16,7 +16,7 @@ const extraServices = [
 
 export default function ServicesPage() {
   return (
-    <main className="min-h-screen bg-[#020817] text-white">
+    <main className="min-h-screen bg-[#f7faf9] text-slate-900">
 
       <Navbar />
 
@@ -49,7 +49,7 @@ export default function ServicesPage() {
 
               <div
                 key={service}
-                className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm font-semibold text-slate-200"
+                className="rounded-2xl border border-slate-200 bg-white/[0.03] p-4 text-sm font-semibold text-slate-600"
               >
                 {service}
               </div>

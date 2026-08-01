@@ -40,7 +40,7 @@ function RegisterContent() {
     : "/login";
 
   return (
-    <div className="min-h-screen bg-[#020817] px-6 text-white flex items-center justify-center">
+    <div className="min-h-screen bg-[#f7faf9] px-6 text-slate-900 flex items-center justify-center">
       <div className="card-dark w-full max-w-md p-8">
         <p className="eyebrow">Create your account</p>
 

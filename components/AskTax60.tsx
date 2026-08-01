@@ -33,7 +33,7 @@ export default function AskTax60({ caseId }: { caseId: number }) {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-400"
+        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500 text-slate-900 shadow-lg hover:bg-blue-400"
         aria-label="Ask Tax60"
       >
         <MessageCircle size={22} />
@@ -42,8 +42,8 @@ export default function AskTax60({ caseId }: { caseId: number }) {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex h-[28rem] w-80 flex-col rounded-2xl border border-white/10 bg-[#060d1d] shadow-2xl">
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+    <div className="fixed bottom-6 right-6 z-40 flex h-[28rem] w-80 flex-col rounded-2xl border border-slate-200 bg-white shadow-2xl">
+      <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
         <p className="text-sm font-semibold">Ask Tax60</p>
         <button onClick={() => setOpen(false)} aria-label="Close chat">
           <X size={18} />
@@ -61,8 +61,8 @@ export default function AskTax60({ caseId }: { caseId: number }) {
             key={i}
             className={`max-w-[85%] rounded-xl px-3 py-2 text-sm ${
               m.role === "user"
-                ? "ml-auto bg-blue-500 text-white"
-                : "bg-white/5 text-slate-200"
+                ? "ml-auto bg-blue-500 text-slate-900"
+                : "bg-slate-100 text-slate-600"
             }`}
           >
             {m.content}
@@ -70,7 +70,7 @@ export default function AskTax60({ caseId }: { caseId: number }) {
         ))}
       </div>
 
-      <div className="flex items-center gap-2 border-t border-white/10 p-3">
+      <div className="flex items-center gap-2 border-t border-slate-200 p-3">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -82,7 +82,7 @@ export default function AskTax60({ caseId }: { caseId: number }) {
           onClick={send}
           disabled={sending}
           aria-label="Send"
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-500 text-white disabled:opacity-50"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-500 text-slate-900 disabled:opacity-50"
         >
           <Send size={16} />
         </button>

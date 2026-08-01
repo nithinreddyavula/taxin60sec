@@ -25,7 +25,7 @@ function ConfirmContent() {
   }
 
   return (
-    <main className="min-h-screen bg-[#020817] px-6 py-16 text-white">
+    <main className="min-h-screen bg-[#f7faf9] px-6 py-16 text-slate-900">
       <div className="mx-auto max-w-xl text-center">
         <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500/15">
           <CheckCircle2 className="h-10 w-10 text-emerald-400" />
@@ -38,7 +38,7 @@ function ConfirmContent() {
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
           <div className="flex flex-col items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/5">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100">
               <UserRound className="h-6 w-6 text-emerald-400" />
             </div>
             <p className="text-sm font-semibold">
@@ -50,7 +50,7 @@ function ConfirmContent() {
           </div>
 
           <div className="flex flex-col items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/5">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100">
               <UploadCloud className="h-6 w-6 text-emerald-400" />
             </div>
             <p className="text-sm font-semibold">Upload Documents</p>
@@ -58,7 +58,7 @@ function ConfirmContent() {
           </div>
 
           <div className="flex flex-col items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/5">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100">
               <FileText className="h-6 w-6 text-emerald-400" />
             </div>
             <p className="text-sm font-semibold">We Assign Your CA</p>

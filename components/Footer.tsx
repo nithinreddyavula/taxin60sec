@@ -16,7 +16,7 @@ const services = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#020817]">
+    <footer className="border-t border-slate-200 bg-[#f7faf9]">
       <div className="container-main py-10 md:py-12">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr]">
           <div>
@@ -30,7 +30,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-200">
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-600">
               Quick Links
             </h4>
             <div className="mt-4 flex flex-col gap-2.5 text-sm text-secondary">
@@ -38,7 +38,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="transition hover:text-white"
+                  className="transition hover:text-slate-900"
                 >
                   {link.label}
                 </Link>
@@ -47,7 +47,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-200">
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-600">
               Services
             </h4>
             <div className="mt-4 flex flex-col gap-2.5 text-sm text-secondary">
@@ -58,7 +58,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-200">
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-600">
               Contact
             </h4>
             <div className="mt-4 space-y-2.5 text-sm text-secondary">
@@ -69,7 +69,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-secondary sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-3 border-t border-slate-200 pt-6 text-sm text-secondary sm:flex-row sm:items-center sm:justify-between">
           <p>Copyright 2026 Tax60Sec. All rights reserved.</p>
           <p>Tax | Finance | Growth</p>
         </div>

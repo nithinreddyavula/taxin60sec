@@ -10,7 +10,7 @@ const metrics = [
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[#020817] text-white">
+    <main className="min-h-screen bg-[#f7faf9] text-slate-900">
       <Navbar />
 
       <section className="page-hero">

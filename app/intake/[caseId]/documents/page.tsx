@@ -227,7 +227,7 @@ return (
   <>
     <Navbar />
 
-    <main className="min-h-screen bg-[#020817] text-white">
+    <main className="min-h-screen bg-[#f7faf9] text-slate-900">
       <section className="mx-auto max-w-5xl px-6 py-16">
         <p className="text-cyan-400 uppercase tracking-widest">
           Secure Upload
@@ -242,19 +242,19 @@ return (
           submit your application for CA review.
         </p>
 
-        <div className="mt-10 rounded-2xl border border-white/10 bg-[#111827] p-8">
+        <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-8">
           {loading ? (
             <div className="space-y-4">
-              <div className="h-12 animate-pulse rounded bg-white/10" />
-              <div className="h-12 animate-pulse rounded bg-white/10" />
-              <div className="h-12 animate-pulse rounded bg-white/10" />
+              <div className="h-12 animate-pulse rounded bg-slate-100" />
+              <div className="h-12 animate-pulse rounded bg-slate-100" />
+              <div className="h-12 animate-pulse rounded bg-slate-100" />
             </div>
           ) : (
             <div className="space-y-6">
               {documents.map((doc) => (
                 <div
                   key={doc.id}
-                  className="rounded-xl border border-white/10 bg-[#020817] p-6"
+                  className="rounded-xl border border-slate-200 bg-[#f7faf9] p-6"
                 >
                   <div className="flex items-center justify-between">
                     <div>
@@ -282,7 +282,7 @@ return (
 
                   <input
                     type="file"
-                    className="mt-5 block w-full rounded-lg border border-white/10 bg-[#111827] p-3"
+                    className="mt-5 block w-full rounded-lg border border-slate-200 bg-white p-3"
                     onChange={(e) =>
                       chooseFile(
                         doc.id,
