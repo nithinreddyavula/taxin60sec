@@ -133,23 +133,23 @@ export default function Hero() {
 
             <div className="card-dark p-6">
               <p className="text-sm font-semibold text-white">Tax Overview</p>
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                <div className="rounded-xl border border-white/8 bg-white/[.03] p-3">
+              <div className="mt-4 grid grid-cols-2 auto-rows-fr gap-3">
+                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-3">
                   <p className="flex items-center gap-1.5 text-xs text-secondary"><Calendar size={13} /> Upcoming Deadlines</p>
                   <p className="mt-1 text-xl font-bold text-white">09</p>
                   <p className="text-[11px] text-secondary">This Month</p>
                 </div>
-                <div className="rounded-xl border border-white/8 bg-white/[.03] p-3">
+                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-3">
                   <p className="flex items-center gap-1.5 text-xs text-secondary"><TrendingUp size={13} /> Potential Savings</p>
                   <p className="mt-1 text-xl font-bold text-white">₹24,800</p>
                   <p className="text-[11px] text-secondary">Identify Now</p>
                 </div>
-                <div className="rounded-xl border border-white/8 bg-white/[.03] p-3">
+                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-3">
                   <p className="flex items-center gap-1.5 text-xs text-secondary"><FileText size={13} /> Active Services</p>
                   <p className="mt-1 text-xl font-bold text-white">03</p>
                   <p className="text-[11px] text-secondary">In Progress</p>
                 </div>
-                <div className="rounded-xl border border-white/8 bg-white/[.03] p-3">
+                <div className="flex flex-col justify-between rounded-xl border border-white/8 bg-white/[.03] p-3">
                   <p className="flex items-center gap-1.5 text-xs text-secondary"><ShieldCheck size={13} /> Tax Compliance</p>
                   <p className="mt-1 text-xl font-bold text-white">98%</p>
                   <p className="text-[11px] text-secondary">On Track</p>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown, Menu, Phone, ShieldCheck, UserRound, X } from "lucide-react";
+import { ChevronDown, Menu, ShieldCheck, UserRound, X } from "lucide-react";
 import { useState } from "react";
 import { useAppSession } from "./AppProviders";
 
@@ -10,7 +10,6 @@ const navLinks: { href: string; label: string; hasMenu?: boolean }[] = [
   { href: "/health-check", label: "Solutions", hasMenu: true },
   { href: "/about", label: "Why Tax60" },
   { href: "/contact", label: "Resources", hasMenu: true },
-  { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About Us" },
 ];
 
@@ -59,13 +58,14 @@ export default function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden items-center gap-3 lg:flex">
-            <a
-              href="tel:+917013734079"
-              className="flex items-center gap-2 rounded-xl border border-white/12 px-4 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5"
-            >
-              <Phone size={16} />
-              Talk to Expert
-            </a>
+            {!user && (
+              <Link
+                href="/login"
+                className="flex items-center gap-2 rounded-xl border border-white/12 px-4 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5"
+              >
+                Login / Register
+              </Link>
+            )}
 
             {user ? (
               <Link href="/dashboard" className="btn-primary">
@@ -114,13 +114,15 @@ export default function Navbar() {
               ))}
 
               <div className="grid gap-2 border-t border-white/10 pt-2 sm:grid-cols-2">
-                <a
-                  href="tel:+917013734079"
-                  className="flex items-center justify-center gap-2 rounded-xl border border-white/12 px-4 py-2.5 text-sm font-semibold text-slate-200"
-                >
-                  <Phone size={16} />
-                  Talk to Expert
-                </a>
+                {!user && (
+                  <Link
+                    href="/login"
+                    className="flex items-center justify-center gap-2 rounded-xl border border-white/12 px-4 py-2.5 text-sm font-semibold text-slate-200"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Login / Register
+                  </Link>
+                )}
 
                 {user ? (
                   <Link

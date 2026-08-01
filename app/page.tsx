@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import FeatureStrip from "@/components/FeatureStrip";
 import Metrics from "@/components/Metrics";
 import TrustBadges from "@/components/TrustBadges";
 import CtaBanner from "@/components/CtaBanner";
@@ -24,8 +23,6 @@ export default function HomePage() {
       <main>
 
         <Hero />
-
-        <FeatureStrip />
 
         <Metrics />
 
