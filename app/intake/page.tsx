@@ -256,8 +256,8 @@ setServices(loadedServices);
 
   if (!ready || !user) {
     return (
-      <main className="min-h-screen bg-[#f7faf9] p-6 text-slate-900">
-        <div className="mx-auto mt-24 h-40 max-w-5xl animate-pulse rounded-2xl bg-slate-100" />
+      <main className="min-h-screen p-6">
+        <div className="mx-auto mt-24 h-40 max-w-5xl animate-pulse rounded-2xl bg-white/5" />
       </main>
     );
   }
@@ -266,7 +266,7 @@ setServices(loadedServices);
   <>
     <Navbar />
 
-    <main className="min-h-screen bg-[#f7faf9] text-slate-900">
+    <main className="min-h-screen">
 
       <section className="mx-auto max-w-4xl px-6 py-16">
 
@@ -284,19 +284,19 @@ setServices(loadedServices);
           securely.
         </p>
 
-        <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-8">
+        <div className="card-dark mt-10 p-8">
 
           {loading ? (
 
             <div className="space-y-4">
 
-              <div className="h-8 w-56 animate-pulse rounded bg-slate-100" />
+              <div className="h-8 w-56 animate-pulse rounded bg-white/10" />
 
-              <div className="h-12 animate-pulse rounded bg-slate-100" />
+              <div className="h-12 animate-pulse rounded bg-white/10" />
 
-              <div className="h-12 animate-pulse rounded bg-slate-100" />
+              <div className="h-12 animate-pulse rounded bg-white/10" />
 
-              <div className="h-12 animate-pulse rounded bg-slate-100" />
+              <div className="h-12 animate-pulse rounded bg-white/10" />
 
             </div>
 
@@ -317,7 +317,7 @@ setServices(loadedServices);
                   <select
                     value={serviceId}
                     onChange={(e) => setServiceId(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 bg-[#f7faf9] p-3"
+                    className="input-dark w-full p-3"
                   >
 
                     <option value="">
@@ -343,7 +343,7 @@ setServices(loadedServices);
 
               )}
 
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-secondary">
                 Confirm your details below — pre-filled from your account.
               </p>
 
@@ -356,7 +356,7 @@ setServices(loadedServices);
                 </label>
 
                 <input
-                  className="w-full rounded-xl border border-slate-200 bg-[#f7faf9] p-3"
+                  className="input-dark w-full p-3"
                   value={fullName}
                   onChange={(e) =>
                     setFullName(e.target.value)
@@ -375,7 +375,7 @@ setServices(loadedServices);
                 </label>
 
                 <input
-                  className="w-full rounded-xl border border-slate-200 bg-[#f7faf9] p-3"
+                  className="input-dark w-full p-3"
                   value={phone}
                   onChange={(e) =>
                     setPhone(e.target.value)
@@ -395,7 +395,7 @@ setServices(loadedServices);
 
                 <input
                   type="email"
-                  className="w-full rounded-xl border border-slate-200 bg-[#f7faf9] p-3"
+                  className="input-dark w-full p-3"
                   value={email}
                   onChange={(e) =>
                     setEmail(e.target.value)
@@ -408,7 +408,7 @@ setServices(loadedServices);
               <button
                 disabled={saving}
                 onClick={start}
-                className="mt-4 w-full rounded-xl bg-emerald-500 px-6 py-3 font-semibold text-slate-900 transition hover:bg-emerald-400 disabled:opacity-50"
+                className="btn-primary mt-4 w-full"
               >
 
                 {saving
@@ -434,7 +434,7 @@ setServices(loadedServices);
 
                 </h2>
 
-                <p className="mt-2 text-slate-400">
+                <p className="mt-2 text-secondary">
 
                   Your responses help our CA understand
                   your case before reviewing documents.
@@ -456,7 +456,7 @@ setServices(loadedServices);
                   <textarea
                     required
                     rows={4}
-                    className="w-full rounded-xl border border-slate-200 bg-[#f7faf9] p-3"
+                    className="input-dark w-full p-3"
                     value={answers[question] ?? ""}
                     onChange={(e) =>
                       setAnswers({
@@ -475,7 +475,7 @@ setServices(loadedServices);
 
               <button
                 disabled={saving}
-                className="w-full rounded-xl bg-emerald-500 px-6 py-3 font-semibold text-slate-900 transition hover:bg-emerald-400 disabled:opacity-50"
+                className="btn-primary w-full"
               >
 
                 {saving

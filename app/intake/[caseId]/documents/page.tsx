@@ -183,12 +183,6 @@ async function submit() {
 
 
 
-        await OnboardingService.submitCase(caseId);
-
-        toast.success("Application submitted successfully.");
-
-        router.push(`/intake/${caseId}/success`);
-
         const submission = await OnboardingService.submitCase(caseId);
 
         toast.success("Application submitted successfully.");
@@ -227,7 +221,7 @@ return (
   <>
     <Navbar />
 
-    <main className="min-h-screen bg-[#f7faf9] text-slate-900">
+    <main className="min-h-screen">
       <section className="mx-auto max-w-5xl px-6 py-16">
         <p className="text-cyan-400 uppercase tracking-widest">
           Secure Upload
@@ -237,24 +231,24 @@ return (
           Upload Required Documents
         </h1>
 
-        <p className="mt-3 text-slate-400">
+        <p className="mt-3 text-secondary">
           Upload every required document. Once everything is uploaded,
           submit your application for CA review.
         </p>
 
-        <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-8">
+        <div className="card-dark mt-10 p-8">
           {loading ? (
             <div className="space-y-4">
-              <div className="h-12 animate-pulse rounded bg-slate-100" />
-              <div className="h-12 animate-pulse rounded bg-slate-100" />
-              <div className="h-12 animate-pulse rounded bg-slate-100" />
+              <div className="h-12 animate-pulse rounded bg-white/10" />
+              <div className="h-12 animate-pulse rounded bg-white/10" />
+              <div className="h-12 animate-pulse rounded bg-white/10" />
             </div>
           ) : (
             <div className="space-y-6">
               {documents.map((doc) => (
                 <div
                   key={doc.id}
-                  className="rounded-xl border border-slate-200 bg-[#f7faf9] p-6"
+                  className="rounded-xl border border-white/10 bg-white/[0.03] p-6"
                 >
                   <div className="flex items-center justify-between">
                     <div>
@@ -262,7 +256,7 @@ return (
                         {doc.name}
                       </h3>
 
-                      <p className="mt-1 text-sm text-slate-400">
+                      <p className="mt-1 text-sm text-secondary">
                         {doc.mandatory
                           ? "Required Document"
                           : "Optional Document"}
@@ -282,7 +276,7 @@ return (
 
                   <input
                     type="file"
-                    className="mt-5 block w-full rounded-lg border border-slate-200 bg-white p-3"
+                    className="input-dark mt-5 block w-full p-3"
                     onChange={(e) =>
                       chooseFile(
                         doc.id,
@@ -298,7 +292,7 @@ return (
                   )}
 
                   <button
-                    className="mt-5 rounded-xl bg-cyan-500 px-6 py-3 font-semibold text-black transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="btn-secondary mt-5 border-cyan-400/40 text-cyan-300 hover:bg-cyan-500/10 disabled:cursor-not-allowed disabled:opacity-50"
                     disabled={
                       uploading[doc.id] ||
                       doc.uploaded
@@ -315,7 +309,7 @@ return (
               ))}
 
               <button
-                className="mt-8 w-full rounded-xl bg-green-500 py-4 text-lg font-bold text-black transition hover:bg-green-400 disabled:opacity-50"
+                className="btn-primary mt-8 w-full py-4 text-lg"
                 disabled={saving}
                 onClick={submit}
               >

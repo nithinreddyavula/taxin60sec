@@ -44,7 +44,7 @@ function LoginContent() {
     : "/register";
 
   return (
-    <div className="min-h-screen bg-[#f7faf9] px-6 text-slate-900 flex items-center justify-center">
+    <div className="min-h-screen px-6 flex items-center justify-center">
       <div className="card-dark w-full max-w-md p-8">
         <p className="eyebrow">Secure access</p>
 
@@ -82,7 +82,7 @@ function LoginContent() {
           </button>
 
           {message && (
-            <p className="text-sm text-red-600">
+            <p className="text-sm text-red-400">
               {message}
             </p>
           )}

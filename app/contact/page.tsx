@@ -4,7 +4,7 @@ import Contact from "@/sections/Contact";
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[#f7faf9] text-slate-900">
+    <main className="min-h-screen">
       <Navbar />
       <Contact />
       <Footer />

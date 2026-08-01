@@ -51,15 +51,15 @@ function ScoreGauge({ score }: { score: number }) {
   return (
     <div className="relative flex h-36 w-36 items-center justify-center">
       <svg className="h-36 w-36 -rotate-90" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r={radius} fill="none" stroke="#E5E7EB" strokeWidth="10" />
+        <circle cx="60" cy="60" r={radius} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="10" />
         <circle
           cx="60" cy="60" r={radius} fill="none" stroke={color} strokeWidth="10"
           strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round"
         />
       </svg>
       <div className="absolute flex flex-col items-center">
-        <span className="text-3xl font-bold text-slate-900">{score}</span>
-        <span className="text-xs text-slate-400">/100</span>
+        <span className="text-3xl font-bold text-white">{score}</span>
+        <span className="text-xs text-secondary">/100</span>
       </div>
     </div>
   );
@@ -125,7 +125,7 @@ export default function HealthCheckPage() {
   const onTimePercent = result ? Math.round((compliant / monitoredAreas) * 100) : 0;
 
   return (
-    <main className="min-h-screen bg-[#f4f6f8] text-slate-900">
+    <main className="min-h-screen">
       <Navbar />
 
       <section className="pb-20 pt-12">
@@ -138,33 +138,33 @@ export default function HealthCheckPage() {
                   <div
                     className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
                       i < currentStepIndex
-                        ? "bg-emerald-600 text-white"
+                        ? "bg-emerald-500 text-white"
                         : i === currentStepIndex
-                        ? "bg-emerald-600 text-white ring-4 ring-emerald-100"
-                        : "bg-slate-200 text-slate-500"
+                        ? "bg-emerald-500 text-white ring-4 ring-emerald-500/30"
+                        : "bg-white/10 text-slate-400"
                     }`}
                   >
                     {i < currentStepIndex ? <CheckCircle2 size={16} /> : i + 1}
                   </div>
-                  <span className="hidden text-xs font-medium text-slate-500 sm:block">{label}</span>
+                  <span className="hidden text-xs font-medium text-secondary sm:block">{label}</span>
                 </div>
                 {i < STEPS.length - 1 && (
-                  <div className={`h-0.5 w-6 sm:w-12 ${i < currentStepIndex ? "bg-emerald-600" : "bg-slate-200"}`} />
+                  <div className={`h-0.5 w-6 sm:w-12 ${i < currentStepIndex ? "bg-emerald-500" : "bg-white/10"}`} />
                 )}
               </div>
             ))}
           </div>
 
           {step === "type" && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-              <h1 className="text-center text-2xl font-bold text-slate-900">
+            <div className="card-dark p-8">
+              <h1 className="text-center text-2xl font-bold text-white">
                 Let&apos;s Check Your Tax Health
               </h1>
-              <p className="mt-2 text-center text-slate-500">
+              <p className="mt-2 text-center text-secondary">
                 Answer a few simple questions. It&apos;s free!
               </p>
 
-              <p className="mt-8 mb-3 text-sm font-semibold text-slate-700">
+              <p className="mt-8 mb-3 text-sm font-semibold text-slate-200">
                 What best describes you?
               </p>
               <div className="grid gap-3 sm:grid-cols-2">
@@ -174,42 +174,42 @@ export default function HealthCheckPage() {
                     <button
                       key={t.value}
                       onClick={() => selectType(t.value)}
-                      className="flex items-start gap-3 rounded-xl border border-slate-200 p-4 text-left transition hover:border-emerald-400 hover:bg-emerald-50/50"
+                      className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4 text-left transition hover:border-emerald-400/50 hover:bg-emerald-500/10"
                     >
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-50">
-                        <Icon size={20} className="text-emerald-600" />
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
+                        <Icon size={20} className="text-emerald-400" />
                       </div>
                       <div>
-                        <p className="font-semibold text-slate-900">{t.label}</p>
-                        <p className="text-xs text-slate-500">{t.desc}</p>
+                        <p className="font-semibold text-white">{t.label}</p>
+                        <p className="text-xs text-secondary">{t.desc}</p>
                       </div>
                     </button>
                   );
                 })}
               </div>
 
-              <p className="mt-6 text-center text-xs text-slate-400">
+              <p className="mt-6 text-center text-xs text-secondary">
                 Takes less than 2 minutes · 100% secure, your data is safe with us
               </p>
             </div>
           )}
 
           {step === "questions" && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-              <h1 className="text-2xl font-bold text-slate-900">A few quick questions</h1>
-              <p className="mt-1 text-slate-500">This helps us spot what needs attention.</p>
+            <div className="card-dark p-8">
+              <h1 className="text-2xl font-bold text-white">A few quick questions</h1>
+              <p className="mt-1 text-secondary">This helps us spot what needs attention.</p>
 
               <div className="mt-6 space-y-3">
                 {questions.map((q) => (
-                  <div key={q.key} className="rounded-xl border border-slate-200 p-4">
-                    <p className="mb-3 text-sm font-medium text-slate-700">{q.text}</p>
+                  <div key={q.key} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+                    <p className="mb-3 text-sm font-medium text-slate-200">{q.text}</p>
                     <div className="flex gap-3">
                       <button
                         onClick={() => answer(q.key, true)}
                         className={`rounded-lg px-5 py-2 text-sm font-semibold transition ${
                           answers[q.key] === true
-                            ? "bg-emerald-600 text-white"
-                            : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                            ? "bg-emerald-500 text-white"
+                            : "bg-white/10 text-slate-300 hover:bg-white/20"
                         }`}
                       >
                         Yes
@@ -218,8 +218,8 @@ export default function HealthCheckPage() {
                         onClick={() => answer(q.key, false)}
                         className={`rounded-lg px-5 py-2 text-sm font-semibold transition ${
                           answers[q.key] === false
-                            ? "bg-emerald-600 text-white"
-                            : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                            ? "bg-emerald-500 text-white"
+                            : "bg-white/10 text-slate-300 hover:bg-white/20"
                         }`}
                       >
                         No
@@ -232,7 +232,7 @@ export default function HealthCheckPage() {
               <button
                 onClick={seeResults}
                 disabled={!allAnswered || loading}
-                className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-50"
+                className="btn-primary mt-6 w-full"
               >
                 {loading ? "Checking..." : "See my Tax Health Score"}
                 {!loading && <ArrowRight size={18} />}
@@ -243,11 +243,11 @@ export default function HealthCheckPage() {
           {step === "results" && result && (
             <div className="space-y-5">
 
-              <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-                <p className="text-center text-sm font-semibold uppercase tracking-wide text-slate-400">
+              <div className="card-dark p-8">
+                <p className="text-center text-sm font-semibold uppercase tracking-wide text-secondary">
                   We&apos;ve Analyzed Your Profile
                 </p>
-                <h1 className="mt-1 text-center text-2xl font-bold text-slate-900">
+                <h1 className="mt-1 text-center text-2xl font-bold text-white">
                   Here&apos;s what we found
                 </h1>
 
@@ -257,56 +257,56 @@ export default function HealthCheckPage() {
                   <div className="flex-1 sm:max-w-sm">
                     {result.issues.length > 0 ? (
                       <>
-                        <p className="mb-2 text-sm font-bold text-red-600">
+                        <p className="mb-2 text-sm font-bold text-red-400">
                           {result.issues.length} action{result.issues.length === 1 ? "" : "s"} need your attention
                         </p>
                         <div className="space-y-2">
                           {result.issues.map((issue, i) => (
-                            <div key={i} className="flex items-center gap-2 rounded-lg bg-slate-50 px-3 py-2 text-sm">
+                            <div key={i} className="flex items-center gap-2 rounded-lg bg-white/[0.04] px-3 py-2 text-sm">
                               <span
                                 className={`h-2 w-2 shrink-0 rounded-full ${
                                   issue.severity === "HIGH" ? "bg-red-500" : "bg-yellow-500"
                                 }`}
                               />
-                              <span className="text-slate-700">{issue.title}</span>
+                              <span className="text-slate-200">{issue.title}</span>
                             </div>
                           ))}
                         </div>
                       </>
                     ) : (
-                      <p className="text-slate-600">
+                      <p className="text-secondary">
                         You&apos;re in great shape! No urgent actions right now.
                       </p>
                     )}
                   </div>
                 </div>
 
-                <div className="mt-8 grid grid-cols-2 gap-3 border-t border-slate-100 pt-6 sm:grid-cols-4">
+                <div className="mt-8 grid grid-cols-2 gap-3 border-t border-white/10 pt-6 sm:grid-cols-4">
                   <div className="text-center">
-                    <p className="text-xl font-bold text-slate-900">{monitoredAreas}</p>
-                    <p className="text-xs text-slate-500">Monitored Areas</p>
+                    <p className="text-xl font-bold text-white">{monitoredAreas}</p>
+                    <p className="text-xs text-secondary">Monitored Areas</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-xl font-bold text-red-600">{result.issues.length}</p>
-                    <p className="text-xs text-slate-500">Action Needed</p>
+                    <p className="text-xl font-bold text-red-400">{result.issues.length}</p>
+                    <p className="text-xs text-secondary">Action Needed</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-xl font-bold text-emerald-600">{compliant}</p>
-                    <p className="text-xs text-slate-500">Compliant</p>
+                    <p className="text-xl font-bold text-emerald-400">{compliant}</p>
+                    <p className="text-xs text-secondary">Compliant</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-xl font-bold text-slate-900">{onTimePercent}%</p>
-                    <p className="text-xs text-slate-500">On-time Compliance</p>
+                    <p className="text-xl font-bold text-white">{onTimePercent}%</p>
+                    <p className="text-xs text-secondary">On-time Compliance</p>
                   </div>
                 </div>
               </div>
 
               {result.recommendations.length > 0 && (
-                <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-                  <h2 className="text-center text-xl font-bold text-slate-900">
+                <div className="card-dark p-8">
+                  <h2 className="text-center text-xl font-bold text-white">
                     Recommended for You
                   </h2>
-                  <p className="mt-1 text-center text-sm text-slate-500">
+                  <p className="mt-1 text-center text-sm text-secondary">
                     Based on your Tax Health Score
                   </p>
 
@@ -315,22 +315,22 @@ export default function HealthCheckPage() {
                       <div
                         key={rec.code}
                         className={`relative rounded-xl border p-5 ${
-                          i === 0 ? "border-emerald-400 ring-1 ring-emerald-400" : "border-slate-200"
+                          i === 0 ? "border-emerald-400 ring-1 ring-emerald-400" : "border-white/10"
                         }`}
                       >
                         {i === 0 && (
-                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-emerald-600 px-3 py-0.5 text-xs font-bold text-white">
+                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-emerald-500 px-3 py-0.5 text-xs font-bold text-white">
                             MOST RECOMMENDED
                           </span>
                         )}
-                        <p className="mt-1 font-bold text-slate-900">{rec.displayName}</p>
-                        <p className="mt-3 text-2xl font-bold text-slate-900">
+                        <p className="mt-1 font-bold text-white">{rec.displayName}</p>
+                        <p className="mt-3 text-2xl font-bold text-white">
                           ₹{Number(rec.priceFrom).toLocaleString("en-IN")}
                         </p>
-                        <p className="text-xs text-slate-500">{rec.turnaroundDays} day turnaround</p>
+                        <p className="text-xs text-secondary">{rec.turnaroundDays} day turnaround</p>
                         <button
                           onClick={() => router.push(`/intake?id=${rec.serviceId}`)}
-                          className="mt-4 w-full rounded-lg bg-emerald-600 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
+                          className="btn-primary mt-4 w-full"
                         >
                           Select Service
                         </button>
@@ -341,9 +341,9 @@ export default function HealthCheckPage() {
               )}
 
               {!captured && (
-                <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                  <p className="font-semibold text-slate-900">Not ready yet?</p>
-                  <p className="mb-3 text-sm text-slate-500">
+                <div className="card-dark p-6">
+                  <p className="font-semibold text-white">Not ready yet?</p>
+                  <p className="mb-3 text-sm text-secondary">
                     Get these results emailed to you so you don&apos;t lose them.
                   </p>
                   <div className="flex flex-col gap-2 sm:flex-row">
@@ -352,19 +352,19 @@ export default function HealthCheckPage() {
                       value={leadEmail}
                       onChange={(e) => setLeadEmail(e.target.value)}
                       placeholder="you@example.com"
-                      className="flex-1 rounded-lg border border-slate-200 px-4 py-2 text-sm"
+                      className="input-dark flex-1 px-4 py-2 text-sm"
                     />
                     <input
                       type="tel"
                       value={leadPhone}
                       onChange={(e) => setLeadPhone(e.target.value)}
                       placeholder="Phone (optional)"
-                      className="flex-1 rounded-lg border border-slate-200 px-4 py-2 text-sm"
+                      className="input-dark flex-1 px-4 py-2 text-sm"
                     />
                     <button
                       onClick={captureResults}
                       disabled={!leadEmail.trim() || capturing}
-                      className="shrink-0 rounded-lg border border-emerald-600 px-5 py-2 text-sm font-semibold text-emerald-600 transition hover:bg-emerald-50 disabled:opacity-50"
+                      className="btn-secondary shrink-0 border-emerald-400/40 text-emerald-400 hover:bg-emerald-500/10 disabled:opacity-50"
                     >
                       {capturing ? "Sending..." : "Email my results"}
                     </button>

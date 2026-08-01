@@ -10,7 +10,7 @@ const metrics = [
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[#f7faf9] text-slate-900">
+    <main className="min-h-screen">
       <Navbar />
 
       <section className="page-hero">
@@ -31,7 +31,7 @@ export default function AboutPage() {
             <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
               {metrics.map(([value, label]) => (
                 <div key={label} className="card-dark p-4">
-                  <h2 className="text-3xl font-bold tracking-tight text-emerald-600">
+                  <h2 className="text-3xl font-bold tracking-tight text-emerald-400">
                     {value}
                   </h2>
                   <p className="mt-1 text-sm text-secondary">{label}</p>

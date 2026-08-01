@@ -15,7 +15,7 @@ const gstServices = [
 
 export default function GSTFilingPage() {
   return (
-    <main className="min-h-screen bg-[#f7faf9] text-slate-900">
+    <main className="min-h-screen">
       <Navbar />
 
       <section className="page-hero">
@@ -38,7 +38,7 @@ export default function GSTFilingPage() {
               {gstServices.map((service) => (
                 <li
                   key={service}
-                  className="rounded-2xl border border-slate-200 bg-white/[0.025] p-3 text-sm font-semibold text-slate-600"
+                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-sm font-semibold text-slate-200"
                 >
                   {service}
                 </li>
