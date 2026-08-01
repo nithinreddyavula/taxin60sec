@@ -9,35 +9,35 @@ export default function ProfilePage() {
 
   return (
     <AppShell>
-      <p className="text-xs font-bold uppercase tracking-[.18em] text-emerald-600">Account</p>
-      <h1 className="mt-2 text-3xl font-bold text-slate-900">Profile & Settings</h1>
+      <p className="eyebrow">Account</p>
+      <h1 className="mt-2 text-3xl font-bold">Profile &amp; Settings</h1>
 
-      <section className="mt-8 max-w-2xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="card-dark mt-8 max-w-2xl p-6">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50">
-            <UserRound size={26} className="text-emerald-600" />
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10">
+            <UserRound size={26} className="text-emerald-400" />
           </div>
           <div>
-            <p className="text-lg font-bold text-slate-900">{user?.fullName ?? "Not provided"}</p>
-            <p className="text-sm text-slate-500">
+            <p className="text-lg font-bold text-white">{user?.fullName ?? "Not provided"}</p>
+            <p className="text-sm text-secondary">
               {user?.roles?.map((role) => role.replace("ROLE_", "")).join(", ")}
             </p>
           </div>
         </div>
 
-        <dl className="mt-8 grid gap-6 border-t border-slate-100 pt-6 sm:grid-cols-2">
+        <dl className="mt-8 grid gap-6 border-t border-white/10 pt-6 sm:grid-cols-2">
           <div className="flex items-start gap-3">
-            <Mail size={18} className="mt-0.5 text-slate-400" />
+            <Mail size={18} className="mt-0.5 text-secondary" />
             <div>
-              <dt className="text-sm text-slate-500">Email</dt>
-              <dd className="mt-1 font-semibold text-slate-900">{user?.email ?? "Not provided"}</dd>
+              <dt className="text-sm text-secondary">Email</dt>
+              <dd className="mt-1 font-semibold text-white">{user?.email ?? "Not provided"}</dd>
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <ShieldCheck size={18} className="mt-0.5 text-slate-400" />
+            <ShieldCheck size={18} className="mt-0.5 text-secondary" />
             <div>
-              <dt className="text-sm text-slate-500">Account type</dt>
-              <dd className="mt-1 font-semibold text-slate-900">
+              <dt className="text-sm text-secondary">Account type</dt>
+              <dd className="mt-1 font-semibold text-white">
                 {user?.roles?.[0]?.replace("ROLE_", "") ?? "—"}
               </dd>
             </div>

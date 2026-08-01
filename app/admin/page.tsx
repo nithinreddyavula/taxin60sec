@@ -121,7 +121,7 @@ export default function AdminPage() {
 
           <div>
 
-            <p className="uppercase tracking-[0.3em] text-sm text-gray-500">
+            <p className="uppercase tracking-[0.3em] text-sm text-secondary">
               Admin Dashboard
             </p>
 
@@ -138,9 +138,9 @@ export default function AdminPage() {
         {/* STATS */}
         <div className="grid md:grid-cols-3 gap-6 mb-10">
 
-          <div className="bg-white p-8 rounded-[30px] shadow">
+          <div className="card-dark p-8">
 
-            <p className="text-gray-500">Open cases</p>
+            <p className="text-secondary">Open cases</p>
 
             <h2 className="text-4xl font-bold mt-4">
               {openCases}
@@ -148,9 +148,9 @@ export default function AdminPage() {
 
           </div>
 
-          <div className="bg-white p-8 rounded-[30px] shadow">
+          <div className="card-dark p-8">
 
-            <p className="text-gray-500">
+            <p className="text-secondary">
               Today Leads
             </p>
 
@@ -176,9 +176,9 @@ export default function AdminPage() {
 
           </div>
 
-          <div className="bg-white p-8 rounded-[30px] shadow">
+          <div className="card-dark p-8">
 
-            <p className="text-gray-500">
+            <p className="text-secondary">
               Latest Lead
             </p>
 
@@ -210,14 +210,14 @@ export default function AdminPage() {
               placeholder="Search by client name or service..."
               value={caseSearch}
               onChange={(e) => setCaseSearch(e.target.value)}
-              className="w-full p-5 rounded-2xl border border-gray-300 outline-none"
+              className="w-full p-5 rounded-2xl border border-white/15 bg-white/[.03] text-white placeholder:text-slate-500 outline-none"
             />
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
 
             {/* LIST */}
-            <div className="bg-white rounded-[30px] shadow overflow-hidden">
+            <div className="card-dark overflow-hidden">
               <table className="w-full">
                 <thead className="bg-black text-white">
                   <tr>
@@ -231,25 +231,25 @@ export default function AdminPage() {
                 </thead>
                 <tbody>
                   {casesLoading && (
-                    <tr><td colSpan={6} className="p-6 text-center text-gray-500">Loading service requests...</td></tr>
+                    <tr><td colSpan={6} className="p-6 text-center text-secondary">Loading service requests...</td></tr>
                   )}
                   {!casesLoading && filteredCases.length === 0 && (
-                    <tr><td colSpan={6} className="p-6 text-center text-gray-500">No service requests yet.</td></tr>
+                    <tr><td colSpan={6} className="p-6 text-center text-secondary">No service requests yet.</td></tr>
                   )}
                   {filteredCases.map((c) => (
                     <tr
                       key={c.caseId}
                       onClick={() => openCase(c.caseId)}
-                      className={`border-b border-gray-200 hover:bg-gray-50 cursor-pointer ${selectedCase?.caseId === c.caseId ? "bg-blue-50" : ""}`}
+                      className={`border-b border-white/10 hover:bg-white/5 cursor-pointer ${selectedCase?.caseId === c.caseId ? "bg-blue-500/10" : ""}`}
                     >
-                      <td className="p-5 font-mono text-sm text-gray-500">#{c.caseId}</td>
+                      <td className="p-5 font-mono text-sm text-secondary">#{c.caseId}</td>
                       <td className="p-5 font-medium">{c.clientName}</td>
-                      <td className="p-5 text-gray-600">{c.serviceName}</td>
+                      <td className="p-5 text-secondary">{c.serviceName}</td>
                       <td className="p-5">
                         <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-700">{c.status}</span>
                       </td>
-                      <td className="p-5 text-gray-600 text-sm">{c.answeredQuestions}/{c.totalQuestions}</td>
-                      <td className="p-5 text-gray-500 text-sm">{new Date(c.createdAt).toLocaleDateString()}</td>
+                      <td className="p-5 text-secondary text-sm">{c.answeredQuestions}/{c.totalQuestions}</td>
+                      <td className="p-5 text-secondary text-sm">{new Date(c.createdAt).toLocaleDateString()}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -257,32 +257,32 @@ export default function AdminPage() {
             </div>
 
             {/* DETAIL PANEL */}
-            <div className="bg-white p-8 rounded-[30px] shadow">
+            <div className="card-dark p-8">
               {!selectedCase && !detailLoading && !detailError && (
-                <p className="text-gray-500">Select a client from the list to see their contact details and intake answers.</p>
+                <p className="text-secondary">Select a client from the list to see their contact details and intake answers.</p>
               )}
-              {detailLoading && <p className="text-gray-500">Loading client details...</p>}
+              {detailLoading && <p className="text-secondary">Loading client details...</p>}
               {detailError && <p className="text-red-500">{detailError}</p>}
               {selectedCase && !detailLoading && (
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-gray-400 font-bold">Case #{selectedCase.caseId}</p>
+                  <p className="text-xs uppercase tracking-widest text-secondary font-bold">Case #{selectedCase.caseId}</p>
                   <h3 className="text-2xl font-bold mt-1">{selectedCase.clientName}</h3>
-                  <p className="text-gray-500 mt-1">{selectedCase.serviceName}</p>
+                  <p className="text-secondary mt-1">{selectedCase.serviceName}</p>
 
                   <div className="mt-5 space-y-2 text-sm">
-                    <p><span className="text-gray-400">Email: </span>{selectedCase.email || "Not provided"}</p>
-                    <p><span className="text-gray-400">Phone: </span>{selectedCase.phone || "Not provided"}</p>
-                    <p><span className="text-gray-400">Status: </span>{selectedCase.status}</p>
-                    <p><span className="text-gray-400">Intake completed: </span>{selectedCase.intakeCompleted ? "Yes" : "No"}</p>
+                    <p><span className="text-secondary">Email: </span>{selectedCase.email || "Not provided"}</p>
+                    <p><span className="text-secondary">Phone: </span>{selectedCase.phone || "Not provided"}</p>
+                    <p><span className="text-secondary">Status: </span>{selectedCase.status}</p>
+                    <p><span className="text-secondary">Intake completed: </span>{selectedCase.intakeCompleted ? "Yes" : "No"}</p>
                   </div>
 
-                  <div className="mt-5 rounded-xl border border-gray-200 p-4">
-                    <p className="text-xs uppercase tracking-widest text-gray-400 font-bold mb-2">Assign to CA</p>
+                  <div className="mt-5 rounded-xl border border-white/10 p-4">
+                    <p className="text-xs uppercase tracking-widest text-secondary font-bold mb-2">Assign to CA</p>
                     <div className="flex gap-2">
                       <select
                         value={selectedCaId}
                         onChange={(e) => setSelectedCaId(e.target.value)}
-                        className="flex-1 rounded-lg border border-gray-300 p-2 text-sm"
+                        className="flex-1 rounded-lg border border-white/15 bg-white/[.03] p-2 text-sm text-white"
                       >
                         <option value="">Select a CA...</option>
                         {caList.map((ca) => (
@@ -298,25 +298,25 @@ export default function AdminPage() {
                       </button>
                     </div>
                     {caList.length === 0 && (
-                      <p className="mt-2 text-xs text-gray-400">No CA accounts found — create a user with the CA role first.</p>
+                      <p className="mt-2 text-xs text-secondary">No CA accounts found — create a user with the CA role first.</p>
                     )}
                   </div>
 
                   {selectedCase.intakeSummary && (
                     <div className="mt-5">
-                      <p className="text-xs uppercase tracking-widest text-gray-400 font-bold mb-2">AI Summary</p>
-                      <p className="text-sm text-gray-700">{selectedCase.intakeSummary}</p>
+                      <p className="text-xs uppercase tracking-widest text-secondary font-bold mb-2">AI Summary</p>
+                      <p className="text-sm text-slate-300">{selectedCase.intakeSummary}</p>
                     </div>
                   )}
 
                   {selectedCase.answers && Object.keys(selectedCase.answers).length > 0 && (
                     <div className="mt-5">
-                      <p className="text-xs uppercase tracking-widest text-gray-400 font-bold mb-2">Intake Answers</p>
+                      <p className="text-xs uppercase tracking-widest text-secondary font-bold mb-2">Intake Answers</p>
                       <div className="space-y-2">
                         {Object.entries(selectedCase.answers).map(([question, answer]) => (
-                          <div key={question} className="border-b border-gray-100 pb-2">
-                            <p className="text-xs text-gray-400">{question}</p>
-                            <p className="text-sm text-gray-800">{answer}</p>
+                          <div key={question} className="border-b border-white/8 pb-2">
+                            <p className="text-xs text-secondary">{question}</p>
+                            <p className="text-sm text-white">{answer}</p>
                           </div>
                         ))}
                       </div>
@@ -330,14 +330,14 @@ export default function AdminPage() {
         </div>
 
         {/* CHART */}
-        <div className="bg-white p-8 rounded-[30px] shadow mb-10">
+        <div className="card-dark p-8 mb-10">
 
           <h2 className="text-2xl font-bold mb-6">
             Lead Analytics
           </h2>
 
           {chartData.length === 0 ? (
-            <p className="text-gray-500 text-sm">No lead activity yet — the chart will populate once inquiries come in.</p>
+            <p className="text-secondary text-sm">No lead activity yet — the chart will populate once inquiries come in.</p>
           ) : (
             <div className="h-[300px]">
 
@@ -374,13 +374,13 @@ export default function AdminPage() {
             placeholder="Search clients..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full p-5 rounded-2xl border border-gray-300 outline-none"
+            className="w-full p-5 rounded-2xl border border-white/15 bg-white/[.03] text-white placeholder:text-slate-500 outline-none"
           />
 
         </div>
 
         {/* TABLE */}
-        <div className="bg-white rounded-[30px] shadow overflow-hidden">
+        <div className="card-dark overflow-hidden">
 
           <table className="w-full">
 
@@ -408,22 +408,22 @@ export default function AdminPage() {
 
                   <tr
                     key={contact.id}
-                    className="border-b border-gray-200 hover:bg-gray-50"
+                    className="border-b border-white/10 hover:bg-white/5"
                   >
 
                     <td className="p-6 font-medium">
                       {contact.name}
                     </td>
 
-                    <td className="p-6 text-gray-600">
+                    <td className="p-6 text-secondary">
                       {contact.email}
                     </td>
 
-                    <td className="p-6 text-gray-700">
+                    <td className="p-6 text-slate-300">
                       {contact.message}
                     </td>
 
-                    <td className="p-6 text-gray-500">
+                    <td className="p-6 text-secondary">
 
                       {contact.createdAt
                         ? new Date(contact.createdAt).toLocaleString()

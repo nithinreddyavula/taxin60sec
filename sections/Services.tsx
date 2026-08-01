@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ServiceCards from "@/components/ServiceCards";
 
 export default function Services() {
@@ -13,6 +14,12 @@ export default function Services() {
         </div>
 
         <ServiceCards />
+
+        <div className="mt-8 text-center">
+          <Link href="/services" className="btn-secondary">
+            View All Services
+          </Link>
+        </div>
       </div>
     </section>
   );

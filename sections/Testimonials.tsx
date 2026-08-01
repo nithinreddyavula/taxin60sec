@@ -39,8 +39,8 @@ export default function Testimonials() {
 
               <p className="text-sm leading-6 text-secondary">&quot;{item.text}&quot;</p>
 
-              <div className="mt-5 border-t border-slate-100 pt-4">
-                <h4 className="font-semibold text-slate-900">{item.name}</h4>
+              <div className="mt-5 border-t border-white/8 pt-4">
+                <h4 className="font-semibold text-white">{item.name}</h4>
                 <p className="mt-1 text-sm text-secondary">{item.role}</p>
               </div>
             </div>

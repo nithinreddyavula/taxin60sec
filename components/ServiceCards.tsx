@@ -70,11 +70,11 @@ export default function ServiceCards() {
             href={`/intake?id=${service.id}`}
             className="card-dark group flex flex-col p-5 transition hover:-translate-y-0.5 hover:shadow-lg"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50">
-              <Icon className="text-emerald-600" size={20} />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10">
+              <Icon className="text-emerald-400" size={20} />
             </div>
 
-            <h3 className="mt-4 text-base font-bold text-slate-900">
+            <h3 className="mt-4 text-base font-bold text-white">
               {service.displayName}
             </h3>
 
@@ -83,13 +83,13 @@ export default function ServiceCards() {
             </p>
 
             <div className="mt-4 flex items-center justify-between">
-              <p className="text-sm font-semibold text-emerald-600">
+              <p className="text-sm font-semibold text-emerald-400">
                 From {formatInr(service.basePrice)}
                 {isNri ? ` (approx. ${formatUsdEstimate(service.basePrice)})` : ""}
               </p>
               <ArrowRight
                 size={16}
-                className="text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-emerald-600"
+                className="text-slate-500 transition group-hover:translate-x-0.5 group-hover:text-emerald-400"
               />
             </div>
           </Link>

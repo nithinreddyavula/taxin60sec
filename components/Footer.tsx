@@ -16,12 +16,12 @@ const services = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-[#f7faf9]">
+    <footer className="border-t border-white/10 bg-[#020817]">
       <div className="container-main py-10 md:py-12">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr]">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-              Tax<span className="text-emerald-600">60</span>Sec
+            <h2 className="text-2xl font-bold tracking-tight text-white">
+              Tax<span className="text-emerald-400">60</span>Sec
             </h2>
             <p className="mt-3 max-w-sm text-sm leading-6 text-secondary">
               Helping businesses stay compliant, save taxes and grow with
@@ -30,7 +30,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-600">
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-secondary">
               Quick Links
             </h4>
             <div className="mt-4 flex flex-col gap-2.5 text-sm text-secondary">
@@ -38,7 +38,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="transition hover:text-slate-900"
+                  className="transition hover:text-white"
                 >
                   {link.label}
                 </Link>
@@ -47,7 +47,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-600">
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-secondary">
               Services
             </h4>
             <div className="mt-4 flex flex-col gap-2.5 text-sm text-secondary">
@@ -58,7 +58,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-600">
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-secondary">
               Contact
             </h4>
             <div className="mt-4 space-y-2.5 text-sm text-secondary">
@@ -69,7 +69,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-slate-200 pt-6 text-sm text-secondary sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-secondary sm:flex-row sm:items-center sm:justify-between">
           <p>Copyright 2026 Tax60Sec. All rights reserved.</p>
           <p>Tax | Finance | Growth</p>
         </div>

@@ -10,6 +10,7 @@ import Hero from "@/sections/Hero";
 import DeadlinesWidget from "@/sections/DeadlinesWidget";
 import Services from "@/sections/Services";
 import WhyChooseUs from "@/sections/WhyChooseUs";
+import HowItWorks from "@/sections/HowItWorks";
 import Testimonials from "@/sections/Testimonials";
 import FAQ from "@/sections/FAQ";
 import Contact from "@/sections/Contact";
@@ -31,6 +32,8 @@ export default function HomePage() {
         <Services />
 
         <WhyChooseUs />
+
+        <HowItWorks />
 
         <TrustBadges />
 

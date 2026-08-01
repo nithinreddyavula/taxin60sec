@@ -61,15 +61,15 @@ export default function WhyChooseUs() {
         <div className="grid gap-5 lg:grid-cols-3">
           <div className="card-dark p-6">
             <p className="eyebrow">Why Choose Us</p>
-            <h2 className="mt-3 text-xl font-bold text-slate-900">
+            <h2 className="mt-3 text-xl font-bold text-white">
               Why Choose Tax60?
             </h2>
 
             <div className="mt-5 space-y-3">
               {points.map((point) => (
                 <div key={point} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
-                  <span className="text-sm text-slate-600">{point}</span>
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+                  <span className="text-sm text-secondary">{point}</span>
                 </div>
               ))}
             </div>
@@ -77,8 +77,8 @@ export default function WhyChooseUs() {
 
           <div className="card-dark p-6">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-slate-900">Tax Health Overview</p>
-              <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-600">
+              <p className="text-sm font-semibold text-white">Tax Health Overview</p>
+              <span className="rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-bold text-emerald-400">
                 {complianceRate ?? 94}
               </span>
             </div>
@@ -87,20 +87,20 @@ export default function WhyChooseUs() {
               <Sparkline points={CHART_POINTS} />
             </div>
 
-            <div className="mt-5 grid grid-cols-2 gap-3 border-t border-slate-100 pt-4 text-sm">
+            <div className="mt-5 grid grid-cols-2 gap-3 border-t border-white/8 pt-4 text-sm">
               <div>
-                <p className="font-bold text-slate-900">98%</p>
+                <p className="font-bold text-white">98%</p>
                 <p className="text-xs text-secondary">Compliance Rate</p>
               </div>
               <div>
-                <p className="font-bold text-slate-900">24/7</p>
+                <p className="font-bold text-white">24/7</p>
                 <p className="text-xs text-secondary">Monitoring</p>
               </div>
             </div>
           </div>
 
           <div className="card-dark p-6">
-            <p className="text-sm font-semibold text-slate-900">What Our Customers Say</p>
+            <p className="text-sm font-semibold text-white">What Our Customers Say</p>
 
             <div className="mt-4 flex items-center gap-1 text-amber-400">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -113,8 +113,8 @@ export default function WhyChooseUs() {
               Highly reliable and very responsive team!&quot;
             </p>
 
-            <div className="mt-4 border-t border-slate-100 pt-4">
-              <p className="text-sm font-semibold text-slate-900">Rahul Mehta</p>
+            <div className="mt-4 border-t border-white/8 pt-4">
+              <p className="text-sm font-semibold text-white">Rahul Mehta</p>
               <p className="text-xs text-secondary">Founder, FinEdge</p>
             </div>
           </div>

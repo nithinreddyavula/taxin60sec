@@ -40,11 +40,11 @@ export default function Metrics() {
 
             return (
               <div key={item.label} className="card-dark flex gap-3 p-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50">
-                  <Icon size={20} className="text-emerald-600" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10">
+                  <Icon size={20} className="text-emerald-400" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold tracking-tight text-slate-900">
+                  <h3 className="text-xl font-bold tracking-tight text-white">
                     {item.value}
                   </h3>
                   <p className="mt-1 text-xs text-secondary">{item.label}</p>

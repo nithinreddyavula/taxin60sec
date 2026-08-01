@@ -52,9 +52,9 @@ export default function DeadlinesWidget() {
             {deadlines.map((d) => (
               <div
                 key={d.type}
-                className="flex items-center justify-between rounded-xl border border-slate-100 p-4"
+                className="flex items-center justify-between rounded-xl border border-white/8 p-4"
               >
-                <span className="font-semibold text-slate-900">{d.title}</span>
+                <span className="font-semibold text-white">{d.title}</span>
                 <span className={`text-sm font-medium ${urgencyColor(d.daysRemaining)}`}>
                   {new Date(d.dueDate).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
                   {" · "}
@@ -64,14 +64,14 @@ export default function DeadlinesWidget() {
             ))}
           </div>
 
-          <div className="mt-6 border-t border-slate-100 pt-5">
+          <div className="mt-6 border-t border-white/8 pt-5">
             {subscribed ? (
-              <p className="text-center text-sm text-emerald-600">
+              <p className="text-center text-sm text-emerald-400">
                 You&apos;re subscribed — see you next month.
               </p>
             ) : (
               <>
-                <p className="mb-3 text-sm font-semibold text-slate-900">
+                <p className="mb-3 text-sm font-semibold text-white">
                   Get next month&apos;s deadlines on WhatsApp, free
                 </p>
                 <div className="flex flex-col gap-2 sm:flex-row">

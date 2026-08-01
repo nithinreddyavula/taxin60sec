@@ -35,14 +35,14 @@ export default function ReferralShareBlock({
   return (
     <section className="card-dark p-6">
       <div className="flex items-center gap-2">
-        <Users size={18} className="text-emerald-600" />
-        <h2 className="font-bold text-slate-900">{title}</h2>
+        <Users size={18} className="text-emerald-400" />
+        <h2 className="font-bold text-white">{title}</h2>
       </div>
 
       <p className="mt-1 text-sm text-secondary">{description}</p>
 
-      <div className="mt-4 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3">
-        <span className="truncate font-mono text-sm text-emerald-700">
+      <div className="mt-4 flex items-center justify-between rounded-xl border border-white/10 bg-white/[.03] p-3">
+        <span className="truncate font-mono text-sm text-emerald-300">
           {referralCode}
         </span>
 

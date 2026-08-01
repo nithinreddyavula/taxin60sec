@@ -47,17 +47,17 @@ export default function FAQ() {
                     onClick={() => setOpenIndex(isOpen ? -1 : index)}
                     aria-expanded={isOpen}
                   >
-                    <span className="text-base font-semibold text-slate-900">{faq.q}</span>
+                    <span className="text-base font-semibold text-white">{faq.q}</span>
                     <ChevronDown
                       size={18}
-                      className={`shrink-0 text-emerald-600 transition ${
+                      className={`shrink-0 text-emerald-400 transition ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
 
                   {isOpen && (
-                    <p className="border-t border-slate-100 px-5 py-4 text-sm leading-6 text-secondary">
+                    <p className="border-t border-white/8 px-5 py-4 text-sm leading-6 text-secondary">
                       {faq.a}
                     </p>
                   )}
