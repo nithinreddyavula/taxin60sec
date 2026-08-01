@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, Bot, Calendar, CheckCircle2, Clock, CreditCard, FileText, PlayCircle, ShieldCheck, TrendingUp, UserRound } from "lucide-react";
+import { ArrowRight, Calendar, CheckCircle2, Clock, FileText, PlayCircle, ShieldCheck, TrendingUp } from "lucide-react";
 import { StatsService } from "@/services/stats-service";
 
 export default function Hero() {
@@ -40,7 +40,7 @@ export default function Hero() {
       </svg>
 
       <div className="container-main relative">
-        <div className="grid items-start gap-8 lg:grid-cols-[1.15fr_0.85fr_0.7fr]">
+        <div className="grid items-start gap-8 lg:grid-cols-[1.15fr_1.4fr]">
           {/* Left: headline */}
           <div>
             <div className="mb-5 flex flex-wrap gap-2">
@@ -84,8 +84,8 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Middle: Tax Health Score + Tax Overview */}
-          <div className="space-y-5">
+          {/* Right: Tax Health Score + Tax Overview, side by side */}
+          <div className="grid gap-5 sm:grid-cols-2">
             <div className="card-dark p-6">
               <p className="flex items-center gap-1.5 text-sm font-medium text-secondary">
                 Your Tax Health Score
@@ -155,35 +155,6 @@ export default function Hero() {
                   <p className="text-[11px] text-secondary">On Track</p>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Right: AI Assistant + CA support */}
-          <div className="space-y-5">
-            <div className="card-dark p-5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10">
-                <Bot size={18} className="text-emerald-400" />
-              </div>
-              <p className="mt-3 text-sm font-semibold text-white">AI Tax Assistant</p>
-              <p className="mt-1 text-xs text-secondary">
-                Get instant answers to your tax queries
-              </p>
-              <Link href="/contact" className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-emerald-400">
-                Ask Now <ArrowRight size={13} />
-              </Link>
-            </div>
-
-            <div className="card-dark p-5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10">
-                <UserRound size={18} className="text-emerald-400" />
-              </div>
-              <p className="mt-3 text-sm font-semibold text-white">CA Expert Support</p>
-              <p className="mt-1 text-xs text-secondary">
-                Connect with our experts whenever you need
-              </p>
-              <Link href="/contact" className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-emerald-400">
-                Connect Now <ArrowRight size={13} />
-              </Link>
             </div>
           </div>
         </div>
