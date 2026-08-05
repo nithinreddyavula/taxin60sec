@@ -67,7 +67,7 @@ export default function ServiceCards() {
         return (
           <Link
             key={service.code}
-            href={`/intake?id=${service.id}`}
+            href={`/intake/confirm?id=${service.id}`}
             className="card-dark group flex flex-col p-5 transition hover:-translate-y-0.5 hover:shadow-lg"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10">
