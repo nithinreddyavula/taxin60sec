@@ -22,8 +22,8 @@ export type ServiceOffering = {
   intakeQuestions: string[];
   // New — backed by service_offerings.complexity / included_features.
   complexity?: "SIMPLE" | "MODERATE" | "COMPLEX" | string;
-  /** Comma-separated list of what's included, e.g. "Review,Filing,Notice support,Expert Verification" */
-  includedFeatures?: string;
+  /** List of what's included, e.g. ["Review", "Filing", "Notice support", "Expert Verification"] */
+    includedFeatures?: string[];
 };
 
 export type StartIntakeResponse = {

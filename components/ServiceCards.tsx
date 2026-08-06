@@ -53,11 +53,8 @@ function bestForTags(category: string): string[] {
 }
 
 function includedFeaturesList(service: ServiceOffering): string[] {
-  if (service.includedFeatures) {
-    return service.includedFeatures
-      .split(",")
-      .map((f) => f.trim())
-      .filter(Boolean);
+  if (Array.isArray(service.includedFeatures) && service.includedFeatures.length > 0) {
+    return service.includedFeatures.map((f) => f.trim()).filter(Boolean);
   }
   // Fallback so the card never looks empty when the backend hasn't sent
   // per-service features yet.
