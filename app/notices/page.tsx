@@ -37,6 +37,9 @@ export default function NoticesPage() {
     setNotices((prev) => prev.map((n) => ({ ...n, read: true })));
   }
 
+  const unreadNotices = notices.filter((n) => !n.read);
+  const readNotices = notices.filter((n) => n.read);
+
   return (
     <AppShell roles={["ROLE_CLIENT"]}>
       <div className="flex items-center justify-between">
@@ -52,7 +55,9 @@ export default function NoticesPage() {
         </button>
       </div>
 
-      <div className="mt-6 space-y-3">
+      <p className="mt-2 text-secondary">Everything that needs your attention, newest first.</p>
+
+      <div className="mt-6 space-y-6">
         {loading && (
           <div className="card-dark h-20 animate-pulse rounded-2xl" />
         )}
@@ -63,45 +68,78 @@ export default function NoticesPage() {
           </div>
         )}
 
-        {notices.map((n) => (
-          <div
-            key={n.id}
-            className={`card-dark flex items-start gap-3 p-4 ${
-              n.read ? "opacity-60" : ""
-            }`}
-          >
-            <span
-              className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
-                severityColor[n.severity] ?? "bg-slate-400"
-              }`}
-            />
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-sm font-semibold">{n.title}</p>
-                <p className="shrink-0 text-xs text-secondary">
-                  {new Date(n.createdAt).toLocaleDateString()}
-                </p>
-              </div>
-              {n.message && (
-                <p className="mt-1 text-sm text-secondary">{n.message}</p>
-              )}
-              {n.caseNumber && (
-                <p className="mt-1 text-xs text-secondary">
-                  Case: {n.caseNumber}
-                </p>
-              )}
+        {!loading && unreadNotices.length > 0 && (
+          <div>
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-blue-300">
+              New
+            </p>
+            <div className="space-y-3">
+              {unreadNotices.map((n) => (
+                <NoticeRow key={n.id} notice={n} onMarkRead={markRead} />
+              ))}
             </div>
-            {!n.read && (
-              <button
-                onClick={() => markRead(n.id)}
-                className="shrink-0 text-xs font-semibold text-blue-400 hover:text-blue-300"
-              >
-                Mark read
-              </button>
-            )}
           </div>
-        ))}
+        )}
+
+        {!loading && readNotices.length > 0 && (
+          <div>
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-secondary">
+              Earlier
+            </p>
+            <div className="space-y-3">
+              {readNotices.map((n) => (
+                <NoticeRow key={n.id} notice={n} onMarkRead={markRead} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </AppShell>
+  );
+}
+
+function NoticeRow({
+  notice,
+  onMarkRead,
+}: {
+  notice: Notice;
+  onMarkRead: (id: number) => void;
+}) {
+  return (
+    <div
+      className={`card-dark flex items-start gap-3 p-4 ${
+        notice.read ? "opacity-60" : ""
+      }`}
+    >
+      <span
+        className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
+          severityColor[notice.severity] ?? "bg-slate-400"
+        }`}
+      />
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm font-semibold">{notice.title}</p>
+          <p className="shrink-0 text-xs text-secondary">
+            {new Date(notice.createdAt).toLocaleDateString()}
+          </p>
+        </div>
+        {notice.message && (
+          <p className="mt-1 text-sm text-secondary">{notice.message}</p>
+        )}
+        {notice.caseNumber && (
+          <p className="mt-1 text-xs text-secondary">
+            Case: {notice.caseNumber}
+          </p>
+        )}
+      </div>
+      {!notice.read && (
+        <button
+          onClick={() => onMarkRead(notice.id)}
+          className="shrink-0 text-xs font-semibold text-blue-400 hover:text-blue-300"
+        >
+          Mark read
+        </button>
+      )}
+    </div>
   );
 }

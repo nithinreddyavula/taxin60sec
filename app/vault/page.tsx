@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import AppShell from "@/components/AppShell";
+import TrustBadges from "@/components/TrustBadges";
 import { VaultService, VaultDocument } from "@/services/vault-service";
 
 function formatSize(bytes: number | null) {
@@ -101,6 +102,10 @@ export default function VaultPage() {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="mt-10 -mx-6">
+        <TrustBadges />
       </div>
     </AppShell>
   );

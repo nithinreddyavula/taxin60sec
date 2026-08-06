@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import AppShell from "@/components/AppShell";
+import TrustBadges from "@/components/TrustBadges";
 import { Payment, PaymentHistoryService } from "@/services/payment-history-service";
 
 const statusColor: Record<string, string> = {
@@ -31,6 +32,7 @@ export default function PaymentsPage() {
     <AppShell roles={["ROLE_CLIENT"]}>
       <p className="eyebrow">Payments</p>
       <h1 className="mt-2 text-3xl font-bold">Payment history</h1>
+      <p className="mt-2 text-secondary">Every payment, invoiced automatically and encrypted end to end.</p>
 
       <div className="card-dark mt-6 overflow-x-auto p-0">
         {loading && <div className="h-40 animate-pulse" />}
@@ -73,6 +75,10 @@ export default function PaymentsPage() {
             </tbody>
           </table>
         )}
+      </div>
+
+      <div className="mt-10">
+        <TrustBadges />
       </div>
     </AppShell>
   );

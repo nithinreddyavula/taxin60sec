@@ -3,19 +3,21 @@
 import { useState } from "react";
 import { Check, Copy, MessageCircle, Users } from "lucide-react";
 
-export default function ReferralShareBlock({
-  referralCode,
-  referralShareUrl,
-  referredCount,
-  title = "Refer & Earn",
-  description = "Share your link. When someone signs up through it, you both get rewarded.",
-}: {
+interface ReferralShareBlockProps {
   referralCode: string;
   referralShareUrl: string;
   referredCount?: number;
   title?: string;
   description?: string;
-}) {
+}
+
+export default function ReferralShareBlock({
+  referralCode,
+  referralShareUrl,
+  referredCount,
+  title = "Know someone stressed about taxes?",
+  description = "Send them your link. When they file with Tax60, you both get rewarded.",
+}: ReferralShareBlockProps) {
   const [copied, setCopied] = useState(false);
 
   async function copyLink() {
@@ -23,17 +25,17 @@ export default function ReferralShareBlock({
       await navigator.clipboard.writeText(referralShareUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Clipboard may fail on unsupported browsers.
+    } catch (error) {
+      console.error("Failed to copy referral link:", error);
     }
   }
 
   const waText = encodeURIComponent(
-    `I've been using Tax60Sec for my taxes - use my link and we both save → ${referralShareUrl}`
+    `I've been using Tax60Sec for my taxes. Use my referral link and we both save! 🎉\n\n${referralShareUrl}`
   );
 
   return (
-    <section className="card-dark p-6">
+    <section className="card-dark p-6 rounded-2xl">
       <div className="flex items-center gap-2">
         <Users size={18} className="text-emerald-400" />
         <h2 className="font-bold text-white">{title}</h2>
@@ -41,13 +43,13 @@ export default function ReferralShareBlock({
 
       <p className="mt-1 text-sm text-secondary">{description}</p>
 
-      <div className="mt-4 flex items-center justify-between rounded-xl border border-white/10 bg-white/[.03] p-3">
+      <div className="mt-4 flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] p-3">
         <span className="truncate font-mono text-sm text-emerald-300">
           {referralCode}
         </span>
 
         {referredCount !== undefined && (
-          <span className="shrink-0 text-xs text-secondary">
+          <span className="ml-3 shrink-0 text-xs text-secondary">
             {referredCount} referred so far
           </span>
         )}
@@ -70,7 +72,7 @@ export default function ReferralShareBlock({
           className="btn-secondary flex flex-1 items-center justify-center gap-2"
         >
           {copied ? <Check size={16} /> : <Copy size={16} />}
-          {copied ? "Copied" : "Copy link"}
+          {copied ? "Copied!" : "Copy link"}
         </button>
       </div>
     </section>

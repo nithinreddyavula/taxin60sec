@@ -14,6 +14,7 @@ import SlaBadge from "@/components/SlaBadge";
 import CaseChat from "@/components/CaseChat";
 import CaseSupportPanel from "@/components/CaseSupportPanel";
 import DocumentUploader from "@/components/intake/DocumentUploader";
+import AskTax60 from "@/components/AskTax60";
 
 const pretty = (value?: string) => value?.replaceAll("_", " ") ?? "Pending";
 
@@ -180,10 +181,25 @@ export default function CaseDetailsPage() {
             <IndianRupee className="text-blue-300" size={21} />
             <h2 className="mt-3 font-bold">Pricing & payment</h2>
             <p className="mt-2 text-sm text-secondary">A final payment request is issued after document validation.</p>
-            {price !== undefined && <p className="mt-3 text-2xl font-bold">₹{Number(price).toLocaleString("en-IN")}</p>}
+            {price !== undefined && (
+              <div className="mt-3">
+                <p className="text-2xl font-bold">₹{Number(price).toLocaleString("en-IN")}</p>
+                <p className="mt-1 text-xs text-secondary">Includes platform fee and GST.</p>
+              </div>
+            )}
             {taxCase.workflowStage === "PAYMENT_PENDING" ? (
               <div className="mt-4">
                 <PayNowButton caseId={id} clientName={taxCase.clientName} clientEmail={taxCase.clientEmail} clientPhone={taxCase.clientPhone} />
+                <div className="mt-4 space-y-1.5 rounded-xl border border-white/8 bg-white/[0.02] p-3 text-xs text-secondary">
+                  <p>An invoice is generated automatically as soon as payment succeeds.</p>
+                  <p>Refund policy: full refund if your CA hasn&apos;t started review yet.</p>
+                  <p>
+                    Need help?{" "}
+                    <button onClick={() => setTab("Support")} className="font-semibold text-blue-300">
+                      Open Support
+                    </button>
+                  </p>
+                </div>
               </div>
             ) : (
               <button disabled className="btn-primary mt-4 w-full opacity-60">Payment unlocks after review</button>
@@ -194,6 +210,8 @@ export default function CaseDetailsPage() {
         {tab === "Support" && <CaseSupportPanel caseId={id} />}
 
       </div>
+
+      <AskTax60 caseId={id} />
 
     </AppShell>
   );
