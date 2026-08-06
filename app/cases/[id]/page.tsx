@@ -12,6 +12,7 @@ import { DocumentService, RequiredDocument } from "@/services/document-service";
 import PayNowButton from "@/components/PayNowButton";
 import SlaBadge from "@/components/SlaBadge";
 import CaseChat from "@/components/CaseChat";
+import CaseSupportPanel from "@/components/CaseSupportPanel";
 import DocumentUploader from "@/components/intake/DocumentUploader";
 
 const pretty = (value?: string) => value?.replaceAll("_", " ") ?? "Pending";
@@ -190,23 +191,7 @@ export default function CaseDetailsPage() {
           </section>
         )}
 
-        {tab === "Support" && (
-          <section className="card-dark p-5 text-center">
-            <MessageCircle className="mx-auto text-emerald-400" size={28} />
-            <h2 className="mt-3 font-bold">Need help with this case?</h2>
-            <p className="mt-2 text-sm text-secondary">
-              Our team is here for anything - questions, delays, or changes.
-            </p>
-            <a
-              href="https://wa.me/917013734079"
-              target="_blank"
-              rel="noreferrer"
-              className="btn-primary mt-5 inline-flex"
-            >
-              Chat on WhatsApp
-            </a>
-          </section>
-        )}
+        {tab === "Support" && <CaseSupportPanel caseId={id} />}
 
       </div>
 
