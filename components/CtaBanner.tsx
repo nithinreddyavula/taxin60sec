@@ -12,21 +12,24 @@ export default function CtaBanner() {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white">
-                Start Your Tax Health Check Now
+                Ready to make taxes stress-free?
               </h3>
               <p className="mt-1 text-sm text-emerald-50">
-                Join thousands of smart taxpayers who stay stress-free all year round.
+                Join thousands of happy customers who trust Tax60Sec.
               </p>
             </div>
           </div>
 
-          <Link
-            href="/health-check"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-emerald-700 transition hover:bg-emerald-50"
-          >
-            Check My Tax Health
-            <ArrowRight size={16} />
-          </Link>
+          <div className="flex flex-col items-center gap-2 sm:items-end">
+            <Link
+              href="/health-check"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-emerald-700 transition hover:bg-emerald-50"
+            >
+              Check My Tax Health Free
+              <ArrowRight size={16} />
+            </Link>
+            <p className="text-xs text-emerald-50/80">Takes 2 minutes · No card required</p>
+          </div>
         </div>
       </div>
     </section>

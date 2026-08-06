@@ -9,7 +9,17 @@ import GlobalSearch from "./GlobalSearch";
 
 const clientLinks = [{ href: "/dashboard", label: "Dashboard", icon: LayoutDashboard }, { href: "/tax-health", label: "Tax Health", icon: HeartPulse }, { href: "/calendar", label: "Tax Calendar", icon: Calendar }, { href: "/my-services", label: "My Services", icon: BriefcaseBusiness }, { href: "/vault", label: "Documents Vault", icon: ClipboardList }, { href: "/ca-workspace", label: "CA Workspace", icon: MessagesSquare }, { href: "/notices", label: "Notices", icon: Bell }, { href: "/payments", label: "Payments", icon: CreditCard }, { href: "/profile", label: "Profile & Settings", icon: UserRound }];
 const caLinks = [{ href: "/ca/cases", label: "Work queue", icon: ClipboardList }, { href: "/ca/profile", label: "Availability & KYC", icon: UserCheck }, { href: "/ca/payouts", label: "Earnings", icon: Wallet }, { href: "/profile", label: "Profile", icon: UserRound }];
-const adminLinks = [{ href: "/admin", label: "System overview", icon: LayoutDashboard }, { href: "/ca/cases", label: "Case queue", icon: ClipboardList }, { href: "/admin/ca-applications", label: "Partner Management", icon: UserCheck }, { href: "/admin/payouts", label: "Payments", icon: IndianRupee }, { href: "/admin/reports", label: "Reports", icon: BarChart3 }, { href: "/profile", label: "Profile", icon: UserRound }];
+const adminLinks = [
+  { href: "/admin", label: "Overview", icon: LayoutDashboard },
+  { href: "/admin/clients", label: "Clients", icon: UserRound },
+  { href: "/admin/cases", label: "Cases", icon: ClipboardList },
+  { href: "/admin/ca-applications", label: "CA Management", icon: UserCheck },
+  { href: "/admin/payouts", label: "Payments", icon: IndianRupee },
+  { href: "/admin/reports", label: "Reports", icon: BarChart3 },
+  { href: "/admin/settings", label: "System Settings", icon: ShieldCheck },
+  { href: "/admin/audit-logs", label: "Audit Logs", icon: MessagesSquare },
+  { href: "/profile", label: "Profile", icon: UserRound },
+];
 
 export default function AppShell({ children, roles = ["ROLE_CLIENT", "ROLE_CA", "ROLE_ADMIN"] }: { children: React.ReactNode; roles?: string[] }) {
   const { user, ready, logout } = useAppSession(); const router = useRouter(); const pathname = usePathname(); const [open, setOpen] = useState(false);

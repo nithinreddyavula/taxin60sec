@@ -2,31 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Bell } from "lucide-react";
+import { ArrowRight, Bell, Briefcase, CheckCircle2, Circle, Files, HeartPulse } from "lucide-react";
 import AppShell from "@/components/AppShell";
-import ComplianceScoreWidget from "@/components/ComplianceScoreWidget";
 import ReferralCard from "@/components/ReferralCard";
 import TierBadge from "@/components/TierBadge";
 import { useAppSession } from "@/components/AppProviders";
 import { CaseService, CaseItem } from "@/services/case-service";
 import { NoticeService } from "@/services/notice-service";
-
-// Phase 9 — dashboard should answer "what do I do now", not just list widgets.
-const STAGE_ACTION: Record<string, string> = {
-  CREATED: "We're reviewing what you've shared.",
-  DOCUMENTS_PENDING: "Upload your documents to get things moving.",
-  DOCUMENTS_UPLOADED: "Your documents are queued for verification.",
-  DOCUMENTS_VERIFIED: "Documents verified — waiting for a CA to be assigned.",
-  CA_ASSIGNED: "Your CA has been assigned and will begin review shortly.",
-  UNDER_REVIEW: "Your CA is reviewing your documents.",
-  CLIENT_ACTION_REQUIRED: "Your CA needs something from you — check messages.",
-  READY_TO_FILE: "Your filing is ready — a payment request is coming.",
-  PAYMENT_PENDING: "Payment is due to move your filing forward.",
-  PAYMENT_COMPLETED: "Payment received — we're preparing your filing.",
-  PROCESSING: "We're filing your return now.",
-  FILED: "Filed! We're waiting on confirmation.",
-  COMPLETED: "This case is complete.",
-};
+import { ComplianceService, ComplianceScore } from "@/services/compliance-service";
+import { VaultService, VaultDocument } from "@/services/vault-service";
+import { DeadlinesService, Deadline } from "@/services/deadlines-service";
+import { MessageService, CaseMessage } from "@/services/message-service";
+import { CASE_STAGES, caseStageIndex, NEXT_ACTION_COPY } from "@/lib/case-stage";
 
 function firstName(fullName?: string) {
   if (!fullName) return "there";
@@ -44,64 +31,164 @@ export default function DashboardPage() {
   const { user } = useAppSession();
   const [cases, setCases] = useState<CaseItem[] | null>(null);
   const [unread, setUnread] = useState(0);
+  const [score, setScore] = useState<ComplianceScore | null>(null);
+  const [documents, setDocuments] = useState<VaultDocument[]>([]);
+  const [deadlines, setDeadlines] = useState<Deadline[]>([]);
+  const [latestMessage, setLatestMessage] = useState<CaseMessage | null>(null);
 
   useEffect(() => {
-    CaseService.list()
-      .then((page) => setCases(page.items))
-      .catch(() => setCases([]));
-    NoticeService.unreadCount()
-      .then((res) => setUnread(res.unread))
-      .catch(() => {
-        // Non-critical - dashboard works without the notice count.
-      });
+    CaseService.list().then((page) => setCases(page.items)).catch(() => setCases([]));
+    NoticeService.unreadCount().then((res) => setUnread(res.unread)).catch(() => {});
+    ComplianceService.myScore().then(setScore).catch(() => {});
+    VaultService.list().then(setDocuments).catch(() => {});
+    DeadlinesService.upcoming().then((res) => setDeadlines(res.deadlines)).catch(() => {});
   }, []);
 
-  const activeCase = cases?.find((c) => c.status !== "COMPLETED") ?? cases?.[0] ?? null;
-  const statusLine = activeCase
-    ? STAGE_ACTION[activeCase.workflowStage] ?? "Your case is moving forward."
-    : null;
+  const activeCase = cases?.find((c) => c.status !== "COMPLETED" && c.status !== "CANCELLED") ?? cases?.[0] ?? null;
+
+  useEffect(() => {
+    if (activeCase?.id) {
+      MessageService.list(activeCase.id)
+        .then((messages) => setLatestMessage(messages[messages.length - 1] ?? null))
+        .catch(() => {});
+    }
+  }, [activeCase?.id]);
+
+  const currentStep = caseStageIndex(activeCase?.workflowStage);
+  const pendingActions = cases?.filter((c) => c.workflowStage === "CLIENT_ACTION_REQUIRED").length ?? 0;
 
   return (
     <AppShell roles={["ROLE_CLIENT"]}>
-      <p className="eyebrow">Overview</p>
-      <h1 className="mt-2 text-3xl font-bold">
-        {greeting()}, {firstName(user?.fullName)}
+      <h1 className="text-3xl font-bold">
+        {greeting()}, {firstName(user?.fullName)}!
       </h1>
-      <p className="mt-2 text-secondary">Everything is on track.</p>
+      <p className="mt-2 text-secondary">Here&apos;s what&apos;s happening with your tax journey.</p>
 
+      {/* Stat tiles */}
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="card-dark p-4">
+          <Briefcase size={18} className="text-emerald-400" />
+          <p className="mt-2 text-2xl font-bold">
+            {cases?.filter((c) => c.status !== "COMPLETED" && c.status !== "CANCELLED").length ?? "—"}
+          </p>
+          <p className="text-xs text-secondary">Active Cases</p>
+          <Link href="/my-services" className="mt-1 block text-xs font-semibold text-emerald-400">View all</Link>
+        </div>
+        <div className="card-dark p-4">
+          <Bell size={18} className="text-amber-400" />
+          <p className="mt-2 text-2xl font-bold">{pendingActions}</p>
+          <p className="text-xs text-secondary">Pending Actions</p>
+          <Link href="/notices" className="mt-1 block text-xs font-semibold text-emerald-400">View now</Link>
+        </div>
+        <div className="card-dark p-4">
+          <Files size={18} className="text-blue-400" />
+          <p className="mt-2 text-2xl font-bold">{documents.length}</p>
+          <p className="text-xs text-secondary">Documents</p>
+          <Link href="/vault" className="mt-1 block text-xs font-semibold text-emerald-400">In Vault</Link>
+        </div>
+        <div className="card-dark p-4">
+          <HeartPulse size={18} className="text-emerald-400" />
+          <p className="mt-2 text-2xl font-bold">{score?.score ?? "—"}<span className="text-sm text-secondary">/100</span></p>
+          <p className="text-xs text-secondary">Tax Health Score</p>
+          <Link href="/tax-health" className="mt-1 block text-xs font-semibold text-emerald-400">{score?.statusLabel ?? "View"}</Link>
+        </div>
+      </div>
+
+      {/* Current case */}
       {cases === null ? (
-        <div className="card-dark mt-6 h-28 animate-pulse" />
+        <div className="card-dark mt-6 h-40 animate-pulse" />
       ) : activeCase ? (
         <section className="card-dark mt-6 p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-400">
-                {activeCase.caseNumber} · {activeCase.title}
-              </p>
-              <p className="mt-2 text-lg font-semibold">{statusLine}</p>
+            <div>
+              <div className="flex items-center gap-2">
+                <p className="font-bold">{activeCase.title}</p>
+                <span className="rounded-full bg-blue-500/15 px-2.5 py-0.5 text-xs font-semibold text-blue-200">
+                  {activeCase.status.replaceAll("_", " ")}
+                </span>
+              </div>
+              <p className="mt-1 text-xs text-secondary">Case ID: {activeCase.caseNumber}</p>
             </div>
             <Link href={`/cases/${activeCase.id}`} className="btn-primary shrink-0 !w-auto px-5">
               Open case <ArrowRight size={16} />
             </Link>
           </div>
+
+          <ol className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
+            {CASE_STAGES.map((stage, index) => (
+              <li key={stage} className={`rounded-xl border p-3 text-xs font-semibold ${index <= currentStep ? "border-emerald-400/30 bg-emerald-500/10 text-emerald-300" : "border-slate-200 text-slate-400"}`}>
+                {index <= currentStep ? <CheckCircle2 className="mb-2" size={16} /> : <Circle className="mb-2" size={16} />}
+                {stage}
+              </li>
+            ))}
+          </ol>
+
+          <p className="mt-4 text-sm text-secondary">
+            {NEXT_ACTION_COPY[activeCase.workflowStage] ?? "Your case is moving forward."}
+          </p>
         </section>
       ) : (
         <section className="card-dark mt-6 p-6">
           <p className="font-semibold">No active case right now.</p>
-          <p className="mt-1 text-sm text-secondary">
-            Start a filing whenever you&apos;re ready — it takes about 60 seconds.
-          </p>
-          <Link href="/intake" className="btn-primary mt-4 !w-auto px-5">
-            Start a case
+          <p className="mt-1 text-sm text-secondary">Start a filing whenever you&apos;re ready — it takes about 60 seconds.</p>
+          <Link href="/intake" className="btn-primary mt-4 !w-auto px-5">Start a case</Link>
+        </section>
+      )}
+
+      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        {/* Next action required */}
+        {activeCase && (
+          <section className="card-dark p-5">
+            <p className="font-bold">Next Action Required</p>
+            <p className="mt-2 text-sm text-secondary">{NEXT_ACTION_COPY[activeCase.workflowStage] ?? "No action needed right now."}</p>
+            <Link href={`/cases/${activeCase.id}`} className="btn-primary mt-4 !w-auto px-5">
+              Open case
+            </Link>
+          </section>
+        )}
+
+        {/* Message preview */}
+        {latestMessage && (
+          <section className="card-dark p-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-semibold">{latestMessage.senderName}</p>
+                <p className="text-xs text-secondary">{latestMessage.senderRole}</p>
+              </div>
+              <p className="text-xs text-secondary">{new Date(latestMessage.createdAt).toLocaleString()}</p>
+            </div>
+            <p className="mt-3 text-sm text-secondary">{latestMessage.body}</p>
+            {activeCase && (
+              <Link href={`/cases/${activeCase.id}`} className="mt-3 inline-block text-xs font-semibold text-emerald-400">
+                View Message
+              </Link>
+            )}
+          </section>
+        )}
+      </div>
+
+      {/* Upcoming deadlines */}
+      {deadlines.length > 0 && (
+        <section className="card-dark mt-6 p-5">
+          <p className="font-bold">Upcoming Deadlines</p>
+          <div className="mt-4 space-y-3">
+            {deadlines.map((d) => (
+              <div key={`${d.type}-${d.title}`} className="flex items-center justify-between text-sm">
+                <span>{d.title}</span>
+                <span className="text-xs text-secondary">
+                  {new Date(d.dueDate).toLocaleDateString()} · ({d.daysRemaining} days left)
+                </span>
+              </div>
+            ))}
+          </div>
+          <Link href="/calendar" className="mt-4 inline-block text-xs font-semibold text-emerald-400">
+            View All Deadlines
           </Link>
         </section>
       )}
 
       {unread > 0 && (
-        <Link
-          href="/notices"
-          className="mt-4 flex items-center justify-between rounded-2xl border border-blue-400/20 bg-blue-500/10 p-4 text-sm font-semibold text-blue-200"
-        >
+        <Link href="/notices" className="mt-4 flex items-center justify-between rounded-2xl border border-blue-400/20 bg-blue-500/10 p-4 text-sm font-semibold text-blue-200">
           <span className="flex items-center gap-2">
             <Bell size={16} /> {unread} new notice{unread > 1 ? "s" : ""}
           </span>
@@ -110,7 +197,6 @@ export default function DashboardPage() {
       )}
 
       <div className="mt-6 space-y-6">
-        <ComplianceScoreWidget />
         <TierBadge />
         <ReferralCard />
       </div>

@@ -1,21 +1,30 @@
-import { ShieldCheck } from "lucide-react";
+import { ClipboardList, BarChart3, UserCheck2, UploadCloud, CheckCircle2, ArrowRight } from "lucide-react";
 
 const steps = [
   {
-    title: "Check Tax Health",
-    copy: "Answer a few quick questions and get your score instantly.",
+    icon: ClipboardList,
+    title: "1. Check Tax Health",
+    copy: "Answer a few simple questions in 2 minutes",
   },
   {
-    title: "Share & Upload",
-    copy: "Share details and upload required documents securely.",
+    icon: BarChart3,
+    title: "2. Get Your Report",
+    copy: "See your tax health score and recommendations",
   },
   {
-    title: "CA Reviews",
-    copy: "Our expert CA reviews your case and handles everything.",
+    icon: UserCheck2,
+    title: "3. Expert CA Assigned",
+    copy: "We assign the best CA for your case",
   },
   {
-    title: "Relax",
-    copy: "We file, track, and notify you. You stay stress-free.",
+    icon: UploadCloud,
+    title: "4. Upload & Relax",
+    copy: "Upload documents securely. We handle the rest.",
+  },
+  {
+    icon: CheckCircle2,
+    title: "5. File & Done",
+    copy: "Track progress and get notified at every step",
   },
 ];
 
@@ -23,34 +32,37 @@ export default function HowItWorks() {
   return (
     <section className="section-space">
       <div className="container-main">
-        <div className="card-dark grid gap-10 p-8 lg:grid-cols-[1.2fr_0.8fr] lg:p-10">
-          <div>
-            <p className="eyebrow">How it works</p>
-            <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl">
-              Simple. Secure. Seamless.
-            </h2>
+        <div className="section-header">
+          <p className="eyebrow">How It Works</p>
+          <h2 className="section-title mt-3">Simple. Fast. Stress-Free.</h2>
+        </div>
 
-            <div className="mt-7 space-y-6">
-              {steps.map((step, i) => (
-                <div key={step.title} className="flex gap-4">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-sm font-bold text-emerald-400">
-                    {i + 1}
-                  </span>
+        <div className="mt-10 flex flex-col items-stretch gap-6 lg:flex-row lg:items-start">
+          {steps.map((step, index) => {
+            const Icon = step.icon;
+            const isLast = index === steps.length - 1;
+
+            return (
+              <div key={step.title} className="flex flex-1 items-start gap-3 lg:flex-col lg:items-center lg:text-center">
+                <div className="flex flex-col items-center gap-3 lg:flex-1">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-emerald-500/10">
+                    <Icon size={26} className="text-emerald-400" />
+                  </div>
                   <div>
                     <p className="font-semibold text-white">{step.title}</p>
                     <p className="mt-1 text-sm text-secondary">{step.copy}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
 
-          <div className="relative hidden items-center justify-center lg:flex">
-            <div className="absolute h-64 w-64 rounded-full bg-emerald-500/10 blur-3xl" />
-            <div className="relative flex h-40 w-40 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-500/5">
-              <ShieldCheck size={72} className="text-emerald-400" />
-            </div>
-          </div>
+                {!isLast && (
+                  <ArrowRight
+                    size={18}
+                    className="mt-5 hidden shrink-0 text-slate-600 lg:block"
+                  />
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

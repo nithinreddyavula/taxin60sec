@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CheckCircle2, Circle, IndianRupee, RefreshCw, ShieldCheck, MessageCircle } from "lucide-react";
+import { CheckCircle2, Circle, IndianRupee, RefreshCw, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import AppShell from "@/components/AppShell";
 import { CaseService } from "@/services/case-service";
@@ -15,37 +15,18 @@ import CaseChat from "@/components/CaseChat";
 import CaseSupportPanel from "@/components/CaseSupportPanel";
 import DocumentUploader from "@/components/intake/DocumentUploader";
 import AskTax60 from "@/components/AskTax60";
+import { CASE_STAGES, caseStageIndex } from "@/lib/case-stage";
 
 const pretty = (value?: string) => value?.replaceAll("_", " ") ?? "Pending";
 
-// Maps the backend's full operational WorkflowStage onto the clean, customer-facing
-// tracking sequence from the product spec. Multiple internal stages can map to the
-// same customer-facing step - clients don't need to see every internal state.
-const CUSTOMER_STEPS = [
-  { label: "Case Created", stages: ["CREATED"] },
-  { label: "Documents Received", stages: ["DOCUMENTS_PENDING", "DOCUMENTS_UPLOADED", "DOCUMENTS_VERIFIED"] },
-  { label: "Expert Assigned", stages: ["CA_ASSIGNED"] },
-  { label: "Review Started", stages: ["UNDER_REVIEW"] },
-  { label: "Need Clarification", stages: ["CLIENT_ACTION_REQUIRED"] },
-  { label: "Preparing Filing", stages: ["READY_TO_FILE", "PAYMENT_PENDING", "PAYMENT_COMPLETED", "PROCESSING"] },
-  { label: "Filed", stages: ["FILED"] },
-  { label: "Completed", stages: ["COMPLETED"] },
-];
-
-function customerStepIndex(workflowStage?: string) {
-  if (!workflowStage) return 0;
-  const i = CUSTOMER_STEPS.findIndex((step) => step.stages.includes(workflowStage));
-  return i === -1 ? 0 : i;
-}
-
-const TABS = ["Timeline", "Documents", "Messages", "Payments", "Support"] as const;
+const TABS = ["Overview", "Documents", "Timeline", "Communication", "Payments", "Support"] as const;
 type Tab = (typeof TABS)[number];
 
 export default function CaseDetailsPage() {
   const params = useParams<{ id: string }>();
   const id = Number(params.id);
   const queryClient = useQueryClient();
-  const [tab, setTab] = useState<Tab>("Timeline");
+  const [tab, setTab] = useState<Tab>("Overview");
 
   const caseQuery = useQuery({ queryKey: ["case", id], queryFn: () => CaseService.detail(id), enabled: Number.isFinite(id) });
   const docsQuery = useQuery<RequiredDocument[]>({ queryKey: ["case-documents", id], queryFn: () => DocumentService.requiredDocuments(id), enabled: Number.isFinite(id) });
@@ -59,7 +40,7 @@ export default function CaseDetailsPage() {
     onError: (error: Error) => toast.error(error.message),
   });
 
-  const currentStep = useMemo(() => customerStepIndex(caseQuery.data?.workflowStage), [caseQuery.data?.workflowStage]);
+  const currentStep = useMemo(() => caseStageIndex(caseQuery.data?.workflowStage), [caseQuery.data?.workflowStage]);
 
   if (caseQuery.isLoading) return <AppShell roles={["ROLE_CLIENT"]}><div className="h-96 animate-pulse rounded-2xl bg-white/5" /></AppShell>;
   if (caseQuery.error || !caseQuery.data) return <AppShell roles={["ROLE_CLIENT"]}><p className="text-red-300">{caseQuery.error?.message ?? "Case not found"}</p><Link href="/dashboard" className="btn-primary mt-5">Back to dashboard</Link></AppShell>;
@@ -69,40 +50,39 @@ export default function CaseDetailsPage() {
 
   return (
     <AppShell roles={["ROLE_CLIENT"]}>
-
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <Link href="/dashboard" className="text-sm font-semibold text-blue-300">← All cases</Link>
-          <p className="eyebrow mt-5">{taxCase.caseNumber}</p>
+          <Link href="/dashboard" className="text-sm font-semibold text-blue-300">← Back to Cases</Link>
+          <p className="eyebrow mt-5">Case ID: {taxCase.caseNumber}</p>
           <h1 className="mt-2 text-3xl font-bold">{taxCase.title}</h1>
           <p className="mt-2 text-secondary">{taxCase.intakeSummary ?? "Your Tax60 team is reviewing the information you shared."}</p>
+          <p className="mt-1 text-sm text-secondary">CA Assigned: {taxCase.assignedCaName ?? "Not yet assigned"}</p>
           <div className="mt-3"><SlaBadge responseSeconds={taxCase.responseSeconds} slaMet={taxCase.slaMet} /></div>
         </div>
         <span className="rounded-full bg-blue-500/15 px-3 py-1.5 text-sm font-bold text-blue-200">{pretty(taxCase.status)}</span>
       </div>
 
-      {/* Uber-style progress tracker - customer-facing steps only */}
+      {/* Case progress — 5-stage tracker */}
       <section className="card-dark mt-7 p-5">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-bold">Case progress</h2>
-            <p className="mt-1 text-sm text-secondary">Current step: {CUSTOMER_STEPS[currentStep]?.label}</p>
+            <h2 className="font-bold">Case Progress</h2>
+            <p className="mt-1 text-sm text-secondary">Current step: {CASE_STAGES[currentStep]}</p>
           </div>
           <button onClick={() => completeOnboarding.mutate()} disabled={completeOnboarding.isPending} className="text-sm font-semibold text-blue-300">
             <RefreshCw className="mr-1 inline" size={15} /> Refresh AI summary
           </button>
         </div>
-        <ol className="mt-6 grid gap-3 sm:grid-cols-4 lg:grid-cols-8">
-          {CUSTOMER_STEPS.map((step, index) => (
-            <li key={step.label} className={`rounded-xl border p-3 text-xs font-bold ${index <= currentStep ? "border-blue-400/30 bg-blue-500/10 text-blue-200" : "border-white/10 text-slate-500"}`}>
+        <ol className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
+          {CASE_STAGES.map((stage, index) => (
+            <li key={stage} className={`rounded-xl border p-3 text-xs font-bold ${index <= currentStep ? "border-blue-400/30 bg-blue-500/10 text-blue-200" : "border-white/10 text-slate-500"}`}>
               {index <= currentStep ? <CheckCircle2 className="mb-2" size={17} /> : <Circle className="mb-2" size={17} />}
-              {step.label}
+              {stage}
             </li>
           ))}
         </ol>
       </section>
 
-      {/* Tabs - Timeline / Documents / Messages / Payments / Support, nothing else */}
       <div className="mt-6 flex gap-1 overflow-x-auto border-b border-white/10">
         {TABS.map((t) => (
           <button
@@ -118,27 +98,32 @@ export default function CaseDetailsPage() {
       </div>
 
       <div className="mt-6">
-
-        {tab === "Timeline" && (
-          <section className="card-dark p-5">
-            <h2 className="font-bold">Case timeline</h2>
-            <div className="mt-5 space-y-4">
-              {timelineQuery.data?.length ? timelineQuery.data.map((event, index) => (
-                <div key={`${event.createdAt}-${index}`} className="border-l border-blue-400/40 pl-4">
-                  <p className="text-sm font-semibold">{event.title}</p>
-                  <p className="mt-1 text-sm text-secondary">{event.description}</p>
-                  <p className="mt-1 text-xs text-slate-500">{new Date(event.createdAt).toLocaleString()}</p>
-                </div>
-              )) : <p className="text-sm text-secondary">Timeline updates will appear here as your case progresses.</p>}
-            </div>
-          </section>
+        {tab === "Overview" && (
+          <div className="grid gap-6 lg:grid-cols-2">
+            <section className="card-dark p-5">
+              <h2 className="font-bold">Case Details</h2>
+              <dl className="mt-4 space-y-3 text-sm">
+                <div className="flex justify-between"><dt className="text-secondary">Case ID</dt><dd>{taxCase.caseNumber}</dd></div>
+                <div className="flex justify-between"><dt className="text-secondary">Service</dt><dd>{taxCase.title}</dd></div>
+                <div className="flex justify-between"><dt className="text-secondary">Status</dt><dd>{pretty(taxCase.status)}</dd></div>
+                <div className="flex justify-between"><dt className="text-secondary">CA Assigned</dt><dd>{taxCase.assignedCaName ?? "—"}</dd></div>
+              </dl>
+            </section>
+            <section className="card-dark p-5">
+              <ShieldCheck className="text-emerald-400" size={21} />
+              <h2 className="mt-3 font-bold">Documents Summary</h2>
+              <p className="mt-2 text-sm text-secondary">
+                {docsQuery.data?.filter((d) => d.uploaded).length ?? 0} / {docsQuery.data?.length ?? 0} documents uploaded
+              </p>
+            </section>
+          </div>
         )}
 
         {tab === "Documents" && (
           <div className="space-y-6">
             <section className="card-dark p-5">
               <h2 className="font-bold">Secure documents</h2>
-              <p className="mt-1 text-sm text-secondary">Add the requested records. We'll validate each one before it moves forward.</p>
+              <p className="mt-1 text-sm text-secondary">Add the requested records. We&apos;ll validate each one before it moves forward.</p>
               <div className="mt-5">
                 {docsQuery.isLoading ? <div className="h-12 animate-pulse rounded-lg bg-white/5" /> : (
                   <DocumentUploader
@@ -164,14 +149,27 @@ export default function CaseDetailsPage() {
           </div>
         )}
 
-        {tab === "Messages" && (
+        {tab === "Timeline" && (
+          <section className="card-dark p-5">
+            <h2 className="font-bold">Case Timeline</h2>
+            <div className="mt-5 space-y-4">
+              {timelineQuery.data?.length ? timelineQuery.data.map((event, index) => (
+                <div key={`${event.createdAt}-${index}`} className="border-l border-blue-400/40 pl-4">
+                  <p className="text-sm font-semibold">{event.title}</p>
+                  <p className="mt-1 text-sm text-secondary">{event.description}</p>
+                  <p className="mt-1 text-xs text-slate-500">{new Date(event.createdAt).toLocaleString()}</p>
+                </div>
+              )) : <p className="text-sm text-secondary">Timeline updates will appear here as your case progresses.</p>}
+            </div>
+          </section>
+        )}
+
+        {tab === "Communication" && (
           <section className="card-dark p-5">
             {taxCase.assignedCaId ? (
               <CaseChat caseId={id} />
             ) : (
-              <p className="text-sm text-secondary">
-                Messages open once an expert is assigned to your case.
-              </p>
+              <p className="text-sm text-secondary">Messages open once an expert is assigned to your case.</p>
             )}
           </section>
         )}
@@ -195,9 +193,7 @@ export default function CaseDetailsPage() {
                   <p>Refund policy: full refund if your CA hasn&apos;t started review yet.</p>
                   <p>
                     Need help?{" "}
-                    <button onClick={() => setTab("Support")} className="font-semibold text-blue-300">
-                      Open Support
-                    </button>
+                    <button onClick={() => setTab("Support")} className="font-semibold text-blue-300">Open Support</button>
                   </p>
                 </div>
               </div>
@@ -208,11 +204,9 @@ export default function CaseDetailsPage() {
         )}
 
         {tab === "Support" && <CaseSupportPanel caseId={id} />}
-
       </div>
 
       <AskTax60 caseId={id} />
-
     </AppShell>
   );
 }

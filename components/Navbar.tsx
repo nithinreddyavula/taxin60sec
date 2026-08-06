@@ -1,20 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, ShieldCheck, UserRound, X } from "lucide-react";
+import { ChevronDown, Menu, ShieldCheck, UserRound, X } from "lucide-react";
 import { useState } from "react";
 import { useAppSession } from "./AppProviders";
 
-// Fix 3 — freeze the nav to exactly these, nothing more.
-const navLinks: { href: string; label: string }[] = [
-  { href: "/services", label: "Services" },
-  { href: "/services", label: "Pricing" },
+const servicesMenu = [
+  { href: "/services", label: "ITR Filing" },
+  { href: "/services", label: "GST Compliance" },
+  { href: "/services", label: "Company Services" },
+  { href: "/services", label: "TDS Services" },
+  { href: "/services", label: "NRI Taxation" },
+];
+
+const supportMenu = [
+  { href: "/contact", label: "Contact Us" },
   { href: "/cases", label: "Track Case" },
-  { href: "/contact", label: "Support" },
+  { href: "/notices", label: "Notices" },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [openDesktopMenu, setOpenDesktopMenu] = useState<"services" | "support" | null>(null);
   const { user } = useAppSession();
 
   return (
@@ -36,7 +43,7 @@ export default function Navbar() {
                 Tax60
               </span>
               <span className="hidden whitespace-nowrap text-[10px] font-medium text-secondary sm:flex sm:items-center sm:gap-1">
-                AI Powered. CA Verified. 100% Secure.
+                AI Powered. CA Verified.
                 <span className="text-emerald-400">&#10003;</span>
               </span>
             </div>
@@ -44,15 +51,65 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <nav className="hidden items-center gap-7 text-sm font-medium text-slate-300 lg:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="transition hover:text-white"
-              >
-                {link.label}
+            {/* Services dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setOpenDesktopMenu("services")}
+              onMouseLeave={() => setOpenDesktopMenu(null)}
+            >
+              <Link href="/services" className="flex items-center gap-1 transition hover:text-white">
+                Services <ChevronDown size={14} />
               </Link>
-            ))}
+              {openDesktopMenu === "services" && (
+                <div className="absolute left-0 top-full pt-3">
+                  <div className="card-dark w-56 p-2">
+                    {servicesMenu.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className="block rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <Link href="/services" className="transition hover:text-white">
+              Pricing
+            </Link>
+
+            <Link href="/cases" className="transition hover:text-white">
+              Track Case
+            </Link>
+
+            {/* Support dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setOpenDesktopMenu("support")}
+              onMouseLeave={() => setOpenDesktopMenu(null)}
+            >
+              <Link href="/contact" className="flex items-center gap-1 transition hover:text-white">
+                Support <ChevronDown size={14} />
+              </Link>
+              {openDesktopMenu === "support" && (
+                <div className="absolute left-0 top-full pt-3">
+                  <div className="card-dark w-52 p-2">
+                    {supportMenu.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className="block rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </nav>
 
           {/* Desktop Actions */}
@@ -72,7 +129,7 @@ export default function Navbar() {
               </Link>
             ) : (
               <Link href="/health-check" className="btn-primary">
-                Get Started Free
+                Check Tax Health Free
               </Link>
             )}
 
@@ -101,16 +158,18 @@ export default function Navbar() {
         {isOpen && (
           <div className="pb-4 lg:hidden">
             <nav className="card-dark grid gap-1 p-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              <Link href="/services" className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5" onClick={() => setIsOpen(false)}>
+                Services
+              </Link>
+              <Link href="/services" className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5" onClick={() => setIsOpen(false)}>
+                Pricing
+              </Link>
+              <Link href="/cases" className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5" onClick={() => setIsOpen(false)}>
+                Track Case
+              </Link>
+              <Link href="/contact" className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5" onClick={() => setIsOpen(false)}>
+                Support
+              </Link>
 
               <div className="grid gap-2 border-t border-white/10 pt-2 sm:grid-cols-2">
                 {!user && (
@@ -124,20 +183,12 @@ export default function Navbar() {
                 )}
 
                 {user ? (
-                  <Link
-                    href="/dashboard"
-                    className="btn-primary"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link href="/dashboard" className="btn-primary" onClick={() => setIsOpen(false)}>
                     Dashboard
                   </Link>
                 ) : (
-                  <Link
-                    href="/health-check"
-                    className="btn-primary"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Get Started Free
+                  <Link href="/health-check" className="btn-primary" onClick={() => setIsOpen(false)}>
+                    Check Tax Health Free
                   </Link>
                 )}
               </div>

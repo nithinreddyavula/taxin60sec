@@ -1,13 +1,12 @@
 import { FileCheck2, Globe2, ReceiptText, ShieldCheck, Star, UserCheck2 } from "lucide-react";
 
-// Fix 4 — trust shown immediately, in real terms instead of borrowed logos.
 const trustPoints = [
   { icon: FileCheck2, value: "50,000+", label: "Documents Processed" },
-  { icon: Star, value: "4.9", label: "Average Rating" },
-  { icon: ShieldCheck, value: "100%", label: "Encrypted" },
-  { icon: UserCheck2, value: "Verified", label: "CA Partners" },
-  { icon: ReceiptText, value: "No Hidden", label: "Charges" },
-  { icon: Globe2, value: "PAN India", label: "Coverage" },
+  { icon: Star, value: "4.9/5", label: "Google Rating" },
+  { icon: ShieldCheck, value: "100%", label: "Secure & Encrypted" },
+  { icon: UserCheck2, value: "Expert CA", label: "Network" },
+  { icon: ReceiptText, value: "Transparent", label: "Pricing" },
+  { icon: Globe2, value: "Pan India", label: "Support" },
 ];
 
 export default function TrustBadges() {
