@@ -1,9 +1,68 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, Calendar, CheckCircle2, Clock, FileText, PlayCircle, ShieldCheck, TrendingUp } from "lucide-react";
+import {
+  ArrowRight,
+  Calendar,
+  CheckCircle2,
+  Clock,
+  FileCheck2,
+  FileText,
+  ShieldCheck,
+  TrendingUp,
+  UserCheck2,
+} from "lucide-react";
 import { StatsService } from "@/services/stats-service";
+
+// Fix 2 — "the platform feels alive": a slim status strip that cycles
+// through a realistic case lifecycle every few seconds.
+const LIVE_STEPS = [
+  { icon: FileCheck2, text: "GST Filed" },
+  { icon: Clock, text: "Income Tax Due" },
+  { icon: TrendingUp, text: "₹18,400 Potential Saving" },
+  { icon: UserCheck2, text: "CA Assigned" },
+  { icon: CheckCircle2, text: "Case Completed" },
+] as const;
+
+function LiveActivityTicker() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((current) => (current + 1) % LIVE_STEPS.length);
+    }, 2400);
+    return () => clearInterval(interval);
+  }, []);
+
+  const step = LIVE_STEPS[index];
+  const Icon = step.icon;
+
+  return (
+    <div className="flex items-center gap-2.5 overflow-hidden rounded-full border border-white/10 bg-white/[.03] px-3.5 py-2">
+      <span className="relative flex h-2 w-2 shrink-0">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+      </span>
+
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={step.text}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.3 }}
+          className="flex items-center gap-1.5 text-xs font-medium text-slate-200"
+        >
+          <Icon size={13} className="text-emerald-400" />
+          {step.text}
+        </motion.span>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function Hero() {
   const dashboardQuery = useQuery({
@@ -60,15 +119,20 @@ export default function Hero() {
               <span className="badge-pill"><ShieldCheck size={13} /> 100% SECURE</span>
             </div>
 
+            {/* Fix 2 — live status strip, sits right above the headline */}
+            <div className="mb-5">
+              <LiveActivityTicker />
+            </div>
+
+            {/* Fix 1 — hero solves one problem, in plain language */}
             <h1 className="max-w-xl text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl">
-              Your India Taxes.{" "}
-              <span className="text-emerald-400">Handled Smartly.</span>{" "}
-              So You Can Focus on What Matters.
+              Stop worrying about{" "}
+              <span className="text-emerald-400">taxes.</span>
             </h1>
 
             <p className="mt-5 max-w-lg text-lg text-secondary">
-              AI scans your tax profile, finds what needs attention, and our
-              CA experts handle the rest.
+              We&apos;ll tell you what&apos;s wrong, how much it&apos;ll cost, and
+              connect you with a verified CA — all in under 2 minutes.
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -76,9 +140,9 @@ export default function Hero() {
                 Check My Tax Health
                 <ArrowRight size={16} />
               </Link>
-              <Link href="/contact" className="btn-secondary">
-                <PlayCircle size={16} />
-                See How It Works
+              <Link href="#sample-report" className="btn-secondary">
+                <FileText size={16} />
+                See Sample Report
               </Link>
             </div>
 
@@ -96,7 +160,7 @@ export default function Hero() {
           </div>
 
           {/* Right: Tax Health Score + Tax Overview, side by side */}
-          <div className="grid gap-4 sm:grid-cols-[0.85fr_1.15fr]">
+          <div id="sample-report" className="grid gap-4 scroll-mt-24 sm:grid-cols-[0.85fr_1.15fr]">
             <div className="card-dark p-5">
               <p className="flex items-center gap-1.5 text-xs font-medium text-secondary">
                 Your Tax Health Score

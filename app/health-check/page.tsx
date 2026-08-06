@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { User, Briefcase, Globe, Building2, CheckCircle2, ArrowRight } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { User, Briefcase, Globe, Building2, CheckCircle2, ArrowRight, Check } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
@@ -40,7 +41,15 @@ const QUESTIONS: Record<string, { key: string; text: string }[]> = {
   ],
 };
 
-const STEPS = ["About You", "Income Details", "Assets & Investments", "Review"];
+// Fix — the stepper now matches the real 3-step flow instead of a
+// 4-label stepper where one label was never reachable.
+const STEPS = [
+  { label: "About You", eyebrow: "Step 1", title: "Tell us about yourself" },
+  { label: "Your Income", eyebrow: "Step 2", title: "Let's understand your income" },
+  { label: "Your Report", eyebrow: "Step 3", title: "Almost done" },
+];
+
+const SECONDS_PER_QUESTION = 15;
 
 function ScoreGauge({ score }: { score: number }) {
   const radius = 54;
@@ -62,6 +71,23 @@ function ScoreGauge({ score }: { score: number }) {
         <span className="text-xs text-secondary">/100</span>
       </div>
     </div>
+  );
+}
+
+// Fix — every answer instantly confirms itself instead of just changing color.
+function SavedTag() {
+  return (
+    <AnimatePresence>
+      <motion.span
+        initial={{ opacity: 0, x: -6 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        className="ml-auto flex items-center gap-1 text-xs font-semibold text-emerald-400"
+      >
+        <Check size={13} /> Saved
+      </motion.span>
+    </AnimatePresence>
   );
 }
 
@@ -118,11 +144,31 @@ export default function HealthCheckPage() {
   }
 
   const questions = QUESTIONS[userType] ?? [];
-  const allAnswered = questions.every((q) => answers[q.key] !== undefined);
-  const currentStepIndex = step === "type" ? 0 : step === "questions" ? 1 : 3;
+  const answeredCount = questions.filter((q) => answers[q.key] !== undefined).length;
+  const allAnswered = questions.length > 0 && answeredCount === questions.length;
+  const currentStepIndex = step === "type" ? 0 : step === "questions" ? 1 : 2;
+
+  // Fix — "Almost there · X seconds left" instead of a bare "2 / 4".
+  const secondsLeft = Math.max((questions.length - answeredCount) * SECONDS_PER_QUESTION, 5);
+  const questionsProgressLabel =
+    answeredCount === 0
+      ? `About ${secondsLeft} seconds left`
+      : answeredCount === questions.length
+      ? "Almost there"
+      : `Almost there · ~${secondsLeft}s left`;
+
   const monitoredAreas = questions.length + 4;
   const compliant = result ? monitoredAreas - result.issues.length : 0;
   const onTimePercent = result ? Math.round((compliant / monitoredAreas) * 100) : 0;
+
+  const cheapestFix = useMemo(() => {
+    if (!result || result.recommendations.length === 0) return null;
+    return result.recommendations.reduce((min, r) =>
+      Number(r.priceFrom) < Number(min.priceFrom) ? r : min
+    );
+  }, [result]);
+
+  const isGoodNews = !!result && result.issues.length <= 2 && result.score >= 60;
 
   return (
     <main className="min-h-screen">
@@ -131,9 +177,9 @@ export default function HealthCheckPage() {
       <section className="pb-20 pt-12">
         <div className="mx-auto max-w-3xl px-4">
 
-          <div className="mb-10 flex items-center justify-center gap-2 sm:gap-4">
-            {STEPS.map((label, i) => (
-              <div key={label} className="flex items-center gap-2 sm:gap-4">
+          <div className="mb-3 flex items-center justify-center gap-2 sm:gap-4">
+            {STEPS.map((s, i) => (
+              <div key={s.label} className="flex items-center gap-2 sm:gap-4">
                 <div className="flex flex-col items-center gap-1.5">
                   <div
                     className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
@@ -146,7 +192,7 @@ export default function HealthCheckPage() {
                   >
                     {i < currentStepIndex ? <CheckCircle2 size={16} /> : i + 1}
                   </div>
-                  <span className="hidden text-xs font-medium text-secondary sm:block">{label}</span>
+                  <span className="hidden text-xs font-medium text-secondary sm:block">{s.label}</span>
                 </div>
                 {i < STEPS.length - 1 && (
                   <div className={`h-0.5 w-6 sm:w-12 ${i < currentStepIndex ? "bg-emerald-500" : "bg-white/10"}`} />
@@ -154,6 +200,12 @@ export default function HealthCheckPage() {
               </div>
             ))}
           </div>
+
+          {step !== "results" && (
+            <p className="mb-7 text-center text-xs font-semibold uppercase tracking-wide text-emerald-400">
+              {STEPS[currentStepIndex].eyebrow} · {STEPS[currentStepIndex].title}
+            </p>
+          )}
 
           {step === "type" && (
             <div className="card-dark p-8">
@@ -196,13 +248,21 @@ export default function HealthCheckPage() {
 
           {step === "questions" && (
             <div className="card-dark p-8">
-              <h1 className="text-2xl font-bold text-white">A few quick questions</h1>
+              <div className="flex items-center justify-between gap-3">
+                <h1 className="text-2xl font-bold text-white">A few quick questions</h1>
+                <span className="shrink-0 text-xs font-semibold text-emerald-400">
+                  {questionsProgressLabel}
+                </span>
+              </div>
               <p className="mt-1 text-secondary">This helps us spot what needs attention.</p>
 
               <div className="mt-6 space-y-3">
                 {questions.map((q) => (
                   <div key={q.key} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                    <p className="mb-3 text-sm font-medium text-slate-200">{q.text}</p>
+                    <div className="mb-3 flex items-start justify-between gap-3">
+                      <p className="text-sm font-medium text-slate-200">{q.text}</p>
+                      {answers[q.key] !== undefined && <SavedTag />}
+                    </div>
                     <div className="flex gap-3">
                       <button
                         onClick={() => answer(q.key, true)}
@@ -234,7 +294,7 @@ export default function HealthCheckPage() {
                 disabled={!allAnswered || loading}
                 className="btn-primary mt-6 w-full"
               >
-                {loading ? "Checking..." : "See my Tax Health Score"}
+                {loading ? "Generating report..." : "See my Tax Health Score"}
                 {!loading && <ArrowRight size={18} />}
               </button>
             </div>
@@ -247,9 +307,27 @@ export default function HealthCheckPage() {
                 <p className="text-center text-sm font-semibold uppercase tracking-wide text-secondary">
                   We&apos;ve Analyzed Your Profile
                 </p>
+
+                {/* Fix — lead with a plain-language verdict instead of a bare number. */}
                 <h1 className="mt-1 text-center text-2xl font-bold text-white">
-                  Here&apos;s what we found
+                  {isGoodNews ? "Good news." : "Here's what we found."}
                 </h1>
+                <p className="mx-auto mt-2 max-w-md text-center text-sm text-secondary">
+                  {result.issues.length === 0 ? (
+                    "Your tax health is excellent — nothing needs your attention right now."
+                  ) : (
+                    <>
+                      Your tax health score is {result.score}/100 ({result.statusLabel}). We
+                      found {result.issues.length} issue{result.issues.length === 1 ? "" : "s"}{" "}
+                      that need attention
+                      {cheapestFix ? (
+                        <> — sorting it out starts at just ₹{Number(cheapestFix.priceFrom).toLocaleString("en-IN")}.</>
+                      ) : (
+                        "."
+                      )}
+                    </>
+                  )}
+                </p>
 
                 <div className="mt-6 flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-center">
                   <ScoreGauge score={result.score} />
@@ -304,7 +382,7 @@ export default function HealthCheckPage() {
               {result.recommendations.length > 0 && (
                 <div className="card-dark p-8">
                   <h2 className="text-center text-xl font-bold text-white">
-                    Recommended for You
+                    Best Next Step
                   </h2>
                   <p className="mt-1 text-center text-sm text-secondary">
                     Based on your Tax Health Score
@@ -320,7 +398,7 @@ export default function HealthCheckPage() {
                       >
                         {i === 0 && (
                           <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-emerald-500 px-3 py-0.5 text-xs font-bold text-white">
-                            MOST RECOMMENDED
+                            BEST NEXT STEP
                           </span>
                         )}
                         <p className="mt-1 font-bold text-white">{rec.displayName}</p>

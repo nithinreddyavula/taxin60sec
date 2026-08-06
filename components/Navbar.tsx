@@ -1,16 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown, Menu, ShieldCheck, UserRound, X } from "lucide-react";
+import { Menu, ShieldCheck, UserRound, X } from "lucide-react";
 import { useState } from "react";
 import { useAppSession } from "./AppProviders";
 
-const navLinks: { href: string; label: string; hasMenu?: boolean }[] = [
-  { href: "/services", label: "Services", hasMenu: true },
-  { href: "/health-check", label: "Solutions", hasMenu: true },
-  { href: "/about", label: "Why Tax60" },
-  { href: "/contact", label: "Resources", hasMenu: true },
-  { href: "/about", label: "About Us" },
+// Fix 3 — freeze the nav to exactly these, nothing more.
+const navLinks: { href: string; label: string }[] = [
+  { href: "/services", label: "Services" },
+  { href: "/services", label: "Pricing" },
+  { href: "/cases", label: "Track Case" },
+  { href: "/contact", label: "Support" },
 ];
 
 export default function Navbar() {
@@ -48,10 +48,9 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="flex items-center gap-1 transition hover:text-white"
+                className="transition hover:text-white"
               >
                 {link.label}
-                {link.hasMenu && <ChevronDown size={14} />}
               </Link>
             ))}
           </nav>
@@ -63,7 +62,7 @@ export default function Navbar() {
                 href="/login"
                 className="flex items-center gap-2 rounded-xl border border-white/12 px-4 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5"
               >
-                Login / Register
+                Login
               </Link>
             )}
 
@@ -120,7 +119,7 @@ export default function Navbar() {
                     className="flex items-center justify-center gap-2 rounded-xl border border-white/12 px-4 py-2.5 text-sm font-semibold text-slate-200"
                     onClick={() => setIsOpen(false)}
                   >
-                    Login / Register
+                    Login
                   </Link>
                 )}
 

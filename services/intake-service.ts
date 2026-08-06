@@ -1,5 +1,7 @@
 import { request } from "./client";
 
+// Replace your current ServiceOffering type with this version:
+ 
 export type ServiceOffering = {
   id: number;
   code: string;
@@ -18,6 +20,10 @@ export type ServiceOffering = {
   requiresPaymentFirst: boolean;
   requiresDocumentVerification: boolean;
   intakeQuestions: string[];
+  // New — backed by service_offerings.complexity / included_features.
+  complexity?: "SIMPLE" | "MODERATE" | "COMPLEX" | string;
+  /** Comma-separated list of what's included, e.g. "Review,Filing,Notice support,Expert Verification" */
+  includedFeatures?: string;
 };
 
 export type StartIntakeResponse = {
