@@ -33,7 +33,7 @@ export default function AskTax60({ caseId }: { caseId: number }) {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500 text-slate-900 shadow-lg hover:bg-blue-400"
+        className="fixed bottom-24 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500 text-slate-900 shadow-lg hover:bg-blue-400"
         aria-label="Ask Tax60"
       >
         <MessageCircle size={22} />
@@ -42,7 +42,7 @@ export default function AskTax60({ caseId }: { caseId: number }) {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex h-[28rem] w-80 flex-col rounded-2xl border border-slate-200 bg-white shadow-2xl">
+    <div className="fixed bottom-24 right-4 z-40 flex h-[28rem] w-80 flex-col rounded-2xl border border-slate-200 bg-white shadow-2xl">
       <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
         <p className="text-sm font-semibold">Ask Tax60</p>
         <button onClick={() => setOpen(false)} aria-label="Close chat">
