@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Instagram, Linkedin, Mail, MapPin, Phone, ShieldCheck, Youtube } from "lucide-react";
+import { Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
 
 const quickLinks = [
   { href: "/", label: "Home" },
@@ -28,10 +28,10 @@ const support = [
 ];
 
 const socialLinks = [
-  { href: "https://wa.me/917013734079", label: "WhatsApp", icon: Phone },
-  { href: "#", label: "LinkedIn", icon: Linkedin },
-  { href: "#", label: "YouTube", icon: Youtube },
-  { href: "#", label: "Instagram", icon: Instagram },
+  { href: "https://wa.me/917013734079", label: "WhatsApp", initials: "WA" },
+  { href: "#", label: "LinkedIn", initials: "in" },
+  { href: "#", label: "YouTube", initials: "YT" },
+  { href: "#", label: "Instagram", initials: "IG" },
 ];
 
 export default function Footer() {
@@ -55,14 +55,11 @@ export default function Footer() {
             </p>
 
             <div className="mt-4 flex items-center gap-2">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <a key={social.label} href={social.href} aria-label={social.label} className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-secondary transition hover:bg-white/5 hover:text-white">
-                    <Icon size={14} />
-                  </a>
-                );
-              })}
+              {socialLinks.map((social) => (
+                <a key={social.label} href={social.href} aria-label={social.label} className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-[10px] font-bold text-secondary transition hover:bg-white/5 hover:text-white">
+                  {social.initials}
+                </a>
+              ))}
             </div>
           </div>
 
