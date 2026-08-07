@@ -51,7 +51,7 @@ const FLOW_STEPS = [
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden py-10 md:py-14">
+    <section className="relative overflow-hidden py-8 md:py-10">
       <div
         className="pointer-events-none absolute -left-32 top-0 h-72 w-72 rounded-full bg-emerald-500/10 blur-[130px]"
         aria-hidden="true"
@@ -62,7 +62,7 @@ export default function Hero() {
       />
 
       <div className="container-main relative">
-        <div className="mb-5 flex flex-wrap gap-2">
+        <div className="mb-4 flex flex-wrap gap-2">
           <span className="badge-pill"><Sparkles size={13} /> AI POWERED</span>
           <span className="badge-pill"><CheckCircle2 size={13} /> CA VERIFIED</span>
           <span className="badge-pill"><ShieldCheck size={13} /> 100% SECURE</span>
@@ -71,7 +71,7 @@ export default function Hero() {
         <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_1fr]">
           {/* Left: headline + choice cards */}
           <div>
-            <h1 className="max-w-xl text-4xl font-bold leading-[1.12] tracking-tight text-white sm:text-5xl">
+            <h1 className="max-w-xl text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">
               Your Taxes.
               <br />
               Understood in 2 Minutes.
@@ -79,13 +79,13 @@ export default function Hero() {
               <span className="text-emerald-400">Handled by Experts.</span>
             </h1>
 
-            <p className="mt-5 max-w-lg text-base leading-7 text-secondary">
+            <p className="mt-3 max-w-lg text-sm leading-6 text-secondary">
               Whether you need ITR filing, GST, company compliance, startup
               registration, or business advisory — we&apos;ll first understand
               your situation and guide you to exactly what you need.
             </p>
 
-            <div className="relative mt-8 grid items-stretch gap-5 sm:grid-cols-2">
+            <div className="relative mt-5 grid items-stretch gap-5 sm:grid-cols-2">
               {/* Card 1: Check My Tax Health */}
               <div className="card-dark relative flex h-full flex-col border-emerald-400/40 bg-emerald-500/[.04] p-5">
                 <span className="absolute right-4 top-4 rounded-full bg-emerald-500/15 px-2.5 py-1 text-[10px] font-bold tracking-wide text-emerald-300">
