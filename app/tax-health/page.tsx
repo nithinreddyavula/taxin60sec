@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AlertTriangle, ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
+import { AlertTriangle, ArrowRight, CheckCircle2, MinusCircle, ShieldCheck } from "lucide-react";
 import AppShell from "@/components/AppShell";
 import { ComplianceService, ComplianceScore } from "@/services/compliance-service";
 
@@ -19,6 +19,32 @@ function statusPill(status: string) {
   if (status === "OVERDUE") return "bg-red-50 text-red-700";
   if (status === "COMPLETED") return "bg-emerald-50 text-emerald-700";
   return "bg-blue-50 text-blue-700";
+}
+
+const CATEGORY_LABEL: Record<string, string> = {
+  INCOME_TAX: "Income Tax",
+  GST: "GST",
+  ROC: "ROC",
+  PAYROLL: "Payroll (TDS)",
+};
+
+function categoryCardClasses(status: string) {
+  if (status === "OVERDUE") return "border-red-200 bg-red-50";
+  if (status === "PENDING") return "border-blue-200 bg-blue-50";
+  if (status === "COMPLETED") return "border-emerald-200 bg-emerald-50";
+  return "border-slate-200 bg-slate-50"; // NOT_APPLICABLE
+}
+
+function categoryIcon(status: string) {
+  if (status === "OVERDUE") return <AlertTriangle size={18} className="text-red-600" />;
+  if (status === "PENDING") return <ShieldCheck size={18} className="text-blue-600" />;
+  if (status === "COMPLETED") return <CheckCircle2 size={18} className="text-emerald-600" />;
+  return <MinusCircle size={18} className="text-slate-400" />; // NOT_APPLICABLE
+}
+
+function categoryStatusLabel(status: string) {
+  if (status === "NOT_APPLICABLE") return "Not applicable to you";
+  return status.replace("_", " ");
 }
 
 export default function TaxHealthPage() {
@@ -98,6 +124,31 @@ export default function TaxHealthPage() {
           )}
         </section>
       </div>
+
+      {/* Category rollup - Income Tax / GST / ROC / Payroll, always all four.
+          Backend already computes this (ComplianceScoreService.categoryStatus,
+          worst-status-wins per category); it just wasn't captured on the
+          frontend type or shown anywhere before. */}
+      <section className="card-dark mt-6 p-5">
+        <p className="font-bold">By Category</p>
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {(data?.categories ?? []).map((c) => (
+            <div key={c.category} className={`rounded-xl border p-3 ${categoryCardClasses(c.status)}`}>
+              {categoryIcon(c.status)}
+              <p className="mt-2 text-sm font-semibold">{CATEGORY_LABEL[c.category] ?? c.category}</p>
+              <p className="mt-0.5 text-xs text-secondary">{categoryStatusLabel(c.status)}</p>
+            </div>
+          ))}
+          {!data && (
+            <>
+              <div className="h-20 animate-pulse rounded-xl bg-slate-100" />
+              <div className="h-20 animate-pulse rounded-xl bg-slate-100" />
+              <div className="h-20 animate-pulse rounded-xl bg-slate-100" />
+              <div className="h-20 animate-pulse rounded-xl bg-slate-100" />
+            </>
+          )}
+        </div>
+      </section>
 
       <section className="card-dark mt-6 p-5">
         <p className="font-bold">Your Compliance Checklist</p>
