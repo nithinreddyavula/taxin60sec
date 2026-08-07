@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Bell, Briefcase, CheckCircle2, Circle, Files, HeartPulse } from "lucide-react";
+import { ArrowRight, Bell, Briefcase, CheckCircle2, Circle, Files, HeartPulse, Home } from "lucide-react";
 import AppShell from "@/components/AppShell";
 import ReferralCard from "@/components/ReferralCard";
 import TierBadge from "@/components/TierBadge";
@@ -59,10 +59,17 @@ export default function DashboardPage() {
 
   return (
     <AppShell roles={["ROLE_CLIENT"]}>
-      <h1 className="text-3xl font-bold">
-        {greeting()}, {firstName(user?.fullName)}!
-      </h1>
-      <p className="mt-2 text-secondary">Here&apos;s what&apos;s happening with your tax journey.</p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">
+            {greeting()}, {firstName(user?.fullName)}!
+          </h1>
+          <p className="mt-2 text-secondary">Here&apos;s what&apos;s happening with your tax journey.</p>
+        </div>
+        <Link href="/" className="btn-secondary !w-auto shrink-0 px-4">
+          <Home size={16} /> Home
+        </Link>
+      </div>
 
       {/* Stat tiles */}
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">

@@ -2,24 +2,24 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AlertTriangle, CheckCircle2, ShieldCheck } from "lucide-react";
-import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
+import { AlertTriangle, ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
 import AppShell from "@/components/AppShell";
 import { ComplianceService, ComplianceScore } from "@/services/compliance-service";
 
-const HISTORY = [
-  { month: "Dec", score: 62 }, { month: "Jan", score: 68 }, { month: "Feb", score: 71 },
-  { month: "Mar", score: 75 }, { month: "Apr", score: 79 }, { month: "May", score: 85 },
-];
-
 const ringColor = (score: number) =>
-  score >= 85 ? "#34d399" : score >= 70 ? "#3b82f6" : score >= 50 ? "#fbbf24" : "#f87171";
+  score >= 85 ? "#10b981" : score >= 70 ? "#3b82f6" : score >= 50 ? "#f59e0b" : "#ef4444";
 
-const statusIcon = (status: string) => {
-  if (status === "OVERDUE") return <AlertTriangle size={15} className="text-red-400" />;
-  if (status === "COMPLETED") return <CheckCircle2 size={15} className="text-emerald-400" />;
-  return <ShieldCheck size={15} className="text-blue-300" />;
-};
+function statusIcon(status: string) {
+  if (status === "OVERDUE") return <AlertTriangle size={15} className="text-red-500" />;
+  if (status === "COMPLETED") return <CheckCircle2 size={15} className="text-emerald-500" />;
+  return <ShieldCheck size={15} className="text-blue-500" />;
+}
+
+function statusPill(status: string) {
+  if (status === "OVERDUE") return "bg-red-50 text-red-700";
+  if (status === "COMPLETED") return "bg-emerald-50 text-emerald-700";
+  return "bg-blue-50 text-blue-700";
+}
 
 export default function TaxHealthPage() {
   const [data, setData] = useState<ComplianceScore | null>(null);
@@ -31,12 +31,16 @@ export default function TaxHealthPage() {
   const circumference = 2 * Math.PI * 40;
   const offset = data ? circumference - (data.score / 100) * circumference : circumference;
 
+  const completed = data?.items.filter((i) => i.status === "COMPLETED").length ?? 0;
+  const overdue = data?.items.filter((i) => i.status === "OVERDUE") ?? [];
+  const total = data?.items.length ?? 0;
+
   return (
     <AppShell roles={["ROLE_CLIENT"]}>
       <h1 className="text-3xl font-bold">Your Tax Health</h1>
       <p className="mt-2 text-secondary">Last updated on {new Date().toLocaleDateString()}</p>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.2fr_0.8fr]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.4fr]">
         <section className="card-dark p-5">
           <p className="font-bold">Tax Health Score</p>
           {data ? (
@@ -51,63 +55,69 @@ export default function TaxHealthPage() {
                   <span className="text-[10px] text-secondary">/100</span>
                 </div>
               </div>
-              <p className="mt-3 text-center text-sm font-semibold text-emerald-500">{data.statusLabel}</p>
-              <p className="mt-1 text-center text-xs text-secondary">You&apos;re doing great! Keep it up.</p>
+              <p className="mt-3 text-center text-sm font-semibold text-emerald-600">{data.statusLabel}</p>
+              <p className="mt-1 text-center text-xs text-secondary">
+                {total > 0 ? `${completed} of ${total} compliance items on track` : "No compliance items tracked yet"}
+              </p>
             </>
           ) : (
             <div className="mt-4 h-28 animate-pulse rounded-xl bg-black/5" />
           )}
-          <Link href="/intake" className="btn-primary mt-4 w-full">View Detailed Report</Link>
         </section>
 
+        {/* One clear, real next step - not a vanity number. Uses the same
+            nextDue item the backend already computes for the score. */}
         <section className="card-dark p-5">
-          <p className="font-bold">Score Summary</p>
-          <div className="mt-4 space-y-3">
-            {(data?.items ?? []).map((item) => (
-              <div key={item.id} className="flex items-center justify-between text-sm">
-                <span className="flex items-center gap-2">{statusIcon(item.status)} {item.title}</span>
-                <span className="text-xs font-semibold text-secondary">{item.status.replace("_", " ")}</span>
+          <p className="font-bold">Why it&apos;s {data?.score ?? "—"}, not 100</p>
+          {overdue.length > 0 ? (
+            <div className="mt-3 space-y-2">
+              {overdue.map((item) => (
+                <div key={item.id} className="flex items-center justify-between rounded-xl bg-red-50 px-3 py-2 text-sm">
+                  <span className="flex items-center gap-2 text-red-800">
+                    <AlertTriangle size={14} /> {item.title}
+                  </span>
+                  <span className="text-xs text-red-600">Due {new Date(item.dueDate).toLocaleDateString()}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-3 text-sm text-secondary">Nothing overdue right now.</p>
+          )}
+
+          {data?.nextDue && (
+            <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+              <p className="text-xs font-bold uppercase tracking-wide text-emerald-700">One action to move your score</p>
+              <p className="mt-1 text-sm font-semibold text-emerald-900">{data.nextDue.title}</p>
+              <p className="mt-1 text-xs text-emerald-700">Due {new Date(data.nextDue.dueDate).toLocaleDateString()}</p>
+              {data.nextDue.recommendedServiceId ? (
+                <Link href={`/intake?id=${data.nextDue.recommendedServiceId}`} className="btn-primary mt-3 !w-auto px-4 text-sm">
+                  Take care of it <ArrowRight size={15} />
+                </Link>
+              ) : null}
+            </div>
+          )}
+        </section>
+      </div>
+
+      <section className="card-dark mt-6 p-5">
+        <p className="font-bold">Your Compliance Checklist</p>
+        <div className="mt-4 space-y-2">
+          {(data?.items ?? []).map((item) => (
+            <div key={item.id} className="flex items-center justify-between rounded-xl border border-slate-100 px-3 py-2.5 text-sm">
+              <span className="flex items-center gap-2">{statusIcon(item.status)} {item.title}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-secondary">Due {new Date(item.dueDate).toLocaleDateString()}</span>
+                <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${statusPill(item.status)}`}>
+                  {item.status.replace("_", " ")}
+                </span>
               </div>
-            ))}
-            {(!data || data.items.length === 0) && (
-              <p className="text-sm text-secondary">No compliance items tracked yet.</p>
-            )}
-          </div>
-        </section>
-
-        <section className="card-dark p-5 text-center">
-          <p className="font-bold">Potential Tax Saving</p>
-          <p className="mt-3 text-2xl font-bold text-emerald-500">₹18,400</p>
-          <p className="mt-1 text-xs text-secondary">If you act on the opportunities</p>
-          <Link href="/intake" className="btn-secondary mt-4 w-full">Explore Opportunities</Link>
-        </section>
-      </div>
-
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <section className="card-dark p-5">
-          <p className="font-bold">Insights for You</p>
-          <p className="mt-2 text-sm text-secondary">Great job! We found 2 areas that can help you save more tax.</p>
-          <ul className="mt-3 space-y-2 text-sm text-secondary">
-            <li>Invest in ELSS before 31 Mar to save on tax</li>
-            <li>Consider updating your HRA details — you may save more</li>
-          </ul>
-          <Link href="/intake" className="mt-3 inline-block text-xs font-semibold text-emerald-500">View Detailed Insights</Link>
-        </section>
-
-        <section className="card-dark p-5">
-          <p className="font-bold">Health History</p>
-          <div className="mt-4 h-40">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={HISTORY}>
-                <XAxis dataKey="month" fontSize={11} />
-                <YAxis fontSize={11} domain={[0, 100]} />
-                <Tooltip />
-                <Line type="monotone" dataKey="score" stroke="#10b981" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </section>
-      </div>
+            </div>
+          ))}
+          {(!data || data.items.length === 0) && (
+            <p className="text-sm text-secondary">No compliance items tracked yet.</p>
+          )}
+        </div>
+      </section>
     </AppShell>
   );
 }

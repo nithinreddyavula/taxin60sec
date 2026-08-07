@@ -29,6 +29,7 @@ export default function CaseDetailsPage() {
   const queryClient = useQueryClient();
   const requestedTab = TABS.find((t) => t === searchParams.get("tab"));
   const [tab, setTab] = useState<Tab>(requestedTab ?? "Overview");
+  const [confirmingCancel, setConfirmingCancel] = useState(false);
 
   const caseQuery = useQuery({ queryKey: ["case", id], queryFn: () => CaseService.detail(id), enabled: Number.isFinite(id) });
   const docsQuery = useQuery<RequiredDocument[]>({ queryKey: ["case-documents", id], queryFn: () => DocumentService.requiredDocuments(id), enabled: Number.isFinite(id) });
@@ -39,6 +40,16 @@ export default function CaseDetailsPage() {
   const completeOnboarding = useMutation({
     mutationFn: () => import("@/services/client").then(({ request }) => request(`/api/v1/cases/${id}/onboarding/complete`, "POST")),
     onSuccess: () => { toast.success("AI case summary refreshed."); queryClient.invalidateQueries({ queryKey: ["case", id] }); },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+  const cancelCase = useMutation({
+    mutationFn: () => CaseService.cancel(id),
+    onSuccess: () => {
+      toast.success("Case cancelled.");
+      queryClient.invalidateQueries({ queryKey: ["case", id] });
+      setConfirmingCancel(false);
+    },
     onError: (error: Error) => toast.error(error.message),
   });
 
@@ -59,7 +70,7 @@ export default function CaseDetailsPage() {
           <h1 className="mt-2 text-3xl font-bold">{taxCase.title}</h1>
           <p className="mt-2 text-secondary">{taxCase.intakeSummary ?? "Your Tax60 team is reviewing the information you shared."}</p>
           <p className="mt-1 text-sm text-secondary">CA Assigned: {taxCase.assignedCaName ?? "Not yet assigned"}</p>
-          <div className="mt-3"><SlaBadge responseSeconds={taxCase.responseSeconds} slaMet={taxCase.slaMet} /></div>
+          <div className="mt-3"><SlaBadge responseSeconds={taxCase.responseSeconds} slaMet={taxCase.slaMet} startedAt={taxCase.assignedAt ?? taxCase.createdAt} /></div>
         </div>
         <span className="pill-blue rounded-full px-3 py-1.5 text-sm font-bold">{pretty(taxCase.status)}</span>
       </div>
@@ -110,6 +121,34 @@ export default function CaseDetailsPage() {
                 <div className="flex justify-between"><dt className="text-secondary">Status</dt><dd>{pretty(taxCase.status)}</dd></div>
                 <div className="flex justify-between"><dt className="text-secondary">CA Assigned</dt><dd>{taxCase.assignedCaName ?? "—"}</dd></div>
               </dl>
+
+              {taxCase.status !== "CANCELLED" && taxCase.status !== "COMPLETED" && (
+                <div className="mt-5 border-t border-slate-100 pt-4">
+                  {!confirmingCancel ? (
+                    <button onClick={() => setConfirmingCancel(true)} className="text-xs font-semibold text-red-600 hover:text-red-700">
+                      Cancel this case
+                    </button>
+                  ) : (
+                    <div className="rounded-xl border border-red-200 bg-red-50 p-3">
+                      <p className="text-xs text-red-800">
+                        This can&apos;t be undone. Cancel case {taxCase.caseNumber}?
+                      </p>
+                      <div className="mt-2 flex gap-2">
+                        <button
+                          onClick={() => cancelCase.mutate()}
+                          disabled={cancelCase.isPending}
+                          className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50"
+                        >
+                          {cancelCase.isPending ? "Cancelling…" : "Yes, cancel it"}
+                        </button>
+                        <button onClick={() => setConfirmingCancel(false)} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600">
+                          Keep it
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </section>
             <section className="card-dark p-5">
               <ShieldCheck className="text-emerald-600" size={21} />

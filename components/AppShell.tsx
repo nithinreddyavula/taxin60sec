@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BarChart3, Bell, BriefcaseBusiness, Calendar, ChevronRight, ClipboardList, CreditCard, HeartPulse, IndianRupee, LayoutDashboard, LogOut, Menu, MessagesSquare, ShieldCheck, UserCheck, UserRound, Wallet, X } from "lucide-react";
+import { BarChart3, Bell, BriefcaseBusiness, Calendar, ChevronRight, ClipboardList, CreditCard, HeartPulse, Home, IndianRupee, LayoutDashboard, LogOut, Menu, MessagesSquare, ShieldCheck, UserCheck, UserRound, Wallet, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAppSession } from "./AppProviders";
 import GlobalSearch from "./GlobalSearch";
@@ -34,6 +34,6 @@ export default function AppShell({ children, roles = ["ROLE_CLIENT", "ROLE_CA", 
       <div className="absolute inset-x-4 bottom-4 rounded-xl border border-white/10 bg-white/[.03] p-3"><p className="truncate text-sm font-semibold">{user.fullName ?? user.email ?? "Tax60 member"}</p><p className="mt-1 text-xs text-secondary">{user.roles[0]?.replace("ROLE_", "")}</p><button onClick={() => { logout(); router.replace("/"); }} className="mt-3 flex items-center gap-2 text-sm text-slate-300 hover:text-white"><LogOut size={16} /> Sign out</button></div>
     </aside>
     {open && <button onClick={close} aria-label="Close menu overlay" className="fixed inset-0 z-40 bg-black/50 lg:hidden" />}
-    <div className="min-w-0"><header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-slate-200 bg-white/90 px-4 backdrop-blur lg:px-8"><button onClick={() => setOpen(true)} className="text-slate-700 lg:hidden" aria-label="Open menu"><Menu /></button><div className="hidden items-center gap-2 text-sm text-slate-500 sm:flex"><ShieldCheck size={17} className="text-emerald-500" /> Secure Tax60 workspace <ChevronRight size={15} /></div><div className="flex flex-1 items-center justify-end gap-3"><GlobalSearch /><Link href="/profile" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-700" aria-label="Open profile"><UserRound size={18} /></Link></div></header><main className="app-shell-content mx-auto max-w-7xl p-4 text-slate-900 sm:p-6 lg:p-8">{children}</main></div>
+    <div className="min-w-0"><header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-slate-200 bg-white/90 px-4 backdrop-blur lg:px-8"><button onClick={() => setOpen(true)} className="text-slate-700 lg:hidden" aria-label="Open menu"><Menu /></button><div className="hidden items-center gap-2 text-sm text-slate-500 sm:flex"><ShieldCheck size={17} className="text-emerald-500" /> Secure Tax60 workspace <ChevronRight size={15} /></div><div className="flex flex-1 items-center justify-end gap-3"><Link href="/" className="hidden items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-emerald-700 sm:flex" aria-label="Back to Tax60 home"><Home size={16} /> Home</Link><GlobalSearch /><Link href="/profile" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-700" aria-label="Open profile"><UserRound size={18} /></Link></div></header><main className="app-shell-content mx-auto max-w-7xl p-4 text-slate-900 sm:p-6 lg:p-8">{children}</main></div>
   </div>;
 }

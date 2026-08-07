@@ -147,6 +147,7 @@ function IntakeContent() {
   }
 
   const answeredCount = questions.filter((q) => (answers[q] ?? "").trim().length > 0).length;
+  const selectedService = services.find((s) => String(s.id) === serviceId);
 
   return (
     <>
@@ -191,6 +192,22 @@ function IntakeContent() {
                         <option key={service.id} value={service.id}>{service.displayName}</option>
                       ))}
                     </select>
+                  </div>
+                )}
+
+                {selectedService && (
+                  <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-3">
+                    <p className="text-xs font-semibold text-emerald-300">
+                      {selectedService.minimumPrice === selectedService.maximumPrice
+                        ? `₹${selectedService.basePrice.toLocaleString("en-IN")} for this filing`
+                        : `₹${selectedService.minimumPrice.toLocaleString("en-IN")} – ₹${selectedService.maximumPrice.toLocaleString("en-IN")} depending on complexity`}
+                    </p>
+                    <p className="mt-1 text-[11px] text-secondary">
+                      Final price is confirmed after document review — you&apos;ll never pay more than the top of this range. Est. {selectedService.estimatedCompletionDays} day{selectedService.estimatedCompletionDays === 1 ? "" : "s"} to complete.
+                    </p>
+                    {(selectedService.includedFeatures?.length ?? 0) > 0 && (
+                      <p className="mt-1.5 text-[11px] text-secondary">Includes: {selectedService.includedFeatures!.join(", ")}</p>
+                    )}
                   </div>
                 )}
 
