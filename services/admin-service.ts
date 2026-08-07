@@ -19,6 +19,8 @@ export type AdminCaseSummary = {
   answeredQuestions: number;
   totalQuestions: number;
   createdAt: string;
+  assignedCaId: number | null;
+  assignedCaName: string | null;
 };
 
 export type AdminDashboard = {
@@ -42,6 +44,13 @@ export type CaSummary = {
   availability: string;
   activeCaseload: number;
   averageRating: number | null;
+};
+
+export type AssignableCa = {
+  id: number;
+  fullName: string;
+  email: string;
+  activeCaseload: number;
 };
 
 export type PlatformSetting = {
@@ -72,6 +81,10 @@ export const AdminService = {
     request<PageResponse<AdminClientSummary>>(`/api/v1/admin/clients?search=${encodeURIComponent(search)}&page=${page}&size=${size}`),
 
   cases: () => request<AdminCaseSummary[]>("/api/v1/admin/cases"),
+
+  assignableCas: () => request<AssignableCa[]>("/api/v1/admin/cases/assignable-cas"),
+  assignCase: (caseId: number, caId: number | null) =>
+    request<void>(`/api/v1/admin/cases/${caseId}/assign`, "PATCH", { caId }),
 
   caList: () => request<CaSummary[]>("/api/v1/admin/cas"),
 

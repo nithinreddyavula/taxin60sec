@@ -2,19 +2,25 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
+import { toast } from "sonner";
 import AppShell from "@/components/AppShell";
-import { AdminService, AdminCaseSummary } from "@/services/admin-service";
+import { AdminService, AdminCaseSummary, AssignableCa } from "@/services/admin-service";
 
 const STATUS_OPTIONS = ["All Status", "IN_PROGRESS", "CA_REVIEW", "PENDING_INFO", "COMPLETED", "CANCELLED"];
 
 export default function AdminCasesPage() {
   const [cases, setCases] = useState<AdminCaseSummary[]>([]);
+  const [cas, setCas] = useState<AssignableCa[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("All Status");
+  const [assigning, setAssigning] = useState<number | null>(null);
 
   useEffect(() => {
-    AdminService.cases().then(setCases).catch(() => setCases([])).finally(() => setLoading(false));
+    Promise.all([AdminService.cases(), AdminService.assignableCas()])
+      .then(([caseList, caList]) => { setCases(caseList); setCas(caList); })
+      .catch(() => { setCases([]); setCas([]); })
+      .finally(() => setLoading(false));
   }, []);
 
   const filtered = useMemo(
@@ -24,6 +30,22 @@ export default function AdminCasesPage() {
         .filter((c) => c.clientName.toLowerCase().includes(search.toLowerCase()) || c.serviceName.toLowerCase().includes(search.toLowerCase())),
     [cases, search, status]
   );
+
+  async function handleAssign(caseId: number, value: string) {
+    setAssigning(caseId);
+    const caId = value === "" ? null : Number(value);
+    try {
+      await AdminService.assignCase(caseId, caId);
+      setCases((prev) => prev.map((c) => (c.caseId === caseId
+        ? { ...c, assignedCaId: caId, assignedCaName: cas.find((ca) => ca.id === caId)?.fullName ?? null }
+        : c)));
+      toast.success(caId ? "CA assigned" : "CA unassigned");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Unable to assign CA");
+    } finally {
+      setAssigning(null);
+    }
+  }
 
   return (
     <AppShell roles={["ROLE_ADMIN"]}>
@@ -53,7 +75,7 @@ export default function AdminCasesPage() {
                 <th className="px-4 py-3">Client</th>
                 <th className="px-4 py-3">Service</th>
                 <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3">Intake</th>
+                <th className="px-4 py-3">CA Assigned</th>
                 <th className="px-4 py-3">Created On</th>
               </tr>
             </thead>
@@ -66,7 +88,21 @@ export default function AdminCasesPage() {
                   <td className="px-4 py-3">
                     <span className="rounded-full bg-blue-500/15 px-2.5 py-0.5 text-xs font-semibold text-blue-400">{c.status}</span>
                   </td>
-                  <td className="px-4 py-3 text-secondary">{c.answeredQuestions}/{c.totalQuestions}</td>
+                  <td className="px-4 py-3">
+                    <select
+                      value={c.assignedCaId ?? ""}
+                      disabled={assigning === c.caseId}
+                      onChange={(e) => handleAssign(c.caseId, e.target.value)}
+                      className="rounded-lg border border-slate-200 px-2 py-1.5 text-xs disabled:opacity-50"
+                    >
+                      <option value="">Unassigned</option>
+                      {cas.map((ca) => (
+                        <option key={ca.id} value={ca.id}>
+                          {ca.fullName} ({ca.activeCaseload})
+                        </option>
+                      ))}
+                    </select>
+                  </td>
                   <td className="px-4 py-3 text-secondary">{new Date(c.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}
