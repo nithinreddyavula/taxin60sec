@@ -27,6 +27,13 @@ const support = [
   { href: "/contact", label: "Terms & Conditions" },
 ];
 
+const socialLinks = [
+  { href: "https://wa.me/917013734079", label: "WhatsApp", icon: Phone },
+  { href: "#", label: "LinkedIn", icon: Linkedin },
+  { href: "#", label: "YouTube", icon: Youtube },
+  { href: "#", label: "Instagram", icon: Instagram },
+];
+
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#020817]">
@@ -42,47 +49,25 @@ export default function Footer() {
                 <p className="text-[11px] text-secondary">AI Powered. CA Verified.</p>
               </div>
             </div>
+
             <p className="mt-4 max-w-sm text-sm leading-6 text-secondary">
               Your trusted partner for taxation, compliance, and business growth.
             </p>
+
             <div className="mt-4 flex items-center gap-2">
-
-                href="https://wa.me/917013734079"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="WhatsApp"
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-secondary transition hover:bg-white/5 hover:text-white"
-              >
-                <Phone size={14} />
-              </a>
-
-                href="#"
-                aria-label="LinkedIn"
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-secondary transition hover:bg-white/5 hover:text-white"
-              >
-                <Linkedin size={14} />
-              </a>
-
-                href="#"
-                aria-label="YouTube"
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-secondary transition hover:bg-white/5 hover:text-white"
-              >
-                <Youtube size={14} />
-              </a>
-
-                href="#"
-                aria-label="Instagram"
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-secondary transition hover:bg-white/5 hover:text-white"
-              >
-                <Instagram size={14} />
-              </a>
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a key={social.label} href={social.href} aria-label={social.label} className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-secondary transition hover:bg-white/5 hover:text-white">
+                    <Icon size={14} />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-secondary">
-              Quick Links
-            </h4>
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-secondary">Quick Links</h4>
             <div className="mt-4 flex flex-col gap-2.5 text-sm text-secondary">
               {quickLinks.map((link) => (
                 <Link key={link.label} href={link.href} className="transition hover:text-white">
@@ -93,9 +78,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-secondary">
-              Our Services
-            </h4>
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-secondary">Our Services</h4>
             <div className="mt-4 flex flex-col gap-2.5 text-sm text-secondary">
               {services.map((service) => (
                 <Link key={service.label} href={service.href} className="transition hover:text-white">
@@ -106,9 +89,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-secondary">
-              Support
-            </h4>
+            <h4 className="text-sm font-semibold uppercase tracking-[0.14em] text-secondary">Support</h4>
             <div className="mt-4 flex flex-col gap-2.5 text-sm text-secondary">
               {support.map((item) => (
                 <a key={item.label} href={item.href} className="transition hover:text-white">
@@ -117,9 +98,7 @@ export default function Footer() {
               ))}
             </div>
 
-            <h4 className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-secondary">
-              Contact Us
-            </h4>
+            <h4 className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-secondary">Contact Us</h4>
             <div className="mt-4 space-y-2.5 text-sm text-secondary">
               <p className="flex items-center gap-2">
                 <Phone size={13} /> +91 7013734079
@@ -135,10 +114,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-secondary sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Tax60Sec. All rights reserved.</p>
-          <p>
-            Made with <span className="text-rose-400">♥</span> in India
-          </p>
+          <p>Copyright 2026 Tax60Sec. All rights reserved.</p>
+          <p>Made with love in India</p>
         </div>
       </div>
     </footer>
