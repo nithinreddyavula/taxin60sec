@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Download, Search } from "lucide-react";
 import { toast } from "sonner";
 import AppShell from "@/components/AppShell";
 import { AdminService, AdminCaseSummary, AssignableCa } from "@/services/admin-service";
@@ -9,12 +10,14 @@ import { AdminService, AdminCaseSummary, AssignableCa } from "@/services/admin-s
 const STATUS_OPTIONS = ["All Status", "IN_PROGRESS", "CA_REVIEW", "PENDING_INFO", "COMPLETED", "CANCELLED"];
 
 export default function AdminCasesPage() {
+  const router = useRouter();
   const [cases, setCases] = useState<AdminCaseSummary[]>([]);
   const [cas, setCas] = useState<AssignableCa[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("All Status");
   const [assigning, setAssigning] = useState<number | null>(null);
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     AdminService.cases()
@@ -51,10 +54,31 @@ export default function AdminCasesPage() {
     }
   }
 
+  async function handleExport() {
+    setExporting(true);
+    try {
+      await AdminService.exportCasesExcel();
+    } finally {
+      setExporting(false);
+    }
+  }
+
   return (
     <AppShell roles={["ROLE_ADMIN"]}>
-      <h1 className="text-3xl font-bold">All Cases</h1>
-      <p className="mt-2 text-secondary">Track and manage all client cases.</p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">All Cases</h1>
+          <p className="mt-2 text-secondary">Track and manage all client cases.</p>
+        </div>
+        <button
+          onClick={handleExport}
+          disabled={exporting}
+          className="flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-600 disabled:opacity-60"
+        >
+          <Download size={16} />
+          {exporting ? "Exporting..." : "Download Excel"}
+        </button>
+      </div>
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative flex-1 sm:max-w-xs">
@@ -85,14 +109,18 @@ export default function AdminCasesPage() {
             </thead>
             <tbody>
               {filtered.map((c) => (
-                <tr key={c.caseId} className="border-b border-white/5 hover:bg-white/[0.03]">
+                <tr
+                  key={c.caseId}
+                  onClick={() => router.push(`/admin/cases/${c.caseId}`)}
+                  className="cursor-pointer border-b border-white/5 hover:bg-white/[0.03]"
+                >
                   <td className="px-4 py-3 font-mono text-xs text-secondary">TX{c.caseId}</td>
                   <td className="px-4 py-3 font-semibold">{c.clientName}</td>
                   <td className="px-4 py-3 text-secondary">{c.serviceName}</td>
                   <td className="px-4 py-3">
                     <span className="rounded-full bg-blue-500/15 px-2.5 py-0.5 text-xs font-semibold text-blue-400">{c.status}</span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                     {cas.length === 0 ? (
                       <span className="text-xs text-secondary">{c.assignedCaName ?? "Unassigned"}</span>
                     ) : (

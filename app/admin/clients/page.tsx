@@ -32,8 +32,6 @@ export default function AdminClientsPage() {
     setExporting(true);
     try {
       await AdminService.exportClientsExcel();
-    } catch {
-      // silently ignore - button just stops spinning
     } finally {
       setExporting(false);
     }

@@ -37,6 +37,20 @@ export type AdminClientDetail = {
   cases: AdminClientCaseSummary[];
 };
 
+export type AdminCaseDetail = {
+  caseId: number;
+  clientName: string;
+  email: string | null;
+  phone: string | null;
+  serviceName: string;
+  status: string;
+  intakeCompleted: boolean;
+  answers: Record<string, string>;
+  intakeSummary: string | null;
+  assignedCaId: number | null;
+  assignedCaName: string | null;
+};
+
 export type AdminCaseSummary = {
   caseId: number;
   clientName: string;
@@ -101,6 +115,17 @@ export type AuditLog = {
 
 type PageResponse<T> = { items: T[]; page: number; size: number; totalElements: number; totalPages: number };
 
+function downloadBlob(data: BlobPart, filename: string) {
+  const url = window.URL.createObjectURL(new Blob([data]));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+}
+
 export const AdminService = {
   dashboard: () => request<AdminDashboard>("/api/v1/admin/dashboard"),
 
@@ -110,22 +135,20 @@ export const AdminService = {
   clientDetail: (id: number) => request<AdminClientDetail>(`/api/v1/admin/clients/${id}`),
 
   async exportClientsExcel() {
-    const response = await client.get("/api/v1/admin/clients/export", {
-      responseType: "blob",
-    });
-
-    const filename = `tax60-clients-${new Date().toISOString().slice(0, 10)}.xlsx`;
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.URL.revokeObjectURL(url);
+    const response = await client.get("/api/v1/admin/clients/export", { responseType: "blob" });
+    downloadBlob(response.data, `tax60-clients-${new Date().toISOString().slice(0, 10)}.xlsx`);
   },
 
   cases: () => request<AdminCaseSummary[]>("/api/v1/admin/cases"),
+
+  caseDetail: (id: number) => request<AdminCaseDetail>(`/api/v1/admin/cases/${id}`),
+  updateCaseStatus: (caseId: number, status: string) =>
+    request<void>(`/api/v1/admin/cases/${caseId}/status?status=${encodeURIComponent(status)}`, "PATCH"),
+
+  async exportCasesExcel() {
+    const response = await client.get("/api/v1/admin/cases/export", { responseType: "blob" });
+    downloadBlob(response.data, `tax60-cases-${new Date().toISOString().slice(0, 10)}.xlsx`);
+  },
 
   assignableCas: () => request<AssignableCa[]>("/api/v1/admin/cases/assignable-cas"),
   assignCase: (caseId: number, caId: number | null) =>
