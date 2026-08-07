@@ -1,17 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Download, Search } from "lucide-react";
 import AppShell from "@/components/AppShell";
 import { AdminService, AdminClientSummary } from "@/services/admin-service";
 
 export default function AdminClientsPage() {
+  const router = useRouter();
   const [clients, setClients] = useState<AdminClientSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [totalElements, setTotalElements] = useState(0);
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -25,10 +28,33 @@ export default function AdminClientsPage() {
       .finally(() => setLoading(false));
   }, [search, page]);
 
+  async function handleExport() {
+    setExporting(true);
+    try {
+      await AdminService.exportClientsExcel();
+    } catch {
+      // silently ignore - button just stops spinning
+    } finally {
+      setExporting(false);
+    }
+  }
+
   return (
     <AppShell roles={["ROLE_ADMIN"]}>
-      <h1 className="text-3xl font-bold">Clients</h1>
-      <p className="mt-2 text-secondary">Manage all registered clients on the platform.</p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Clients</h1>
+          <p className="mt-2 text-secondary">Manage all registered clients on the platform.</p>
+        </div>
+        <button
+          onClick={handleExport}
+          disabled={exporting}
+          className="flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-600 disabled:opacity-60"
+        >
+          <Download size={16} />
+          {exporting ? "Exporting..." : "Download Excel"}
+        </button>
+      </div>
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative flex-1 sm:max-w-xs">
@@ -61,7 +87,11 @@ export default function AdminClientsPage() {
             </thead>
             <tbody>
               {clients.map((c) => (
-                <tr key={c.id} className="border-b border-white/5">
+                <tr
+                  key={c.id}
+                  onClick={() => router.push(`/admin/clients/${c.id}`)}
+                  className="cursor-pointer border-b border-white/5 transition hover:bg-white/5"
+                >
                   <td className="px-4 py-3 font-semibold">{c.fullName}</td>
                   <td className="px-4 py-3 text-secondary">{c.email}</td>
                   <td className="px-4 py-3 text-secondary">{c.panNumber ?? "—"}</td>

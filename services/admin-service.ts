@@ -1,4 +1,4 @@
-import { request } from "./client";
+import { request, client } from "./client";
 
 export type AdminClientSummary = {
   id: number;
@@ -8,6 +8,33 @@ export type AdminClientSummary = {
   status: string;
   joinedOn: string;
   totalCases: number;
+};
+
+export type AdminClientCaseSummary = {
+  caseId: number;
+  caseNumber: string;
+  serviceName: string;
+  status: string;
+  createdAt: string;
+};
+
+export type AdminClientDetail = {
+  id: number;
+  fullName: string;
+  email: string;
+  phoneNumber: string | null;
+  status: string;
+  joinedOn: string;
+  businessName: string | null;
+  panNumber: string | null;
+  gstin: string | null;
+  address: string | null;
+  tier: string | null;
+  referralCode: string | null;
+  referredByCode: string | null;
+  referralCredits: number;
+  totalCases: number;
+  cases: AdminClientCaseSummary[];
 };
 
 export type AdminCaseSummary = {
@@ -79,6 +106,24 @@ export const AdminService = {
 
   clients: (search = "", page = 0, size = 20) =>
     request<PageResponse<AdminClientSummary>>(`/api/v1/admin/clients?search=${encodeURIComponent(search)}&page=${page}&size=${size}`),
+
+  clientDetail: (id: number) => request<AdminClientDetail>(`/api/v1/admin/clients/${id}`),
+
+  async exportClientsExcel() {
+    const response = await client.get("/api/v1/admin/clients/export", {
+      responseType: "blob",
+    });
+
+    const filename = `tax60-clients-${new Date().toISOString().slice(0, 10)}.xlsx`;
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  },
 
   cases: () => request<AdminCaseSummary[]>("/api/v1/admin/cases"),
 
