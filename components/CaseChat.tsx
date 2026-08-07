@@ -21,7 +21,10 @@ export default function CaseChat({ caseId }: { caseId: number }) {
 
   function load() {
     MessageService.list(caseId)
-      .then(setMessages)
+      .then((data) => {
+        setMessages(data);
+        setError("");
+      })
       .catch((e) => setError(e instanceof Error ? e.message : "Unable to load messages"));
   }
 
@@ -44,6 +47,7 @@ export default function CaseChat({ caseId }: { caseId: number }) {
       const sent = await MessageService.send(caseId, draft.trim());
       setMessages((prev) => [...(prev ?? []), sent]);
       setDraft("");
+      setError("");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unable to send message");
     } finally {

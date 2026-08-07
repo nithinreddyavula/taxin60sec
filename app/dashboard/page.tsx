@@ -72,25 +72,25 @@ export default function DashboardPage() {
             {cases?.filter((c) => c.status !== "COMPLETED" && c.status !== "CANCELLED").length ?? "—"}
           </p>
           <p className="text-xs text-secondary">Active Cases</p>
-          <Link href="/my-services" className="mt-1 block text-xs font-semibold text-emerald-400">View all</Link>
+          <Link href="/my-services" className="mt-1 block text-xs font-semibold text-emerald-700">View all</Link>
         </div>
         <div className="card-dark p-4">
           <Bell size={18} className="text-amber-400" />
           <p className="mt-2 text-2xl font-bold">{pendingActions}</p>
           <p className="text-xs text-secondary">Pending Actions</p>
-          <Link href="/notices" className="mt-1 block text-xs font-semibold text-emerald-400">View now</Link>
+          <Link href="/notices" className="mt-1 block text-xs font-semibold text-emerald-700">View now</Link>
         </div>
         <div className="card-dark p-4">
           <Files size={18} className="text-blue-400" />
           <p className="mt-2 text-2xl font-bold">{documents.length}</p>
           <p className="text-xs text-secondary">Documents</p>
-          <Link href="/vault" className="mt-1 block text-xs font-semibold text-emerald-400">In Vault</Link>
+          <Link href="/vault" className="mt-1 block text-xs font-semibold text-emerald-700">In Vault</Link>
         </div>
         <div className="card-dark p-4">
           <HeartPulse size={18} className="text-emerald-400" />
           <p className="mt-2 text-2xl font-bold">{score?.score ?? "—"}<span className="text-sm text-secondary">/100</span></p>
           <p className="text-xs text-secondary">Tax Health Score</p>
-          <Link href="/tax-health" className="mt-1 block text-xs font-semibold text-emerald-400">{score?.statusLabel ?? "View"}</Link>
+          <Link href="/tax-health" className="mt-1 block text-xs font-semibold text-emerald-700">{score?.statusLabel ?? "View"}</Link>
         </div>
       </div>
 
@@ -103,7 +103,7 @@ export default function DashboardPage() {
             <div>
               <div className="flex items-center gap-2">
                 <p className="font-bold">{activeCase.title}</p>
-                <span className="rounded-full bg-blue-500/15 px-2.5 py-0.5 text-xs font-semibold text-blue-200">
+                <span className="pill-blue rounded-full px-2.5 py-0.5 text-xs font-semibold">
                   {activeCase.status.replaceAll("_", " ")}
                 </span>
               </div>
@@ -116,7 +116,7 @@ export default function DashboardPage() {
 
           <ol className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
             {CASE_STAGES.map((stage, index) => (
-              <li key={stage} className={`rounded-xl border p-3 text-xs font-semibold ${index <= currentStep ? "border-emerald-400/30 bg-emerald-500/10 text-emerald-300" : "border-slate-200 text-slate-400"}`}>
+              <li key={stage} className={`rounded-xl border p-3 text-xs font-semibold ${index <= currentStep ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-slate-200 text-slate-400"}`}>
                 {index <= currentStep ? <CheckCircle2 className="mb-2" size={16} /> : <Circle className="mb-2" size={16} />}
                 {stage}
               </li>
@@ -159,7 +159,7 @@ export default function DashboardPage() {
             </div>
             <p className="mt-3 text-sm text-secondary">{latestMessage.body}</p>
             {activeCase && (
-              <Link href={`/cases/${activeCase.id}`} className="mt-3 inline-block text-xs font-semibold text-emerald-400">
+              <Link href={`/cases/${activeCase.id}`} className="mt-3 inline-block text-xs font-semibold text-emerald-700">
                 View Message
               </Link>
             )}
@@ -181,14 +181,14 @@ export default function DashboardPage() {
               </div>
             ))}
           </div>
-          <Link href="/calendar" className="mt-4 inline-block text-xs font-semibold text-emerald-400">
+          <Link href="/calendar" className="mt-4 inline-block text-xs font-semibold text-emerald-700">
             View All Deadlines
           </Link>
         </section>
       )}
 
       {unread > 0 && (
-        <Link href="/notices" className="mt-4 flex items-center justify-between rounded-2xl border border-blue-400/20 bg-blue-500/10 p-4 text-sm font-semibold text-blue-200">
+        <Link href="/notices" className="mt-4 flex items-center justify-between rounded-2xl border border-blue-200 bg-blue-50 p-4 text-sm font-semibold text-blue-700">
           <span className="flex items-center gap-2">
             <Bell size={16} /> {unread} new notice{unread > 1 ? "s" : ""}
           </span>

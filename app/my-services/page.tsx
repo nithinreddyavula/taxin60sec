@@ -91,7 +91,7 @@ export default function MyServicesPage() {
         )}
 
         {filtered.map((c) => (
-          <Link key={c.id} href={`/cases/${c.id}`} className="card-dark flex items-center justify-between gap-4 p-4 hover:bg-white/[0.04]">
+          <Link key={c.id} href={`/cases/${c.id}`} className="card-dark flex items-center justify-between gap-4 p-4 hover:bg-slate-50">
             <div>
               <p className="text-sm font-semibold">{c.title}</p>
               <p className="mt-1 text-xs text-secondary">
@@ -99,7 +99,7 @@ export default function MyServicesPage() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <span className="shrink-0 rounded-full bg-blue-500/15 px-2.5 py-1 text-xs font-semibold text-blue-300">
+              <span className="pill-blue shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold">
                 {stageLabel[c.workflowStage] ?? c.workflowStage}
               </span>
               <ChevronRight size={16} className="text-secondary" />

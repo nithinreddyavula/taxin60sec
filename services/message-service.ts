@@ -12,5 +12,5 @@ export type CaseMessage = {
 export const MessageService = {
   list: (caseId: number) => request<CaseMessage[]>(`/api/v1/cases/${caseId}/messages`),
   send: (caseId: number, body: string) =>
-    request<CaseMessage>(`/api/v1/cases/${caseId}/messages`, "POST", { body }),
+    request<CaseMessage>(`/api/v1/cases/${caseId}/messages`, "POST", { content: body }),
 };
