@@ -85,9 +85,9 @@ export default function Hero() {
               your situation and guide you to exactly what you need.
             </p>
 
-            <div className="relative mt-8 grid gap-5 sm:grid-cols-2">
+            <div className="relative mt-8 grid items-stretch gap-5 sm:grid-cols-2">
               {/* Card 1: Check My Tax Health */}
-              <div className="card-dark relative flex flex-col border-emerald-400/40 bg-emerald-500/[.04] p-5">
+              <div className="card-dark relative flex h-full flex-col border-emerald-400/40 bg-emerald-500/[.04] p-5">
                 <span className="absolute right-4 top-4 rounded-full bg-emerald-500/15 px-2.5 py-1 text-[10px] font-bold tracking-wide text-emerald-300">
                   RECOMMENDED
                 </span>
@@ -100,7 +100,7 @@ export default function Hero() {
                   Check My Tax Health
                 </h3>
 
-                <ul className="mt-3 space-y-2">
+                <ul className="mt-3 flex-1 space-y-2">
                   {CHECK_HEALTH_POINTS.map((point) => (
                     <li key={point} className="flex items-start gap-2 text-sm text-slate-300">
                       <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-emerald-400" />
@@ -109,13 +109,15 @@ export default function Hero() {
                   ))}
                 </ul>
 
-                <Link href="/health-check" className="btn-primary mt-5 w-full">
-                  Start Free Assessment
-                  <ArrowRight size={16} />
-                </Link>
-                <p className="mt-2 text-center text-xs text-secondary">
-                  Takes under 2 minutes
-                </p>
+                <div className="mt-5">
+                  <Link href="/health-check" className="btn-primary w-full">
+                    Check My Free Tax Health Score
+                    <ArrowRight size={16} />
+                  </Link>
+                  <p className="mt-2 text-center text-xs text-secondary">
+                    Takes under 2 minutes
+                  </p>
+                </div>
               </div>
 
               {/* OR divider */}
@@ -124,7 +126,7 @@ export default function Hero() {
               </span>
 
               {/* Card 2: I Already Know What I Need */}
-              <div className="card-dark flex flex-col p-5">
+              <div className="card-dark flex h-full flex-col p-5">
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/8">
                   <Zap size={20} className="text-slate-200" />
                 </div>
@@ -137,7 +139,7 @@ export default function Hero() {
                   Browse all CA services directly
                 </p>
 
-                <ul className="mt-3 space-y-2">
+                <ul className="mt-3 flex-1 space-y-2">
                   {BROWSE_ITEMS.map((item) => {
                     const Icon = item.icon;
                     return (
@@ -149,10 +151,15 @@ export default function Hero() {
                   })}
                 </ul>
 
-                <Link href="/services" className="btn-secondary mt-5 w-full">
-                  Browse Services
-                  <ArrowRight size={16} />
-                </Link>
+                <div className="mt-5">
+                  <Link href="/services" className="btn-secondary w-full">
+                    Browse Services
+                    <ArrowRight size={16} />
+                  </Link>
+                  <p className="invisible mt-2 text-center text-xs" aria-hidden="true">
+                    Takes under 2 minutes
+                  </p>
+                </div>
               </div>
             </div>
           </div>
