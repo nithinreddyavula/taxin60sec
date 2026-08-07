@@ -111,7 +111,7 @@ export default function VaultPage() {
           <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search documents..." className="w-full rounded-xl border border-slate-200 py-2.5 pl-9 pr-3 text-sm" />
         </div>
         <div className="flex items-center gap-2">
-          <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="rounded-xl border border-slate-200 px-3 py-2.5 text-sm">
+          <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900">
             <option>All Types</option>
             {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
           </select>

@@ -106,8 +106,7 @@ export default function MyServicesPage() {
             className="w-full rounded-xl border border-slate-200 py-2.5 pl-9 pr-3 text-sm"
           />
         </div>
-        <select value={year} onChange={(e) => setYear(e.target.value)} className="rounded-xl border border-slate-200 px-3 py-2.5 text-sm">
-          {years.map((y) => <option key={y}>{y}</option>)}
+        <select value={year} onChange={(e) => setYear(e.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900">          {years.map((y) => <option key={y}>{y}</option>)}
         </select>
       </div>
 

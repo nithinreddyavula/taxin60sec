@@ -190,3 +190,24 @@ textarea {
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
 }
+/* Light accent card - deliberately white, used for chat panels and the CA
+   workspace list so those specific surfaces pop against the dark shell.
+   Was referenced across the app (ca-workspace, CaseChat, dashboard, etc.)
+   but never actually defined, which is why those cards rendered with no
+   background and hard-to-read text. */
+.card-light {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+
+/* Status pill used for case/workflow stage badges (My Services, Dashboard,
+   Case Detail). Same story - referenced everywhere, defined nowhere. */
+.pill-blue {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(59, 130, 246, 0.14);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #93c5fd;
+}

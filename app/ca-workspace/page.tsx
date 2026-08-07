@@ -23,23 +23,23 @@ export default function CaWorkspacePage() {
 
   return (
     <AppShell roles={["ROLE_CLIENT"]}>
-      <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-600">CA Workspace</p>
-      <h1 className="mt-2 text-3xl font-bold text-slate-900">Track your work with your CA</h1>
-      <p className="mt-2 text-slate-500">
+      <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-400">CA Workspace</p>
+      <h1 className="mt-2 text-3xl font-bold">Track your work with your CA</h1>
+      <p className="mt-2 text-secondary">
         Every active case, and the Chartered Accountant handling it. All messages stay inside Tax60.
       </p>
 
-      {error && <p className="mt-6 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-6 text-sm text-red-400">{error}</p>}
 
       {!cases && !error && (
         <div className="mt-6 space-y-3">
-          <div className="h-24 animate-pulse rounded-2xl bg-slate-100" />
-          <div className="h-24 animate-pulse rounded-2xl bg-slate-100" />
+          <div className="h-24 animate-pulse rounded-2xl bg-white/5" />
+          <div className="h-24 animate-pulse rounded-2xl bg-white/5" />
         </div>
       )}
 
       {cases && active.length === 0 && (
-        <p className="mt-6 rounded-xl border border-dashed border-slate-200 bg-white p-6 text-center text-sm text-slate-500">
+        <p className="mt-6 rounded-xl border border-dashed border-white/15 p-6 text-center text-sm text-secondary">
           No active cases right now.
         </p>
       )}
