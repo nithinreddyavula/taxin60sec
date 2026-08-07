@@ -5,19 +5,19 @@ import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Rahul Mehta",
-    role: "Salaried Professional",
-    text: "Tax60Sec made ITR filing so simple. Their CA team is very responsive and explained everything clearly.",
+    name: "Rohan Mehta",
+    role: "Business Owner",
+    text: "I thought I needed GST registration. The Tax Health Check showed I didn't, saving me unnecessary costs.",
   },
   {
     name: "Priya Sharma",
-    role: "Business Owner",
-    text: "Saved me from penalties and confusion. Highly recommend Tax60Sec for GST compliance.",
+    role: "Salaried Professional",
+    text: "The AI identified deductions I had missed. My tax refund increased by ₹28,000. Very accurate and helpful!",
   },
   {
     name: "Amit Verma",
     role: "Freelancer",
-    text: "The dashboard keeps me updated at every step. Very transparent pricing, no hidden costs.",
+    text: "Everything happened over WhatsApp. I barely spent 15 minutes. Super convenient!",
   },
   {
     name: "Neha Singh",
@@ -48,8 +48,7 @@ export default function Testimonials() {
     <section className="section-space">
       <div className="container-main">
         <div className="section-header">
-          <p className="eyebrow">What Our Clients Say</p>
-          <h2 className="section-title mt-3">Real People. Real Experiences.</h2>
+          <h2 className="section-title">What Our Clients Say</h2>
         </div>
 
         <div className="relative mt-8">
@@ -73,9 +72,14 @@ export default function Testimonials() {
 
                 <p className="text-sm leading-6 text-secondary">&quot;{item.text}&quot;</p>
 
-                <div className="mt-5 border-t border-white/8 pt-4">
-                  <h4 className="font-semibold text-white">{item.name}</h4>
-                  <p className="mt-1 text-sm text-secondary">{item.role}</p>
+                <div className="mt-5 flex items-center gap-3 border-t border-white/8 pt-4">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-xs font-bold text-emerald-400">
+                    {item.name.charAt(0)}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white">{item.name}</h4>
+                    <p className="text-sm text-secondary">{item.role}</p>
+                  </div>
                 </div>
               </div>
             ))}

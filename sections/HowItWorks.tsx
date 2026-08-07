@@ -1,31 +1,14 @@
-import { ClipboardList, BarChart3, UserCheck2, UploadCloud, CheckCircle2, ArrowRight } from "lucide-react";
+type Step = { title: string; copy: string };
 
-const steps = [
-  {
-    icon: ClipboardList,
-    title: "1. Check Tax Health",
-    copy: "Answer a few simple questions in 2 minutes",
-  },
-  {
-    icon: BarChart3,
-    title: "2. Get Your Report",
-    copy: "See your tax health score and recommendations",
-  },
-  {
-    icon: UserCheck2,
-    title: "3. Expert CA Assigned",
-    copy: "We assign the best CA for your case",
-  },
-  {
-    icon: UploadCloud,
-    title: "4. Upload & Relax",
-    copy: "Upload documents securely. We handle the rest.",
-  },
-  {
-    icon: CheckCircle2,
-    title: "5. File & Done",
-    copy: "Track progress and get notified at every step",
-  },
+const steps: Step[] = [
+  { title: "Answer Simple Questions", copy: "(2 Minutes)" },
+  { title: "AI Understands Your Situation", copy: "" },
+  { title: "Get Personalized Recommendations", copy: "" },
+  { title: "Choose the Right Service", copy: "" },
+  { title: "Upload Documents", copy: "" },
+  { title: "CA Reviews & Verifies", copy: "" },
+  { title: "Track Progress Live", copy: "" },
+  { title: "Work Completed", copy: "" },
 ];
 
 export default function HowItWorks() {
@@ -33,33 +16,35 @@ export default function HowItWorks() {
     <section className="section-space">
       <div className="container-main">
         <div className="section-header">
-          <p className="eyebrow">How It Works</p>
-          <h2 className="section-title mt-3">Simple. Fast. Stress-Free.</h2>
+          <h2 className="section-title">What Happens Next?</h2>
         </div>
 
-        <div className="mt-10 flex flex-col items-stretch gap-6 lg:flex-row lg:items-start">
+        <div className="mt-8 grid grid-cols-2 gap-x-2 gap-y-8 sm:grid-cols-4 lg:flex lg:items-start lg:justify-between">
           {steps.map((step, index) => {
-            const Icon = step.icon;
             const isLast = index === steps.length - 1;
 
             return (
-              <div key={step.title} className="flex flex-1 items-start gap-3 lg:flex-col lg:items-center lg:text-center">
-                <div className="flex flex-col items-center gap-3 lg:flex-1">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-emerald-500/10">
-                    <Icon size={26} className="text-emerald-400" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-white">{step.title}</p>
-                    <p className="mt-1 text-sm text-secondary">{step.copy}</p>
-                  </div>
-                </div>
-
+              <div
+                key={step.title}
+                className="relative flex flex-col items-center gap-2.5 text-center lg:flex-1"
+              >
                 {!isLast && (
-                  <ArrowRight
-                    size={18}
-                    className="mt-5 hidden shrink-0 text-slate-600 lg:block"
+                  <span
+                    className="pointer-events-none absolute left-1/2 top-5 hidden h-px w-full border-t border-dashed border-white/15 lg:block"
+                    aria-hidden="true"
                   />
                 )}
+
+                <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-xs font-bold text-emerald-400 ring-4 ring-[#020817]">
+                  {String(index + 1).padStart(2, "0")}
+                </div>
+
+                <div>
+                  <p className="text-xs font-semibold leading-tight text-white">{step.title}</p>
+                  {step.copy && (
+                    <p className="mt-0.5 text-[11px] text-secondary">{step.copy}</p>
+                  )}
+                </div>
               </div>
             );
           })}
