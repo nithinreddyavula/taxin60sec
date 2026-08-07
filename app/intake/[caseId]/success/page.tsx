@@ -21,17 +21,15 @@ function SuccessContent() {
       <Navbar />
 
       <main className="min-h-screen">
-        <section className="mx-auto max-w-3xl px-6 py-24">
-          <div className="card-dark border-emerald-400/20 p-10 text-center">
-            <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-emerald-500/10">
-              <span className="text-5xl">✅</span>
+        <section className="mx-auto max-w-md px-6 py-14">
+          <div className="card-dark border-emerald-400/20 p-6 text-center">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10">
+              <span className="text-3xl">✅</span>
             </div>
 
-            <h1 className="mt-8 text-4xl font-bold">
-              Application Submitted
-            </h1>
+            <h1 className="mt-4 text-2xl font-bold">Application Submitted</h1>
 
-            <p className="mt-5 text-secondary">
+            <p className="mt-3 text-sm text-secondary">
               Thank you.
               <br />
               Your documents have been received successfully.
@@ -39,18 +37,13 @@ function SuccessContent() {
               Our CA team will review everything and contact you shortly.
             </p>
 
-            <div className="mt-8 rounded-xl bg-white/[0.03] p-5">
-              <p className="text-sm text-secondary">
-                Case Reference
-              </p>
-
-              <h2 className="mt-2 text-2xl font-bold text-emerald-400">
-                #{caseId}
-              </h2>
+            <div className="mt-5 rounded-xl bg-white/[0.03] p-4">
+              <p className="text-xs text-secondary">Case Reference</p>
+              <h2 className="mt-1 text-lg font-bold text-emerald-400">#{caseId}</h2>
             </div>
 
             {referralCode && referralLink && (
-              <div className="mt-8 text-left">
+              <div className="mt-5 text-left">
                 <ReferralShareBlock
                   referralCode={referralCode}
                   referralShareUrl={referralLink}
@@ -60,19 +53,13 @@ function SuccessContent() {
               </div>
             )}
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Link
-                href="/"
-                className="btn-primary px-8 py-3"
-              >
-                Back to Home
-              </Link>
+            <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:justify-center">
+              <Link href="/" className="btn-primary px-6 py-2.5 text-sm">Back to Home</Link>
 
-              <a
                 href="https://wa.me/917013734079"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-secondary px-8 py-3"
+                className="btn-secondary px-6 py-2.5 text-sm"
               >
                 Contact on WhatsApp
               </a>
