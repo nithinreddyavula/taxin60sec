@@ -55,14 +55,7 @@ function SuccessContent() {
 
             <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:justify-center">
               <Link href="/" className="btn-primary px-6 py-2.5 text-sm">Back to Home</Link>
-
-                href="https://wa.me/917013734079"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary px-6 py-2.5 text-sm"
-              >
-                Contact on WhatsApp
-              </a>
+              <a href="https://wa.me/917013734079" target="_blank" rel="noopener noreferrer" className="btn-secondary px-6 py-2.5 text-sm">Contact on WhatsApp</a>
             </div>
           </div>
         </section>
