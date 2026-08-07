@@ -17,10 +17,14 @@ export default function AdminCasesPage() {
   const [assigning, setAssigning] = useState<number | null>(null);
 
   useEffect(() => {
-    Promise.all([AdminService.cases(), AdminService.assignableCas()])
-      .then(([caseList, caList]) => { setCases(caseList); setCas(caList); })
-      .catch(() => { setCases([]); setCas([]); })
+    AdminService.cases()
+      .then(setCases)
+      .catch((e) => { console.error("Failed to load cases:", e); setCases([]); })
       .finally(() => setLoading(false));
+
+    AdminService.assignableCas()
+      .then(setCas)
+      .catch((e) => { console.error("Failed to load assignable CAs:", e); setCas([]); });
   }, []);
 
   const filtered = useMemo(
@@ -89,19 +93,23 @@ export default function AdminCasesPage() {
                     <span className="rounded-full bg-blue-500/15 px-2.5 py-0.5 text-xs font-semibold text-blue-400">{c.status}</span>
                   </td>
                   <td className="px-4 py-3">
-                    <select
-                      value={c.assignedCaId ?? ""}
-                      disabled={assigning === c.caseId}
-                      onChange={(e) => handleAssign(c.caseId, e.target.value)}
-                      className="rounded-lg border border-slate-200 px-2 py-1.5 text-xs disabled:opacity-50"
-                    >
-                      <option value="">Unassigned</option>
-                      {cas.map((ca) => (
-                        <option key={ca.id} value={ca.id}>
-                          {ca.fullName} ({ca.activeCaseload})
-                        </option>
-                      ))}
-                    </select>
+                    {cas.length === 0 ? (
+                      <span className="text-xs text-secondary">{c.assignedCaName ?? "Unassigned"}</span>
+                    ) : (
+                      <select
+                        value={c.assignedCaId ?? ""}
+                        disabled={assigning === c.caseId}
+                        onChange={(e) => handleAssign(c.caseId, e.target.value)}
+                        className="rounded-lg border border-slate-200 px-2 py-1.5 text-xs disabled:opacity-50"
+                      >
+                        <option value="">Unassigned</option>
+                        {cas.map((ca) => (
+                          <option key={ca.id} value={ca.id}>
+                            {ca.fullName} ({ca.activeCaseload})
+                          </option>
+                        ))}
+                      </select>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-secondary">{new Date(c.createdAt).toLocaleDateString()}</td>
                 </tr>
