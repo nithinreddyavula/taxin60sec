@@ -24,29 +24,26 @@ export default function AppProviders({ children }: { children: React.ReactNode }
   const user = useSyncExternalStore(subscribe, getUserSnapshot, serverSnapshot);
   const ready = useSyncExternalStore(subscribe, getReadySnapshot, getServerReadySnapshot);
 
-  // The access/refresh tokens themselves are httpOnly cookies now - this app never
-  // stores them and can't read them even if it wanted to. Only the (non-sensitive)
-  // user profile is cached locally so the UI can render without waiting on a network
-  // round trip on every page load.
   const logout = useCallback(() => {
-    AuthService.logout().catch(() => {
-      // Even if the network call fails, still clear local UI state below -
-      // the cookies will simply expire on their own if the request didn't land.
-    }).finally(() => {
-      localStorage.removeItem("tax60-user");
-      window.dispatchEvent(new Event(SESSION_EVENT));
-    });
+    // Fire-and-forget: clears the httpOnly cookies server-side. Local user info
+    // is cleared immediately below regardless of whether this call succeeds.
+    AuthService.logout().catch(() => {});
+    localStorage.removeItem("tax60-user");
+    window.dispatchEvent(new Event(SESSION_EVENT));
   }, []);
 
-  const value = useMemo(() => ({
-    user,
-    ready,
-    logout,
-    setSession: (session: AuthSession) => {
-      localStorage.setItem("tax60-user", JSON.stringify(session.user));
-      window.dispatchEvent(new Event(SESSION_EVENT));
-    },
-  }), [user, ready, logout]);
+  const value = useMemo(
+    () => ({
+      user,
+      ready,
+      logout,
+      setSession: (session: AuthSession) => {
+        localStorage.setItem("tax60-user", JSON.stringify(session.user));
+        window.dispatchEvent(new Event(SESSION_EVENT));
+      },
+    }),
+    [user, ready, logout],
+  );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

@@ -8,8 +8,8 @@ export type AuthUser = {
   phoneNumber?: string;
   roles: UserRole[];
 };
-// accessToken/refreshToken are no longer part of the response body - they arrive as
-// httpOnly cookies the browser stores automatically and this app never touches.
+// accessToken/refreshToken no longer travel in the JSON body - the backend sets
+// them as httpOnly cookies directly on the response. Only `user` is real here.
 export type AuthSession = { user: AuthUser };
 
 export const AuthService = {
@@ -24,7 +24,7 @@ export const AuthService = {
       password,
     }),
 
-  // Hits the backend so it can revoke the refresh token and clear both cookies -
-  // logout is no longer just a local localStorage.removeItem().
+  refresh: () => request<AuthSession>("/api/v1/auth/refresh", "POST"),
+
   logout: () => request<void>("/api/v1/auth/logout", "POST"),
 };
