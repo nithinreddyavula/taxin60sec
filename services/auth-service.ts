@@ -8,7 +8,9 @@ export type AuthUser = {
   phoneNumber?: string;
   roles: UserRole[];
 };
-export type AuthSession = { accessToken: string; refreshToken: string; user: AuthUser };
+// accessToken/refreshToken are no longer part of the response body - they arrive as
+// httpOnly cookies the browser stores automatically and this app never touches.
+export type AuthSession = { user: AuthUser };
 
 export const AuthService = {
   login: (email: string, password: string) =>
@@ -21,4 +23,8 @@ export const AuthService = {
       phoneNumber,
       password,
     }),
+
+  // Hits the backend so it can revoke the refresh token and clear both cookies -
+  // logout is no longer just a local localStorage.removeItem().
+  logout: () => request<void>("/api/v1/auth/logout", "POST"),
 };

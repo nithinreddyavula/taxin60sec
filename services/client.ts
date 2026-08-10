@@ -1,18 +1,42 @@
 "use client";
 import axios from "axios";
 
+// Tokens now live in httpOnly cookies set by the backend - this client never reads or
+// writes them itself. withCredentials is what makes the browser attach those cookies
+// (and the XSRF-TOKEN cookie) to every request, and accept new ones from responses.
 export const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080",
   headers: { "Content-Type": "application/json" },
+  withCredentials: true,
 });
-client.interceptors.request.use((config) => { const token = typeof window === "undefined" ? null : localStorage.getItem("tax60-access-token"); if (token) config.headers.Authorization = `Bearer ${token}`; return config; });
+
+function readCookie(name: string): string | null {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(new RegExp("(?:^|; )" + name + "=([^;]*)"));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+const MUTATING_METHODS = new Set(["post", "put", "patch", "delete"]);
+
+client.interceptors.request.use((config) => {
+  const method = (config.method ?? "get").toLowerCase();
+  if (MUTATING_METHODS.has(method)) {
+    const csrfToken = readCookie("XSRF-TOKEN");
+    if (csrfToken) {
+      config.headers["X-XSRF-TOKEN"] = csrfToken;
+    }
+  }
+  return config;
+});
 
 client.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401 && typeof window !== "undefined") {
-      localStorage.removeItem("tax60-access-token");
-      localStorage.removeItem("tax60-refresh-token");
+      // No tokens to clear from localStorage anymore - the server clears the
+      // httpOnly cookies itself on logout/expiry. We just clear the cached user
+      // profile and let the app react to the unauthorized event.
+      localStorage.removeItem("tax60-user");
       window.dispatchEvent(new Event("tax60:unauthorized"));
     }
     return Promise.reject(new Error(error.response?.data?.message ?? error.message ?? "Request failed"));
