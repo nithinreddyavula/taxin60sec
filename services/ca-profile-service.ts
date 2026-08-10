@@ -49,6 +49,16 @@ export type PayoutDestinationPayload = {
   upiId?: string;
 };
 
+export type CAPublicProfile = {
+  userId: number;
+  fullName: string;
+  membershipNumber?: string;
+  firmName?: string;
+  specialization?: string;
+  verified: boolean;
+  tier?: string;
+};
+
 export const CAProfileService = {
   apply: (payload: CaApplicationPayload) =>
     request<CAProfile>("/api/v1/ca/apply", "POST", payload),
@@ -56,6 +66,10 @@ export const CAProfileService = {
   myDashboard: () => request<CaDashboard>("/api/v1/ca/me/dashboard"),
 
   myProfile: () => request<CAProfile>("/api/v1/ca/me/profile"),
+
+  // Client-facing: safe-to-show credentials of a specific CA (by user id) -
+  // used on the case detail page so the client can see who they're assigned to.
+  publicProfile: (caUserId: number) => request<CAPublicProfile>(`/api/v1/ca/${caUserId}/public-profile`),
 
   uploadDocument: async (documentType: "PRACTICE_CERTIFICATE" | "PAN_CARD", file: File) => {
     const form = new FormData();

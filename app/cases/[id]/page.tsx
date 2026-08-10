@@ -4,16 +4,18 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CheckCircle2, Circle, IndianRupee, RefreshCw, ShieldCheck } from "lucide-react";
+import { CheckCircle2, Circle, IndianRupee, RefreshCw, ShieldCheck, BadgeCheck } from "lucide-react";
 import { toast } from "sonner";
 import AppShell from "@/components/AppShell";
 import { CaseService } from "@/services/case-service";
+import { CAProfileService } from "@/services/ca-profile-service";
 import { DocumentService, RequiredDocument } from "@/services/document-service";
 import PayNowButton from "@/components/PayNowButton";
 import SlaBadge from "@/components/SlaBadge";
 import CaseChat from "@/components/CaseChat";
 import CaseSupportPanel from "@/components/CaseSupportPanel";
 import DocumentUploader from "@/components/intake/DocumentUploader";
+import ChecklistPanel from "@/components/ChecklistPanel";
 import AskTax60 from "@/components/AskTax60";
 import { CASE_STAGES, caseStageIndex } from "@/lib/case-stage";
 
@@ -33,9 +35,14 @@ export default function CaseDetailsPage() {
 
   const caseQuery = useQuery({ queryKey: ["case", id], queryFn: () => CaseService.detail(id), enabled: Number.isFinite(id) });
   const docsQuery = useQuery<RequiredDocument[]>({ queryKey: ["case-documents", id], queryFn: () => DocumentService.requiredDocuments(id), enabled: Number.isFinite(id) });
-  const missingQuery = useQuery({ queryKey: ["case-missing", id], queryFn: () => CaseService.missingDocuments(id), enabled: Number.isFinite(id) });
   const timelineQuery = useQuery({ queryKey: ["case-timeline", id], queryFn: () => CaseService.timeline(id), enabled: Number.isFinite(id) });
   const pricingQuery = useQuery({ queryKey: ["case-pricing", id], queryFn: () => CaseService.pricing(id), enabled: Number.isFinite(id), retry: false });
+  const caProfileQuery = useQuery({
+    queryKey: ["ca-public-profile", caseQuery.data?.assignedCaId],
+    queryFn: () => CAProfileService.publicProfile(caseQuery.data!.assignedCaId!),
+    enabled: !!caseQuery.data?.assignedCaId,
+    retry: false,
+  });
 
   const completeOnboarding = useMutation({
     mutationFn: () => import("@/services/client").then(({ request }) => request(`/api/v1/cases/${id}/onboarding/complete`, "POST")),
@@ -70,6 +77,21 @@ export default function CaseDetailsPage() {
           <h1 className="mt-2 text-3xl font-bold">{taxCase.title}</h1>
           <p className="mt-2 text-secondary">{taxCase.intakeSummary ?? "Your Tax60 team is reviewing the information you shared."}</p>
           <p className="mt-1 text-sm text-secondary">CA Assigned: {taxCase.assignedCaName ?? "Not yet assigned"}</p>
+          {caProfileQuery.data && (
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+              {caProfileQuery.data.verified && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 font-semibold text-emerald-700">
+                  <BadgeCheck size={13} /> ICAI Verified
+                </span>
+              )}
+              {caProfileQuery.data.membershipNumber && (
+                <span className="text-secondary">Membership No. {caProfileQuery.data.membershipNumber}</span>
+              )}
+              {caProfileQuery.data.firmName && (
+                <span className="text-secondary">· {caProfileQuery.data.firmName}</span>
+              )}
+            </div>
+          )}
           <div className="mt-3"><SlaBadge responseSeconds={taxCase.responseSeconds} slaMet={taxCase.slaMet} startedAt={taxCase.assignedAt ?? taxCase.createdAt} /></div>
         </div>
         <span className="pill-blue rounded-full px-3 py-1.5 text-sm font-bold">{pretty(taxCase.status)}</span>
@@ -179,17 +201,7 @@ export default function CaseDetailsPage() {
                 )}
               </div>
             </section>
-            <section className="card-dark p-5">
-              <ShieldCheck className="text-emerald-600" size={21} />
-              <h2 className="mt-3 font-bold">Missing documents</h2>
-              <div className="mt-3 space-y-2">
-                {missingQuery.data?.length ? missingQuery.data.map((document, index) => (
-                  <p key={index} className="rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-800">
-                    {document.name ?? document.documentName ?? "Required document"}
-                  </p>
-                )) : <p className="text-sm text-secondary">Your checklist is up to date.</p>}
-              </div>
-            </section>
+            <ChecklistPanel caseId={id} />
           </div>
         )}
 

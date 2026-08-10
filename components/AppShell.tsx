@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BarChart3, Bell, BriefcaseBusiness, Calendar, ChevronRight, ClipboardList, CreditCard, HeartPulse, Home, IndianRupee, LayoutDashboard, LogOut, Menu, MessagesSquare, ShieldCheck, UserCheck, UserRound, Wallet, X } from "lucide-react";
+import { BarChart3, Bell, BriefcaseBusiness, Calendar, ChevronRight, ClipboardList, CreditCard, HeartPulse, Home, IndianRupee, LayoutDashboard, LogOut, Menu, MessagesSquare, Repeat, ShieldCheck, UserCheck, UserRound, Wallet, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAppSession } from "./AppProviders";
 import GlobalSearch from "./GlobalSearch";
 
-const clientLinks = [{ href: "/dashboard", label: "Dashboard", icon: LayoutDashboard }, { href: "/tax-health", label: "Tax Health", icon: HeartPulse }, { href: "/calendar", label: "Tax Calendar", icon: Calendar }, { href: "/my-services", label: "My Services", icon: BriefcaseBusiness }, { href: "/vault", label: "Documents Vault", icon: ClipboardList }, { href: "/ca-workspace", label: "CA Workspace", icon: MessagesSquare }, { href: "/notices", label: "Notices", icon: Bell }, { href: "/payments", label: "Payments", icon: CreditCard }, { href: "/profile", label: "Profile & Settings", icon: UserRound }];
+const clientLinks = [{ href: "/dashboard", label: "Dashboard", icon: LayoutDashboard }, { href: "/tax-health", label: "Tax Health", icon: HeartPulse }, { href: "/calendar", label: "Tax Calendar", icon: Calendar }, { href: "/my-services", label: "My Services", icon: BriefcaseBusiness }, { href: "/subscriptions", label: "Subscriptions", icon: Repeat }, { href: "/vault", label: "Documents Vault", icon: ClipboardList }, { href: "/ca-workspace", label: "CA Workspace", icon: MessagesSquare }, { href: "/notices", label: "Notices", icon: Bell }, { href: "/payments", label: "Payments", icon: CreditCard }, { href: "/profile", label: "Profile & Settings", icon: UserRound }];
 const caLinks = [{ href: "/ca/cases", label: "Work queue", icon: ClipboardList }, { href: "/ca/profile", label: "Availability & KYC", icon: UserCheck }, { href: "/ca/payouts", label: "Earnings", icon: Wallet }, { href: "/profile", label: "Profile", icon: UserRound }];
 const adminLinks = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
