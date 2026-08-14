@@ -5,7 +5,6 @@ import {
   ArrowRight,
   Building2,
   CheckCircle2,
-  Clock,
   FileText,
   Heart,
   Landmark,
@@ -13,10 +12,9 @@ import {
   ShieldCheck,
   Sparkles,
   Stamp,
-  TrendingUp,
-  UserCheck2,
   Zap,
 } from "lucide-react";
+import HowItWorksSlideshow from "./HowItWorksSlideshow";
 
 const BROWSE_ITEMS = [
   { icon: FileText, label: "Income Tax" },
@@ -32,21 +30,6 @@ const CHECK_HEALTH_POINTS = [
   "Get your Tax Health Score",
   "Personalized recommendations",
   "Free",
-];
-
-const QUIZ_OPTIONS = [
-  { label: "Salaried Employee", selected: true },
-  { label: "Freelancer", selected: false },
-  { label: "Business Owner", selected: false },
-  { label: "Startup Founder", selected: false },
-  { label: "NRI", selected: false },
-];
-
-const FLOW_STEPS = [
-  { icon: Sparkles, label: "AI Analysis" },
-  { icon: ShieldCheck, label: "Tax Health Score" },
-  { icon: FileText, label: "Recommended Services" },
-  { icon: UserCheck2, label: "CA Assigned" },
 ];
 
 export default function Hero() {
@@ -164,86 +147,8 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right: interactive quiz preview */}
-          <div className="card-dark p-6">
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-bold text-white">See How It Works</p>
-              <span className="rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold text-emerald-400">
-                100% Free Assessment
-              </span>
-            </div>
-
-            <p className="mt-4 text-xs font-medium text-secondary">Question 1 of 12</p>
-            <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/8">
-              <div className="h-full w-[8%] rounded-full bg-emerald-400" />
-            </div>
-
-            <div className="mt-5 grid grid-cols-[1fr_auto] gap-4">
-              <div>
-                <p className="text-sm font-semibold text-white">What best describes you?</p>
-                <div className="mt-3 space-y-2.5">
-                  {QUIZ_OPTIONS.map((option) => (
-                    <label
-                      key={option.label}
-                      className={`flex items-center gap-3 rounded-xl border px-3 py-2.5 text-sm transition ${
-                        option.selected
-                          ? "border-emerald-400/50 bg-emerald-500/[.06] text-white"
-                          : "border-white/10 text-slate-300"
-                      }`}
-                    >
-                      <span
-                        className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${
-                          option.selected ? "border-emerald-400" : "border-white/25"
-                        }`}
-                      >
-                        {option.selected && <span className="h-2 w-2 rounded-full bg-emerald-400" />}
-                      </span>
-                      {option.label}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="hidden w-36 shrink-0 flex-col gap-3 rounded-2xl border border-white/8 bg-white/[.03] p-3 sm:flex">
-                <div>
-                  <p className="flex items-center gap-1.5 text-[10px] text-secondary">
-                    <Clock size={12} /> Estimated Time
-                  </p>
-                  <p className="mt-1 text-sm font-bold text-white">1 min 48 sec</p>
-                </div>
-                <div className="border-t border-white/8 pt-3">
-                  <p className="flex items-center gap-1.5 text-[10px] text-secondary">
-                    <TrendingUp size={12} /> AI Confidence
-                  </p>
-                  <p className="mt-1 text-sm font-bold text-white">98%</p>
-                </div>
-                <div className="border-t border-white/8 pt-3">
-                  <p className="flex items-center gap-1.5 text-[10px] font-semibold text-emerald-400">
-                    <CheckCircle2 size={12} /> Free Assessment
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 flex items-center justify-between gap-1 border-t border-white/8 pt-5">
-              {FLOW_STEPS.map((step, index) => {
-                const Icon = step.icon;
-                return (
-                  <div key={step.label} className="flex items-center gap-1">
-                    <div className="flex flex-col items-center gap-1.5 text-center">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500/10">
-                        <Icon size={16} className="text-emerald-400" />
-                      </div>
-                      <p className="w-16 text-[10px] leading-tight text-secondary">{step.label}</p>
-                    </div>
-                    {index < FLOW_STEPS.length - 1 && (
-                      <ArrowRight size={13} className="mb-4 shrink-0 text-slate-700" />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          {/* Right: animated "See How It Works" slideshow */}
+          <HowItWorksSlideshow />
         </div>
       </div>
     </section>
