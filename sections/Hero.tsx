@@ -51,9 +51,10 @@ export default function Hero() {
           <span className="badge-pill"><ShieldCheck size={13} /> 100% SECURE</span>
         </div>
 
-        <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_1fr]">
-          {/* Left: headline + choice cards */}
-          <div>
+        {/* items-stretch: both columns take the same height */}
+        <div className="grid items-stretch gap-8 lg:grid-cols-[1.05fr_1fr]">
+          {/* Left: headline + choice cards — now a flex column so the cards row can grow */}
+          <div className="flex h-full flex-col">
             <h1 className="max-w-xl text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">
               Your Taxes.
               <br />
@@ -68,7 +69,8 @@ export default function Hero() {
               your situation and guide you to exactly what you need.
             </p>
 
-            <div className="relative mt-5 grid items-stretch gap-5 sm:grid-cols-2">
+            {/* flex-1: this row stretches to fill remaining height, so the cards grow */}
+            <div className="relative mt-5 grid flex-1 items-stretch gap-5 sm:grid-cols-2">
               {/* Card 1: Check My Tax Health */}
               <div className="card-dark relative flex h-full flex-col border-emerald-400/40 bg-emerald-500/[.04] p-5">
                 <span className="absolute right-4 top-4 rounded-full bg-emerald-500/15 px-2.5 py-1 text-[10px] font-bold tracking-wide text-emerald-300">
