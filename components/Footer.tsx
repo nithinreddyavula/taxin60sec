@@ -8,6 +8,7 @@ const quickLinks = [
   { href: "/cases", label: "Track Case" },
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact" },
+  { href: "/blog", label: "Blog" },
 ];
 
 const services = [
@@ -103,15 +104,16 @@ export default function Footer() {
               <p className="flex items-center gap-2">
                 <Mail size={13} /> compliance@taxin60sec.com
               </p>
-              <p className="flex items-center gap-2">
-                <MapPin size={13} /> Online Consultation Across India
+              <p className="flex items-start gap-2">
+                <MapPin size={13} className="mt-0.5 shrink-0" />
+                [Your full registered office address, city, state, PIN code]
               </p>
             </div>
           </div>
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-secondary sm:flex-row sm:items-center sm:justify-between">
-          <p>Copyright 2026 Tax60Sec. All rights reserved.</p>
+          <p>Copyright 2026 Tax60Sec. All rights reserved. ICAI Firm Reg. No. [Your Registration Number]</p>
           <p>Made with love in India</p>
         </div>
       </div>
