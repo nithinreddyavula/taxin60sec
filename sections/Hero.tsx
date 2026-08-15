@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   ArrowRight,
   Building2,
@@ -32,6 +33,11 @@ const CHECK_HEALTH_POINTS = [
   "Free",
 ];
 
+const fadeUp = {
+  initial: { opacity: 0, y: 14 },
+  animate: { opacity: 1, y: 0 },
+};
+
 export default function Hero() {
   return (
     <section className="relative overflow-hidden py-8 md:py-10">
@@ -45,34 +51,57 @@ export default function Hero() {
       />
 
       <div className="container-main relative">
-        <div className="mb-4 flex flex-wrap gap-2">
+        <motion.div
+          className="mb-4 flex flex-wrap gap-2"
+          initial="initial"
+          animate="animate"
+          variants={fadeUp}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
           <span className="badge-pill"><Sparkles size={13} /> AI POWERED</span>
           <span className="badge-pill"><CheckCircle2 size={13} /> CA VERIFIED</span>
           <span className="badge-pill"><ShieldCheck size={13} /> 100% SECURE</span>
-        </div>
+        </motion.div>
 
         {/* items-stretch: both columns take the same height */}
         <div className="grid items-stretch gap-8 lg:grid-cols-[1.05fr_1fr]">
-          {/* Left: headline + choice cards — now a flex column so the cards row can grow */}
+          {/* Left: headline + choice cards — flex column so the cards row can grow */}
           <div className="flex h-full flex-col">
-            <h1 className="max-w-xl text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">
-              Your Taxes.
+            <motion.h1
+              className="max-w-xl text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
+              initial="initial"
+              animate="animate"
+              variants={fadeUp}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.05 }}
+            >
+              Know Exactly What Your Taxes Need.
               <br />
-              Understood in 2 Minutes.
-              <br />
-              <span className="text-emerald-400">Handled by Experts.</span>
-            </h1>
+              <span className="text-emerald-400">In 60 Seconds.</span>
+            </motion.h1>
 
-            <p className="mt-3 max-w-lg text-sm leading-6 text-secondary">
-              Whether you need ITR filing, GST, company compliance, startup
-              registration, or business advisory — we&apos;ll first understand
-              your situation and guide you to exactly what you need.
-            </p>
+            <motion.p
+              className="mt-3 max-w-lg text-sm leading-6 text-secondary"
+              initial="initial"
+              animate="animate"
+              variants={fadeUp}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.12 }}
+            >
+              No jargon, no guesswork. Our AI reads your situation instantly and
+              a real, verified Chartered Accountant takes it from there — ITR,
+              GST, company compliance, or startup registration, handled start
+              to finish.
+            </motion.p>
 
             {/* flex-1: this row stretches to fill remaining height, so the cards grow */}
-            <div className="relative mt-5 grid flex-1 items-stretch gap-5 sm:grid-cols-2">
+            <motion.div
+              className="relative mt-5 grid flex-1 items-stretch gap-5 sm:grid-cols-2"
+              initial="initial"
+              animate="animate"
+              variants={fadeUp}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+            >
               {/* Card 1: Check My Tax Health */}
-              <div className="card-dark relative flex h-full flex-col border-emerald-400/40 bg-emerald-500/[.04] p-5">
+              <div className="card-dark relative flex h-full flex-col border-emerald-400/40 bg-emerald-500/[.04] p-5 transition-transform duration-300 hover:-translate-y-1">
                 <span className="absolute right-4 top-4 rounded-full bg-emerald-500/15 px-2.5 py-1 text-[10px] font-bold tracking-wide text-emerald-300">
                   RECOMMENDED
                 </span>
@@ -82,7 +111,7 @@ export default function Hero() {
                 </div>
 
                 <h3 className="mt-4 text-lg font-bold text-white">
-                  Check My Tax Health
+                  Not Sure Where to Start?
                 </h3>
 
                 <ul className="mt-3 flex-1 space-y-2">
@@ -96,11 +125,11 @@ export default function Hero() {
 
                 <div className="mt-5">
                   <Link href="/health-check" className="btn-primary w-full">
-                    Check My Free Tax Health Score
+                    Get My Free Tax Health Score
                     <ArrowRight size={16} />
                   </Link>
                   <p className="mt-2 text-center text-xs text-secondary">
-                    Takes under 2 minutes
+                    2 minutes &middot; No card &middot; No spam
                   </p>
                 </div>
               </div>
@@ -111,17 +140,17 @@ export default function Hero() {
               </span>
 
               {/* Card 2: I Already Know What I Need */}
-              <div className="card-dark flex h-full flex-col p-5">
+              <div className="card-dark flex h-full flex-col p-5 transition-transform duration-300 hover:-translate-y-1">
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/8">
                   <Zap size={20} className="text-slate-200" />
                 </div>
 
                 <h3 className="mt-4 text-lg font-bold text-white">
-                  I Already Know What I Need
+                  Already Know What You Need?
                 </h3>
 
                 <p className="mt-1 text-sm text-secondary">
-                  Browse all CA services directly
+                  Skip ahead — browse all CA services directly
                 </p>
 
                 <ul className="mt-3 flex-1 space-y-2">
@@ -146,11 +175,17 @@ export default function Hero() {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right: animated "See How It Works" slideshow */}
-          <HowItWorksSlideshow />
+          <motion.div
+            initial={{ opacity: 0, y: 14, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.55, ease: "easeOut", delay: 0.15 }}
+          >
+            <HowItWorksSlideshow />
+          </motion.div>
         </div>
       </div>
     </section>
