@@ -2,6 +2,12 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ServiceCards from "@/components/ServiceCards";
 
+export const metadata = {
+  title: "Services & Pricing",
+  description:
+    "GST filing, income tax returns, ROC compliance, startup registration, and virtual CFO services — transparent pricing, handled by verified Chartered Accountants.",
+};
+
 const extraServices = [
   "GST Registration & Filing",
   "Income Tax Filing",

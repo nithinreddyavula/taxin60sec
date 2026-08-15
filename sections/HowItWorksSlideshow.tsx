@@ -189,10 +189,10 @@ export default function HowItWorksSlideshow() {
                 <UserCheck2 size={26} className="text-emerald-400" />
               </div>
               <p className="mt-4 text-sm font-semibold text-white">
-                CA Rahul Mehta assigned
+                A Verified CA Is Assigned
               </p>
               <p className="mt-1 text-xs text-secondary">
-                12 yrs experience &middot; ITR &amp; GST specialist
+                Matched to your specific case type
               </p>
               <div className="mt-4 flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1.5 text-[11px] font-semibold text-emerald-300">
                 <ShieldCheck size={12} /> Verified &amp; CA Certified
