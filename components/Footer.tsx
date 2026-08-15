@@ -24,8 +24,8 @@ const support = [
   { href: "/contact", label: "Help Center" },
   { href: "/contact", label: "Contact Support" },
   { href: "https://wa.me/917013734079", label: "WhatsApp Support" },
-  { href: "/contact", label: "Privacy Policy" },
-  { href: "/contact", label: "Terms & Conditions" },
+  { href: "/privacy-policy", label: "Privacy Policy" },
+  { href: "/terms", label: "Terms & Conditions" },
 ];
 
 const socialLinks = [

@@ -17,6 +17,7 @@ const supportMenu = [
   { href: "/contact", label: "Contact Us" },
   { href: "/cases", label: "Track Case" },
   { href: "/notices", label: "Notices" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export default function Navbar() {
