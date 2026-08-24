@@ -11,6 +11,7 @@ import {
   HealthCheckService,
   HealthCheckResult,
 } from "@/services/health-check-service";
+import { track } from "@/lib/analytics";
 
 const USER_TYPES = [
   { value: "INDIVIDUAL", label: "Individual", desc: "Salary, Investments, House Property", icon: User },
@@ -104,6 +105,7 @@ export default function HealthCheckPage() {
   const [captured, setCaptured] = useState(false);
 
   function selectType(type: string) {
+    track("health_check_started", { user_type: type });
     setUserType(type);
     setAnswers({});
     setStep("questions");
@@ -119,6 +121,7 @@ export default function HealthCheckPage() {
       const res = await HealthCheckService.evaluate(userType, answers);
       setResult(res);
       setStep("results");
+      track("health_check_completed", { user_type: userType, issues: res.issues.length });
     } catch {
       toast.error("Unable to run the check right now");
     } finally {
@@ -130,11 +133,14 @@ export default function HealthCheckPage() {
     if (!result || !leadEmail.trim()) return;
     setCapturing(true);
     try {
-      await HealthCheckService.captureLead(userType, result, {
+      const lead = await HealthCheckService.captureLead(userType, result, {
         email: leadEmail.trim(),
         phoneNumber: leadPhone.trim(),
       });
+      localStorage.setItem("tax60-health-check-lead-id", String(lead.id));
       setCaptured(true);
+      track("lead_created", { source: "health_check" });
+      track("lead_contact_submitted", { has_phone: Boolean(leadPhone.trim()) });
       toast.success("Results sent to your email");
     } catch {
       toast.error("Unable to send results right now");
@@ -407,7 +413,7 @@ export default function HealthCheckPage() {
                         </p>
                         <p className="text-xs text-secondary">{rec.turnaroundDays} day turnaround</p>
                         <button
-                          onClick={() => router.push(`/intake?id=${rec.serviceId}`)}
+                          onClick={() => { track("health_check_recommendation_selected", { service_id: rec.serviceId }); router.push(`/intake?id=${rec.serviceId}`); }}
                           className="btn-primary mt-4 w-full"
                         >
                           Select Service

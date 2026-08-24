@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MessageCircle, Send } from "lucide-react";
 import { SupportTicket, SupportTicketMessage, SupportTicketService } from "@/services/support-ticket-services";
 
@@ -15,14 +15,16 @@ export default function CaseSupportPanel({ caseId }: { caseId: number }) {
   const [reply, setReply] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  function load() {
-    setLoading(true);
+  const load = useCallback(() => {
     SupportTicketService.forCase(caseId)
       .then((res) => setTickets(res.items))
       .finally(() => setLoading(false));
-  }
+  }, [caseId]);
 
-  useEffect(load, [caseId]);
+  useEffect(() => {
+    const timer = window.setTimeout(load, 0);
+    return () => window.clearTimeout(timer);
+  }, [load]);
 
   async function openThread(ticket: SupportTicket) {
     setOpenTicket(ticket);

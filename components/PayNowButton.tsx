@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { PaymentService } from "@/services/payment-service";
+import { track } from "@/lib/analytics";
 
 declare global {
   interface Window {
@@ -43,6 +44,7 @@ export default function PayNowButton({
     setLoading(true);
 
     try {
+      track("payment_opened");
       const order = await PaymentService.orderForCase(caseId);
 
       const ready = await loadRazorpayScript();
@@ -66,12 +68,14 @@ export default function PayNowButton({
         theme: { color: "#2563EB" },
         handler: () => {
           toast.success("Payment successful");
+          track("payment_succeeded");
         },
       });
 
       razorpay.open();
 
     } catch (e) {
+      track("payment_failed");
       toast.error(e instanceof Error ? e.message : "Unable to start payment");
     } finally {
       setLoading(false);

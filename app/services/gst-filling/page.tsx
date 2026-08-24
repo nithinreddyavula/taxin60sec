@@ -4,7 +4,9 @@ import PriceBreakdown from "@/components/PriceBreakdown";
 import { Clock, IndianRupee, Users } from "lucide-react";
 
 export const metadata = {
-  title: "GST Filing",
+  title: "GST Filing & Compliance Services",
+  description: "CA-assisted GST registration, return filing and compliance support for Indian businesses.",
+  alternates: { canonical: "/services/gst-filling" },
 };
 
 const bestFor = ["Freelancer", "Small Business", "E-commerce Seller"];

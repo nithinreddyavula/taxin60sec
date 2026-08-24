@@ -26,7 +26,7 @@ const BROWSE_ITEMS = [
 ];
 
 const CHECK_HEALTH_POINTS = [
-  "Answer 12 simple questions",
+  "Answer a few simple questions",
   "AI analyzes your tax situation",
   "Get your Tax Health Score",
   "Personalized recommendations",

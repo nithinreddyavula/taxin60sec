@@ -138,10 +138,11 @@ export const OnboardingService = {
    * RESUME
    */
 
-  resume: (token: string) =>
-    request<ResumeResponse>(
-      `/api/v1/public/intake/resume/${token}`
-    ),
+  resumeUrl: (token: string) =>
+    `${process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080"}/api/v1/public/intake/resume/${encodeURIComponent(token)}`,
+
+  resumeCurrentSession: () =>
+    request<ResumeResponse>("/api/v1/public/intake/resume-session"),
 
   /*
    * REQUIRED DOCUMENTS
@@ -206,6 +207,13 @@ export const OnboardingService = {
       {
         method: "POST",
         body: formData,
+        credentials: "include",
+        headers: (() => {
+          const headers = new Headers();
+          const token = typeof window === "undefined" ? null : sessionStorage.getItem("tax60-intake-resume-token");
+          if (token) headers.set("X-Intake-Token", token);
+          return headers;
+        })(),
       }
 
     );

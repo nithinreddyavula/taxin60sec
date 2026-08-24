@@ -24,8 +24,8 @@ const sections = [
   {
     heading: "3. How We Protect It",
     body: [
-      "Documents you upload are encrypted in transit and at rest. Access to your Vault is restricted to you and the CA actively working on your case.",
-      "[Describe your specific security practices here — encryption standard used, where data is hosted, retention period, backup policy.]",
+      "Access to documents is restricted by authenticated case and vault authorization checks. File uploads are subject to configured size limits and are stored outside public web routes.",
+      "Security controls and hosting arrangements can change. Contact us for the current retention and vendor information relevant to your case.",
     ],
   },
   {
@@ -60,7 +60,7 @@ export default function PrivacyPolicyPage() {
               <p className="eyebrow">Legal</p>
               <h1 className="section-title mt-3">Privacy Policy</h1>
               <p className="section-copy mt-3">
-                Last updated: [DD Month YYYY]. This policy explains what data
+                This policy explains what data
                 TaxIn60Sec collects and how it&apos;s used and protected.
               </p>
 
@@ -80,13 +80,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div className="card-dark mt-10 p-5">
-                <p className="text-sm leading-6 text-secondary">
-                  This is a starting template, not legal advice. Have it reviewed
-                  by a lawyer familiar with the DPDP Act 2023 before you rely on
-                  it — especially the sections on data retention and third-party
-                  sharing, since those depend on your actual infrastructure and
-                  vendor contracts.
-                </p>
+                <p className="text-sm leading-6 text-secondary">For questions about this policy or your data, contact compliance@taxin60sec.com.</p>
               </div>
             </div>
           </div>

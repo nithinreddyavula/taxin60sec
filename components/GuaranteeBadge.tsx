@@ -19,7 +19,7 @@ export default function GuaranteeBadge() {
       <Zap size={16} />
       {hasLiveData
         ? `Real average: ${data!.averageResponseSeconds}s response, ${data!.slaMetPercentage}% within 60s`
-        : "Confirmed within 60 seconds, guaranteed"}
+        : "Case updates are shared as work progresses"}
     </div>
   );
 }

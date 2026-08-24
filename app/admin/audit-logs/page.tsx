@@ -16,15 +16,17 @@ export default function AuditLogsPage() {
   const [totalElements, setTotalElements] = useState(0);
 
   useEffect(() => {
-    setLoading(true);
+    let active = true;
     AdminService.auditLogs(search, module, page, 20)
       .then((res) => {
+        if (!active) return;
         setLogs(res.items);
         setTotalPages(res.totalPages);
         setTotalElements(res.totalElements);
       })
-      .catch(() => setLogs([]))
-      .finally(() => setLoading(false));
+      .catch(() => { if (active) setLogs([]); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
   }, [search, module, page]);
 
   return (

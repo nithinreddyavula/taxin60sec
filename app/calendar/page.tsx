@@ -121,7 +121,7 @@ export default function CalendarPage() {
 
         {!error && items && items.length === 0 && (
           <div className="mt-8 card-dark p-6 text-sm text-secondary">
-            No deadlines on your calendar yet — they'll show up here once your tax profile is set up.
+            No deadlines on your calendar yet — they&apos;ll show up here once your tax profile is set up.
           </div>
         )}
 

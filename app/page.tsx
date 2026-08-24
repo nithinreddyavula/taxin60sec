@@ -9,6 +9,7 @@ import HowItWorks from "@/sections/HowItWorks";
 import ResultsAndServices from "@/sections/ResultsAndServices";
 import Testimonials from "@/sections/Testimonials";
 import FreeTools from "@/sections/FreeTools";
+import DeadlinesWidget from "@/sections/DeadlinesWidget";
 
 export default function HomePage() {
   return (
@@ -22,6 +23,7 @@ export default function HomePage() {
         <ResultsAndServices />
         <Testimonials />
         <FreeTools />
+        <DeadlinesWidget />
         <CtaBanner />
       </main>
 

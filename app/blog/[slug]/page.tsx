@@ -19,6 +19,8 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: { canonical: `/blog/${post.slug}` },
+    openGraph: { type: "article", title: post.title, description: post.excerpt },
   };
 }
 
@@ -30,6 +32,8 @@ export default async function BlogPostPage({
   const { slug } = await params;
   const post = BLOG_POSTS.find((p) => p.slug === slug);
   if (!post) notFound();
+
+  const schema = { "@context": "https://schema.org", "@type": "Article", headline: post.title, description: post.excerpt, datePublished: post.date, mainEntityOfPage: `https://tax60sec.com/blog/${post.slug}`, publisher: { "@type": "Organization", name: "TaxIn60Sec" } };
 
   return (
     <>
@@ -69,6 +73,7 @@ export default async function BlogPostPage({
         </article>
       </main>
       <Footer />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     </>
   );
 }

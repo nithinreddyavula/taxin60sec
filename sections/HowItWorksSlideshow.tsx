@@ -22,9 +22,9 @@ const QUIZ_OPTIONS = [
 ];
 
 const RECOMMENDATIONS = [
-  { label: "ITR Filing (Salaried)", match: "98% match" },
-  { label: "Tax Saving Advisory", match: "91% match" },
-  { label: "Form 16 Review", match: "87% match" },
+  { label: "ITR Filing (Salaried)", match: "Based on your answers" },
+  { label: "Tax Saving Advisory", match: "Review available" },
+  { label: "Form 16 Review", match: "Review available" },
 ];
 
 const CHECKLIST = [
@@ -100,7 +100,7 @@ export default function HowItWorksSlideshow() {
         <AnimatePresence mode="wait">
           {active === 0 && (
             <motion.div key="step-0" {...fade}>
-              <p className="text-xs font-medium text-secondary">Question 1 of 12</p>
+              <p className="text-xs font-medium text-secondary">A quick starting question</p>
               <p className="mt-2 text-sm font-semibold text-white">
                 What best describes you?
               </p>
@@ -148,10 +148,10 @@ export default function HowItWorksSlideshow() {
                 AI is analyzing your answers…
               </p>
               <p className="mt-1 text-xs text-secondary">
-                Matching your situation against 40+ tax rules
+                Preparing guidance from the answers you provide
               </p>
               <div className="mt-4 flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-emerald-300">
-                <TrendingUp size={12} /> AI Confidence: 98%
+                <TrendingUp size={12} /> Guidance to help you choose a next step
               </div>
             </motion.div>
           )}
@@ -195,7 +195,7 @@ export default function HowItWorksSlideshow() {
                 Matched to your specific case type
               </p>
               <div className="mt-4 flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1.5 text-[11px] font-semibold text-emerald-300">
-                <ShieldCheck size={12} /> Verified &amp; CA Certified
+                <ShieldCheck size={12} /> Assigned after case review
               </div>
             </motion.div>
           )}
@@ -219,7 +219,7 @@ export default function HowItWorksSlideshow() {
                 ))}
               </div>
               <div className="mt-3 flex w-fit items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1.5 text-[11px] font-semibold text-emerald-300">
-                <Clock size={12} /> SLA: 40 hrs remaining
+                <Clock size={12} /> Follow progress in your case workspace
               </div>
             </motion.div>
           )}

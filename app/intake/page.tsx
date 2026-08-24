@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, FormEvent, useEffect, useState } from "react";
+import { Suspense, FormEvent, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
@@ -15,6 +15,7 @@ import {
 } from "@/services/intake-service";
 
 import { useAppSession } from "@/components/AppProviders";
+import { track } from "@/lib/analytics";
 
 function SavedTag() {
   return (
@@ -47,21 +48,18 @@ function IntakeContent() {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [resumeSessionChecked, setResumeSessionChecked] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<"saved" | "saving" | "error" | "idle">("idle");
+  const saveTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
 
   useEffect(() => {
     if (!ready) return;
-    if (!user) {
+    if (!resumeSessionChecked) return;
+    if (!user && !caseId) {
       const currentUrl = `${window.location.pathname}${window.location.search}`;
       router.replace(`/login?next=${encodeURIComponent(currentUrl)}`);
     }
-  }, [ready, user, router]);
-
-  useEffect(() => {
-    if (!user) return;
-    setFullName((prev) => prev || user.fullName || "");
-    setPhone((prev) => prev || user.phoneNumber || "");
-    setEmail((prev) => prev || user.email || "");
-  }, [user]);
+  }, [ready, user, router, resumeSessionChecked, caseId]);
 
   useEffect(() => {
     async function load() {
@@ -93,21 +91,53 @@ function IntakeContent() {
     load();
   }, [searchParams]);
 
+  useEffect(() => {
+    const resumeToken = searchParams.get("resume");
+    if (!resumeToken || caseId) return;
+    window.location.replace(OnboardingService.resumeUrl(resumeToken));
+  }, [searchParams, caseId]);
+
+  useEffect(() => {
+    if (searchParams.get("resume") || caseId) return;
+    OnboardingService.resumeCurrentSession().then((saved) => {
+      setCaseId(saved.caseId); setQuestions(saved.questions); setAnswers(saved.answers); setSaveStatus("saved");
+      track("intake_resumed");
+    }).catch(() => undefined).finally(() => setResumeSessionChecked(true));
+  }, [searchParams, caseId]);
+
+  useEffect(() => () => Object.values(saveTimers.current).forEach(clearTimeout), []);
+
+  useEffect(() => {
+    if (!serviceId || caseId || typeof window === "undefined") return;
+    const raw = localStorage.getItem(`tax60-intake-draft:${serviceId}`);
+    if (!raw) return;
+    try {
+      const draft = JSON.parse(raw) as { caseId: number; resumeToken: string };
+      window.location.replace(OnboardingService.resumeUrl(draft.resumeToken));
+    } catch { localStorage.removeItem(`tax60-intake-draft:${serviceId}`); }
+  }, [serviceId, caseId]);
+
   async function start() {
     if (!serviceId) { toast.error("Select a service"); return; }
-    if (!fullName.trim()) { toast.error("Enter your name"); return; }
-    if (!phone.trim()) { toast.error("Enter phone number"); return; }
-    if (!email.trim()) { toast.error("Enter email"); return; }
+    const submittedName = fullName.trim() || user?.fullName || "";
+    const submittedPhone = phone.trim() || user?.phoneNumber || "";
+    const submittedEmail = email.trim() || user?.email || "";
+    if (!submittedName) { toast.error("Enter your name"); return; }
+    if (!submittedPhone) { toast.error("Enter phone number"); return; }
+    if (!submittedEmail) { toast.error("Enter email"); return; }
 
     setSaving(true);
     const startedAt = Date.now();
 
     try {
-      const result = await OnboardingService.start(Number(serviceId), fullName, phone, email);
+      const result = await OnboardingService.start(Number(serviceId), submittedName, submittedPhone, submittedEmail);
 
       setCaseId(result.caseId);
       setQuestions(result.questions);
       setAnswers({});
+      localStorage.setItem(`tax60-intake-draft:${serviceId}`, JSON.stringify({ caseId: result.caseId, resumeToken: result.resumeToken }));
+      sessionStorage.setItem("tax60-intake-resume-token", result.resumeToken);
+      track("intake_started", { has_referral: Boolean(localStorage.getItem("tax60-referral-code")) });
 
       const elapsedSeconds = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
       toast.success(`Confirmed in ${elapsedSeconds}s — check your email/WhatsApp`);
@@ -129,6 +159,9 @@ function IntakeContent() {
         await OnboardingService.saveAnswer(caseId, question, answers[question] ?? "");
       }
 
+      localStorage.removeItem(`tax60-intake-draft:${serviceId}`);
+      track("intake_completed");
+
       toast.success("Answers saved");
       router.push(`/intake/${caseId}/documents`);
     } catch (e) {
@@ -138,7 +171,27 @@ function IntakeContent() {
     }
   }
 
-  if (!ready || !user) {
+  function queueAnswer(question: string, answer: string, retryAttempt = 0) {
+    setAnswers((current) => ({ ...current, [question]: answer }));
+    if (!caseId) return;
+    setSaveStatus("saving");
+    clearTimeout(saveTimers.current[question]);
+    saveTimers.current[question] = setTimeout(async () => {
+      try {
+        await OnboardingService.saveAnswer(caseId, question, answer);
+        setSaveStatus("saved");
+        track("intake_answer_saved");
+      } catch {
+        setSaveStatus("error");
+        // Keep the answer locally and retry once; final submit remains the durable fallback.
+        if (retryAttempt === 0) {
+          saveTimers.current[question] = setTimeout(() => queueAnswer(question, answer, 1), 3_000);
+        }
+      }
+    }, 650);
+  }
+
+  if (!ready || (!user && !caseId)) {
     return (
       <main className="min-h-screen p-6">
         <div className="mx-auto mt-24 h-40 max-w-xl animate-pulse rounded-2xl bg-white/5" />
@@ -166,7 +219,7 @@ function IntakeContent() {
           <p className="mt-2 text-sm text-slate-400">
             {caseId
               ? "Just a couple of details — your CA will use these to prepare your case."
-              : "Tell us who you are and what you need. It's encrypted the moment you submit it."}
+              : "Tell us who you are and what you need. We use these details to set up your case."}
           </p>
 
           <div className="card-dark mt-6 p-5">
@@ -220,7 +273,7 @@ function IntakeContent() {
                   </div>
                   <input
                     className="input-dark w-full p-2.5 text-sm"
-                    value={fullName}
+                    value={fullName || user?.fullName || ""}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Enter your full name"
                   />
@@ -234,7 +287,7 @@ function IntakeContent() {
                   </div>
                   <input
                     className="input-dark w-full p-2.5 text-sm"
-                    value={phone}
+                    value={phone || user?.phoneNumber || ""}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="9876543210"
                   />
@@ -251,12 +304,12 @@ function IntakeContent() {
                   <input
                     type="email"
                     className="input-dark w-full p-2.5 text-sm"
-                    value={email}
+                    value={email || user?.email || ""}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="example@gmail.com"
                   />
                   <p className="mt-1 flex items-center gap-1 text-[11px] text-secondary">
-                    <ShieldCheck size={11} /> Encrypted immediately. Used to send your updates and report.
+                    <ShieldCheck size={11} /> Used to send updates about your case.
                   </p>
                 </div>
 
@@ -294,10 +347,10 @@ function IntakeContent() {
                         rows={2}
                         className="input-dark w-full p-2.5 text-sm"
                         value={answers[question] ?? ""}
-                        onChange={(e) => setAnswers({ ...answers, [question]: e.target.value })}
+                        onChange={(e) => queueAnswer(question, e.target.value)}
                       />
                       <p className="mt-1 flex items-center gap-1 text-[11px] text-secondary">
-                        <ShieldCheck size={11} /> Encrypted immediately. Seen only by your assigned CA.
+                        <ShieldCheck size={11} /> Used by the team handling your case.
                       </p>
                     </div>
                   );
@@ -306,6 +359,9 @@ function IntakeContent() {
                 <button disabled={saving} className="btn-primary w-full py-2.5 text-sm">
                   {saving ? "Saving..." : "Continue to Document Upload"}
                 </button>
+                <p className={`text-center text-xs ${saveStatus === "error" ? "text-amber-400" : "text-secondary"}`}>
+                  {saveStatus === "saving" ? "Saving your progress…" : saveStatus === "saved" ? "Progress saved" : saveStatus === "error" ? "Connection interrupted — we'll retry when you continue." : "Answers save automatically."}
+                </p>
               </form>
             )}
           </div>

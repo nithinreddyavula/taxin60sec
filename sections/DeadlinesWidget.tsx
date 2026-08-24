@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { DeadlinesService, Deadline } from "@/services/deadlines-service";
+import { track } from "@/lib/analytics";
 
 function urgencyColor(days: number) {
   if (days <= 5) return "text-red-500";
@@ -24,6 +25,8 @@ export default function DeadlinesWidget() {
 
   async function subscribe() {
     if (!phone.trim()) return;
+    if (!/^\+?[1-9]\d{7,14}$/.test(phone.replace(/[\s-]/g, ""))) { toast.error("Enter a valid WhatsApp number with country code"); return; }
+    track("deadline_subscription_started");
     setSubscribing(true);
     try {
       await DeadlinesService.subscribe(phone.trim());

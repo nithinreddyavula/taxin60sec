@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Building2, Plus, X } from "lucide-react";
-import { BusinessService, BusinessProfileRequest, BusinessType, BusinessStatus } from "@/services/business-service";
+import { BusinessService, CommandCenter as CommandCenterData, BusinessProfileRequest, BusinessType, BusinessStatus } from "@/services/business-service";
 
 const statusColor: Record<string, string> = {
   ACTIVE: "bg-emerald-400/15 text-emerald-200",
@@ -32,7 +32,7 @@ const emptyForm: BusinessProfileRequest = {
 };
 
 export default function CommandCenter() {
-  const [data, setData] = useState<{ totalEntities: number; entities: any[] } | null>(null);
+  const [data, setData] = useState<CommandCenterData | null>(null);
   const [error, setError] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<BusinessProfileRequest>(emptyForm);

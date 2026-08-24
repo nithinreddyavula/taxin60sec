@@ -23,12 +23,13 @@ export default function NoticesPage() {
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<(typeof TABS)[number]>("All");
 
-  function load() {
-    setLoading(true);
-    NoticeService.list().then((res) => setNotices(res.items)).finally(() => setLoading(false));
-  }
-
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    let active = true;
+    NoticeService.list()
+      .then((res) => { if (active) setNotices(res.items); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, []);
 
   async function markRead(id: number) {
     await NoticeService.markRead(id);

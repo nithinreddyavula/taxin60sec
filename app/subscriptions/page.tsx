@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Building2, Calendar, ChevronDown, ChevronUp, IndianRupee, Plus, Repeat } from "lucide-react";
+import { Building2, Calendar, ChevronDown, ChevronUp, Plus, Repeat } from "lucide-react";
 import AppShell from "@/components/AppShell";
 import { SubscriptionService, Subscription, SubscriptionPlan } from "@/services/subscription-service";
 import { BusinessService, BusinessProfile, BusinessType } from "@/services/business-service";

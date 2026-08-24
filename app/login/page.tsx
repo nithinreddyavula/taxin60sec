@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AuthService } from "@/services/auth-service";
 import { useAppSession } from "@/components/AppProviders";
+import { track } from "@/lib/analytics";
 
 function LoginContent() {
   const router = useRouter();
@@ -20,10 +21,12 @@ function LoginContent() {
     if (loading) return; // guard against double-click / double-submit
     setLoading(true);
     setMessage("");
+    track("login_started");
 
     try {
       const auth = await AuthService.login(email, password);
       setSession(auth);
+      track("login_completed");
 
       const next = params.get("next");
       if (next) {

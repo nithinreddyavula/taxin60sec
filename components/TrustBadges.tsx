@@ -1,12 +1,12 @@
-import { FileCheck2, Globe2, Headphones, ShieldCheck, Star, Trophy } from "lucide-react";
+import { FileCheck2, Globe2, Headphones, ShieldCheck, UserCheck2, MessageCircle } from "lucide-react";
 
 const trustPoints = [
-  { icon: FileCheck2, value: "50,000+", label: "Documents Processed" },
-  { icon: Star, value: "4.9/5", label: "Google Rating", stars: true },
-  { icon: Trophy, value: "98%", label: "Cases Completed On Time" },
-  { icon: ShieldCheck, value: "100%", label: "Secure & Encrypted" },
-  { icon: Globe2, value: "15+", label: "Years Experience" },
-  { icon: Headphones, value: "PAN India", label: "Support" },
+  { icon: FileCheck2, value: "Guided", label: "Document collection" },
+  { icon: UserCheck2, value: "CA", label: "Review before filing" },
+  { icon: ShieldCheck, value: "Private", label: "Case workspace" },
+  { icon: Globe2, value: "India", label: "Tax and compliance" },
+  { icon: MessageCircle, value: "WhatsApp", label: "Status updates" },
+  { icon: Headphones, value: "Human", label: "Support when needed" },
 ];
 
 export default function TrustBadges() {
@@ -27,13 +27,6 @@ export default function TrustBadges() {
                 </div>
                 <div>
                   <p className="text-sm font-bold text-white">{point.value}</p>
-                  {point.stars && (
-                    <div className="mt-0.5 flex items-center justify-center gap-0.5 text-amber-400">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} size={9} fill="currentColor" />
-                      ))}
-                    </div>
-                  )}
                   <p className="mt-0.5 text-[11px] text-secondary">{point.label}</p>
                 </div>
               </div>

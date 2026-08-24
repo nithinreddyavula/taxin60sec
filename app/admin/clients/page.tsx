@@ -17,15 +17,17 @@ export default function AdminClientsPage() {
   const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
+    let active = true;
     AdminService.clients(search, page, 20)
       .then((res) => {
+        if (!active) return;
         setClients(res.items);
         setTotalPages(res.totalPages);
         setTotalElements(res.totalElements);
       })
-      .catch(() => setClients([]))
-      .finally(() => setLoading(false));
+      .catch(() => { if (active) setClients([]); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
   }, [search, page]);
 
   async function handleExport() {

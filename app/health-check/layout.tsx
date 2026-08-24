@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Free Tax Health Check",
   description:
-    "Answer 12 quick questions and get your personalized Tax Health Score in under 2 minutes — free, AI-powered, no card required.",
+    "Answer a few questions tailored to your situation and get a personalized Tax Health Score — free, AI-powered, no card required.",
+  alternates: { canonical: "/health-check" },
 };
 
 export default function HealthCheckLayout({

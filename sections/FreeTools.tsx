@@ -7,12 +7,7 @@ import {
   Activity,
   Lock,
   MessageCircle,
-  CalendarClock,
   Calculator,
-  Home,
-  Receipt,
-  Percent,
-  FileDown,
   type LucideIcon,
 } from "lucide-react";
 
@@ -27,15 +22,10 @@ const HIGHLIGHTS: Highlight[] = [
   { icon: MessageCircle, title: "WhatsApp Updates", copy: "At Every Stage" },
 ];
 
-type Tool = { icon: LucideIcon; title: string; tone: string };
+type Tool = { icon: LucideIcon; title: string; tone: string; href: string };
 
 const TOOLS: Tool[] = [
-  { icon: CalendarClock, title: "This Month's Tax Deadlines", tone: "bg-violet-500/15 text-violet-300" },
-  { icon: Calculator, title: "Tax Calculator", tone: "bg-blue-500/15 text-blue-300" },
-  { icon: Home, title: "HRA Calculator", tone: "bg-emerald-500/15 text-emerald-300" },
-  { icon: Receipt, title: "GST Calculator", tone: "bg-teal-500/15 text-teal-300" },
-  { icon: Percent, title: "Income Tax Calculator", tone: "bg-rose-500/15 text-rose-300" },
-  { icon: FileDown, title: "Free Tax Saving Guide (PDF)", tone: "bg-pink-500/15 text-pink-300" },
+  { icon: Calculator, title: "Income Tax Calculator", tone: "bg-blue-500/15 text-blue-300", href: "/tools" },
 ];
 
 export default function FreeTools() {
@@ -64,8 +54,8 @@ export default function FreeTools() {
         </div>
 
         <div className="mt-10 flex items-center justify-end">
-          <Link href="/services" className="flex items-center gap-1 text-sm font-semibold text-emerald-400 transition hover:text-emerald-300">
-            View All Resources
+          <Link href="/tools" className="flex items-center gap-1 text-sm font-semibold text-emerald-400 transition hover:text-emerald-300">
+            Open free tools
             <ArrowRight size={14} />
           </Link>
         </div>
@@ -76,7 +66,7 @@ export default function FreeTools() {
             return (
               <Link
                 key={tool.title}
-                href="/services"
+                href={tool.href}
                 className="card-dark flex flex-col items-start gap-3 p-4 transition hover:-translate-y-0.5 hover:border-emerald-400/30"
               >
                 <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${tool.tone}`}>

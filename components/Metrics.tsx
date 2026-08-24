@@ -1,34 +1,22 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { BadgeCheck, Clock3, ShieldCheck, Star, Users } from "lucide-react";
-import { StatsService } from "@/services/stats-service";
+import { BadgeCheck, Clock3, ShieldCheck, UserCheck2, Users } from "lucide-react";
 
 export default function Metrics() {
-  const dashboardQuery = useQuery({
-    queryKey: ["public-dashboard-stats"],
-    queryFn: () => StatsService.dashboard(),
-    staleTime: 5 * 60 * 1000,
-    retry: false,
-  });
-
-  const clients = dashboardQuery.data?.totalClients;
-  const complianceRate = dashboardQuery.data?.complianceRatePercentage;
-
   const metrics = [
     {
       icon: Users,
-      value: clients && clients > 0 ? `${clients}+` : "New",
-      label: "Happy Customers",
+      value: "Built for",
+      label: "Individuals and businesses",
     },
     {
       icon: ShieldCheck,
-      value: complianceRate != null ? `${complianceRate}%` : "98%",
-      label: "On-time Compliance",
+      value: "Secure",
+      label: "Case access controls",
     },
-    { icon: Star, value: "4.8/5", label: "Customer Rating" },
-    { icon: BadgeCheck, value: "15+", label: "Years of Experience" },
-    { icon: Clock3, value: "CA", label: "Expert Support" },
+    { icon: UserCheck2, value: "CA-led", label: "Review when required" },
+    { icon: BadgeCheck, value: "Clear", label: "Case status and next steps" },
+    { icon: Clock3, value: "Ongoing", label: "Deadline reminders" },
   ];
 
   return (

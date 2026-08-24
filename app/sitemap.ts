@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { BLOG_POSTS } from "@/lib/blog-posts";
 
 const BASE_URL = "https://tax60sec.com";
 
@@ -9,17 +10,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/services",
     "/services/gst-filling",
     "/health-check",
-    "/tax-health",
     "/nri/repatriation",
     "/contact",
     "/ca-apply",
     "/blog",
+    "/tools",
   ];
 
-  return staticRoutes.map((route) => ({
+  return [...staticRoutes.map((route) => ({
     url: `${BASE_URL}${route}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: route === "" ? 1 : 0.7,
-  }));
+  })), ...BLOG_POSTS.map((post) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }))];
 }

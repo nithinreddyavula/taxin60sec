@@ -11,6 +11,14 @@ export const client = axios.create({
   withCredentials: true,
 });
 
+client.interceptors.request.use((config) => {
+  if (typeof window !== "undefined" && config.url?.startsWith("/api/v1/public/intake/cases/")) {
+    const intakeToken = window.sessionStorage.getItem("tax60-intake-resume-token");
+    if (intakeToken) config.headers.set("X-Intake-Token", intakeToken);
+  }
+  return config;
+});
+
 let refreshInFlight: Promise<void> | null = null;
 
 function doRefresh(): Promise<void> {

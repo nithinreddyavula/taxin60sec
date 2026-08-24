@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, Copy, MessageCircle, Users } from "lucide-react";
+import { track } from "@/lib/analytics";
 
 interface ReferralShareBlockProps {
   referralCode: string;
@@ -16,7 +17,7 @@ export default function ReferralShareBlock({
   referralShareUrl,
   referredCount,
   title = "Know someone stressed about taxes?",
-  description = "Send them your link. When they file with Tax60, you both get rewarded.",
+  description = "Send them your link so their case can be connected to your referral.",
 }: ReferralShareBlockProps) {
   const [copied, setCopied] = useState(false);
 
@@ -24,6 +25,7 @@ export default function ReferralShareBlock({
     try {
       await navigator.clipboard.writeText(referralShareUrl);
       setCopied(true);
+      track("referral_shared", { channel: "copy" });
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       console.error("Failed to copy referral link:", error);
@@ -59,6 +61,7 @@ export default function ReferralShareBlock({
         <a
           href={`https://wa.me/?text=${waText}`}
           target="_blank"
+          onClick={() => track("referral_shared", { channel: "whatsapp" })}
           rel="noopener noreferrer"
           className="btn-secondary flex flex-1 items-center justify-center gap-2"
         >
