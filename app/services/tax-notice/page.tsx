@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import Navbar from "@/components/Navbar"; import Footer from "@/components/Footer"; import ServiceLanding from "@/components/ServiceLanding";
+export const metadata: Metadata = { title: "Tax notice support: organise your next step", description: "Use TaxIn60Sec to organise a tax-notice related case and understand what information is needed next.", alternates: { canonical: "/services/tax-notice" } };
+const config = { title: "Received a tax notice? Start by organising the facts.", intro: "Do not rely on a generic checklist when a notice needs attention. Start a guided journey so the relevant details and documents can stay with the case.", category: "COMPLIANCE", codeHints: ["NOTICE"], forWho: ["People who have received a tax-related notice", "People who need help understanding what information to organise", "Existing customers following a case update"], tool: { href: "/health-check", label: "Find your next step" } };
+export default function Page() { return <main><Navbar /><ServiceLanding config={config} /><Footer /></main>; }

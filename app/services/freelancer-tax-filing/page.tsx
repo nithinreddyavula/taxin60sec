@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import Navbar from "@/components/Navbar"; import Footer from "@/components/Footer"; import ServiceLanding from "@/components/ServiceLanding";
+export const metadata: Metadata = { title: "Freelancer tax filing: a clearer next step", description: "A practical starting point for freelancers with ITR, advance-tax, and GST questions.", alternates: { canonical: "/services/freelancer-tax-filing" } };
+const config = { title: "Freelancer tax filing, with a clearer starting point", intro: "When fees, TDS, expenses and GST questions overlap, a generic service menu is not enough. Start with the parts that apply to you.", category: "INCOME_TAX", codeHints: ["ITR", "INCOME"], forWho: ["Independent professionals and consultants", "Creators and self-employed people", "Freelancers unsure whether GST or advance tax affects them"], tool: { href: "/tools", label: "Estimate income tax" } };
+export default function Page() { return <main><Navbar /><ServiceLanding config={config} /><Footer /></main>; }

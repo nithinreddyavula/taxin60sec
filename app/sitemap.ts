@@ -9,12 +9,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/services",
     "/services/gst-filling",
+    "/services/itr-filing",
+    "/services/nri-tax-filing",
+    "/services/freelancer-tax-filing",
+    "/services/gst-registration",
+    "/services/tax-notice",
     "/health-check",
     "/nri/repatriation",
     "/contact",
     "/ca-apply",
     "/blog",
     "/tools",
+    "/deadlines",
   ];
 
   return [...staticRoutes.map((route) => ({

@@ -1,17 +1,18 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhyChooseUs from "@/sections/WhyChooseUs";
+import BusinessIdentity from "@/components/BusinessIdentity";
 
 export const metadata = {
   title: "About Us",
   description:
-    "TaxIn60Sec helps startups, founders and businesses simplify taxation, GST, and compliance with AI-powered clarity and verified Chartered Accountants.",
+    "TaxIn60Sec helps people and businesses start tax and compliance work from their situation, then keep their case organised.",
 };
 
 const values = [
-  ["CA-Reviewed", "Every filing checked by a verified Chartered Accountant"],
-  ["AI + Human", "AI narrows down what you need, a real CA handles it"],
-  ["Pan-India", "100% online, no office visits required"],
+  ["Start with context", "A short rule-based check helps clarify what needs attention."],
+  ["Structured case journey", "Intake, documents and case updates stay in one place."],
+  ["Support when needed", "Use the available service and support paths rather than a scattered chat."],
 ];
 
 export default function AboutPage() {
@@ -49,6 +50,7 @@ export default function AboutPage() {
       </section>
 
       <WhyChooseUs />
+      <section className="pb-14"><div className="container-main max-w-3xl"><BusinessIdentity /></div></section>
       <Footer />
     </main>
   );

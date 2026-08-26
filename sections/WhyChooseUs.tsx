@@ -5,17 +5,16 @@ import { CheckCircle2, Lock, ShieldCheck } from "lucide-react";
 import { StatsService } from "@/services/stats-service";
 
 const points = [
-  "AI-powered tax health monitoring",
-  "Verified CA team reviews every filing",
-  "Proactive alerts & deadline reminders",
-  "End-to-end support & notice handling",
-  "Transparent pricing. No hidden charges",
+  "A rule-based health check gives you a clearer first step",
+  "Structured intake keeps service details together",
+  "Deadline and case-status views provide useful return paths",
+  "Pricing and estimated time are shown from the service catalog when available",
 ];
 
 const security = [
-  "Bank-grade encryption on every document you upload",
-  "You control who can view or download your files",
-  "No document is shared without your explicit consent",
+  "Document access is controlled through authenticated case and vault permissions",
+  "Uploads stay outside public web routes",
+  "Your case workspace shows what is needed next",
 ];
 
 export default function WhyChooseUs() {
@@ -70,8 +69,8 @@ export default function WhyChooseUs() {
                 <p className="text-xs text-secondary">Compliance Rate</p>
               </div>
               <div>
-                <p className="font-bold text-white">24/7</p>
-                <p className="text-xs text-secondary">Monitoring</p>
+                <p className="font-bold text-white">Case-based</p>
+                <p className="text-xs text-secondary">Guidance</p>
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { BadgeCheck, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 
 const items = [
   {
@@ -11,23 +11,13 @@ const items = [
     title: "Phone",
     value: "+91 7013734079",
   },
-  {
-    icon: MapPin,
-    title: "Registered Office",
-    value: "[Your full registered office address, city, state, PIN code]",
-  },
-  {
-    icon: BadgeCheck,
-    title: "ICAI Firm Registration No.",
-    value: "[Your ICAI Firm Registration Number]",
-  },
 ];
 
 export default function ContactInfo() {
   return (
     <section className="section-space">
       <div className="container-main">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           {items.map((item) => {
             const Icon = item.icon;
 

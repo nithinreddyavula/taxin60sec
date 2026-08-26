@@ -33,7 +33,7 @@ export default function ReferralShareBlock({
   }
 
   const waText = encodeURIComponent(
-    `I've been using Tax60Sec for my taxes. Use my referral link and we both save! 🎉\n\n${referralShareUrl}`
+    `I found Tax60Sec useful for getting my tax work organised. You can start with this link:\n\n${referralShareUrl}`
   );
 
   return (

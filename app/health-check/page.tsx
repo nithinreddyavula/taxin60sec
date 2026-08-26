@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
-import { User, Briefcase, Globe, Building2, CheckCircle2, ArrowRight, Check } from "lucide-react";
+import { User, Briefcase, Globe, Building2, CheckCircle2, ArrowRight, Check, Copy, MessageCircle, Share2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
@@ -51,6 +51,13 @@ const STEPS = [
 ];
 
 const SECONDS_PER_QUESTION = 15;
+
+const PROFILE_SUMMARIES: Record<string, { situation: string; areas: string[]; documents: string[]; tool?: string }> = {
+  INDIVIDUAL: { situation: "You told us you are filing as an individual.", areas: ["Income-tax return status", "Advance-tax timing where applicable"], documents: ["Identity and tax details requested by your selected case", "Income records relevant to the service you select"], tool: "Income tax calculator" },
+  FREELANCER: { situation: "You told us you earn as a freelancer or self-employed professional.", areas: ["Income-tax return status", "Advance-tax timing", "GST status where applicable"], documents: ["Income and expense information requested for your case", "GST information where it applies"], tool: "Income tax calculator" },
+  BUSINESS: { situation: "You told us you are representing a business.", areas: ["GST return status", "TDS compliance", "ROC filing status"], documents: ["Business and compliance records requested for your case", "GST, TDS or ROC information where it applies"] },
+  NRI: { situation: "You told us you are an NRI with Indian tax questions.", areas: ["Indian ITR status", "NRE/NRO account declarations", "Repatriation forms where applicable"], documents: ["Indian-income details requested for your case", "NRE/NRO or repatriation information where it applies"] },
+};
 
 function ScoreGauge({ score }: { score: number }) {
   const radius = 54;
@@ -121,12 +128,47 @@ export default function HealthCheckPage() {
       const res = await HealthCheckService.evaluate(userType, answers);
       setResult(res);
       setStep("results");
+      // Save the anonymous result so a later intake can be associated with the
+      // guidance the visitor saw. This is deliberately best-effort: viewing a
+      // result never depends on lead capture succeeding.
+      HealthCheckService.captureLead(userType, res)
+        .then((lead) => localStorage.setItem("tax60-health-check-lead-id", String(lead.id)))
+        .catch(() => undefined);
       track("health_check_completed", { user_type: userType, issues: res.issues.length });
     } catch {
       toast.error("Unable to run the check right now");
     } finally {
       setLoading(false);
     }
+  }
+
+  async function shareCheck() {
+    const url = `${window.location.origin}/health-check`;
+    const text = "Not sure what tax service you need? This short tax check gives you a useful starting point.";
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "TaxIn60Sec tax health check", text, url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        toast.success("Health check link copied");
+      }
+      track("health_check_shared");
+    } catch {
+      // A visitor cancelling the native share sheet is not an error state.
+    }
+  }
+
+  async function copyCheckLink() {
+    await navigator.clipboard.writeText(`${window.location.origin}/health-check`);
+    toast.success("Health check link copied");
+    track("health_check_shared", { channel: "copy" });
+  }
+
+  function whatsappShare() {
+    const url = `${window.location.origin}/health-check`;
+    const text = encodeURIComponent(`Not sure what tax service you need? This short TaxIn60Sec check gives you a useful starting point.\n\n${url}`);
+    window.open(`https://wa.me/?text=${text}`, "_blank", "noopener,noreferrer");
+    track("health_check_shared", { channel: "whatsapp" });
   }
 
   async function captureResults() {
@@ -175,6 +217,7 @@ export default function HealthCheckPage() {
   }, [result]);
 
   const isGoodNews = !!result && result.issues.length <= 2 && result.score >= 60;
+  const profileSummary = PROFILE_SUMMARIES[userType];
 
   return (
     <main className="min-h-screen">
@@ -219,7 +262,7 @@ export default function HealthCheckPage() {
                 Let&apos;s Check Your Tax Health
               </h1>
               <p className="mt-2 text-center text-secondary">
-                Answer a few simple questions. It&apos;s free!
+                Answer a few simple questions to see what needs attention. It&apos;s free.
               </p>
 
               <p className="mt-8 mb-3 text-sm font-semibold text-slate-200">
@@ -247,7 +290,7 @@ export default function HealthCheckPage() {
               </div>
 
               <p className="mt-6 text-center text-xs text-secondary">
-                Takes less than 2 minutes · 100% secure, your data is safe with us
+                Usually takes about a minute · You can view guidance before sharing contact details
               </p>
             </div>
           )}
@@ -423,6 +466,16 @@ export default function HealthCheckPage() {
                   </div>
                 </div>
               )}
+
+              {profileSummary && <div className="card-dark p-6"><p className="eyebrow">Your situation</p><h2 className="mt-2 text-xl font-bold text-white">A clearer picture of what may apply</h2><p className="mt-2 text-sm text-secondary">{profileSummary.situation} This free check is general guidance, not professional tax advice.</p><div className="mt-5 grid gap-4 sm:grid-cols-2"><div><p className="font-semibold text-white">What may apply</p><ul className="mt-2 space-y-2">{profileSummary.areas.map((area) => <li key={area} className="flex gap-2 text-sm text-secondary"><CheckCircle2 size={15} className="mt-0.5 shrink-0 text-emerald-400" />{area}</li>)}</ul></div><div><p className="font-semibold text-white">You may need</p><ul className="mt-2 space-y-2">{profileSummary.documents.map((document) => <li key={document} className="flex gap-2 text-sm text-secondary"><CheckCircle2 size={15} className="mt-0.5 shrink-0 text-emerald-400" />{document}</li>)}</ul>{profileSummary.tool && <a href="/tools" className="mt-4 inline-block text-sm font-semibold text-emerald-400">Open the {profileSummary.tool} <ArrowRight className="inline" size={14} /></a>}</div></div></div>}
+
+              <div className="card-dark p-5">
+                <div>
+                  <p className="font-semibold text-white">Know someone who is unsure where to start?</p>
+                  <p className="mt-1 text-sm text-secondary">Send them this free check. It helps them understand their own situation first.</p>
+                </div>
+                <div className="mt-4 flex flex-col gap-2 sm:flex-row"><button onClick={shareCheck} className="btn-secondary"><Share2 size={16} /> Share</button><button onClick={whatsappShare} className="btn-secondary"><MessageCircle size={16} /> WhatsApp</button><button onClick={copyCheckLink} className="btn-secondary"><Copy size={16} /> Copy link</button></div>
+              </div>
 
               {!captured && (
                 <div className="card-dark p-6">

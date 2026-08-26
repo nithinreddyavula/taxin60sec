@@ -3,9 +3,9 @@ import { Info } from "lucide-react";
 type Props = {
   label?: string;
   basePrice: number;
-  /** Flat platform fee in INR. Defaults to ₹49 to match the rest of the product. */
+  /** Optional owner-configured fee; omitted until this has been verified. */
   platformFee?: number;
-  /** GST rate as a decimal. Defaults to 18%, the standard rate for professional services in India. */
+  /** Optional owner-configured rate; omitted until confirmed for the service. */
   gstRate?: number;
 };
 
@@ -18,17 +18,17 @@ function formatInr(value: number) {
 export default function PriceBreakdown({
   label = "Base Filing",
   basePrice,
-  platformFee = 49,
-  gstRate = 0.18,
+  platformFee,
+  gstRate,
 }: Props) {
-  const taxableAmount = basePrice + platformFee;
-  const gst = Math.round(taxableAmount * gstRate);
+  const taxableAmount = basePrice + (platformFee ?? 0);
+  const gst = gstRate === undefined ? 0 : Math.round(taxableAmount * gstRate);
   const total = taxableAmount + gst;
 
   const rows = [
     { name: label, value: basePrice },
-    { name: "Platform Fee", value: platformFee },
-    { name: `GST (${Math.round(gstRate * 100)}%)`, value: gst },
+    ...(platformFee === undefined ? [] : [{ name: "Platform Fee", value: platformFee }]),
+    ...(gstRate === undefined ? [] : [{ name: `GST (${Math.round(gstRate * 100)}%)`, value: gst }]),
   ];
 
   return (
@@ -49,11 +49,7 @@ export default function PriceBreakdown({
 
       <div className="mt-4 flex items-start gap-2 rounded-xl border border-white/8 bg-white/[0.02] p-3 text-xs text-secondary">
         <Info size={14} className="mt-0.5 shrink-0 text-emerald-400" />
-        <p>
-          Why does another user pay a different amount? Pricing scales with income
-          complexity — different forms, capital gains, or number of income sources
-          can change the base filing fee.
-        </p>
+        <p>This is the configured starting price. Any applicable taxes, additional work, or final price should be confirmed before payment.</p>
       </div>
     </div>
   );

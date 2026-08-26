@@ -23,9 +23,10 @@ export default function PaymentsPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("All Status");
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    PaymentHistoryService.list().then((res) => setPayments(res.items)).finally(() => setLoading(false));
+    PaymentHistoryService.list().then((res) => setPayments(res.items)).catch(() => setError(true)).finally(() => setLoading(false));
   }, []);
 
   const totalPaid = useMemo(
@@ -56,7 +57,8 @@ export default function PaymentsPage() {
 
           <div className="card-dark mt-4 overflow-x-auto p-0">
             {loading && <div className="h-40 animate-pulse" />}
-            {!loading && filtered.length === 0 && <p className="p-6 text-sm text-secondary">No payments yet.</p>}
+            {!loading && error && <div className="p-6"><p className="font-semibold text-white">Your payments couldn&apos;t be loaded.</p><p className="mt-1 text-sm text-secondary">No payment has been changed. Try again shortly or contact support if you need help.</p><button onClick={() => window.location.reload()} className="btn-secondary mt-4">Try again</button></div>}
+            {!loading && !error && filtered.length === 0 && <p className="p-6 text-sm text-secondary">No payments yet.</p>}
             {!loading && filtered.length > 0 && (
               <table className="w-full text-left text-sm">
                 <thead>

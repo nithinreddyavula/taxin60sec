@@ -37,12 +37,11 @@ export default function ServicesPage() {
             </p>
 
             <h1 className="mt-3 text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
-              Complete Finance & Tax Solutions
+              Find the right tax or compliance service
             </h1>
 
             <p className="mt-4 text-secondary text-lg leading-8">
-              Professional consulting and compliance support
-              for modern businesses.
+              Start with a clear service, understand what happens next, and keep your documents and case progress in one place.
             </p>
 
           </div>

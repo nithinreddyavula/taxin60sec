@@ -64,11 +64,12 @@ function includedFeaturesList(service: ServiceOffering): string[] {
 export default function ServiceCards() {
   const [services, setServices] = useState<ServiceOffering[]>([]);
   const [loading, setLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     OnboardingService.services()
       .then((response) => setServices(response.items))
-      .catch(() => setServices([]))
+      .catch(() => { setServices([]); setFailed(true); })
       .finally(() => setLoading(false));
   }, []);
 
@@ -78,6 +79,18 @@ export default function ServiceCards() {
         {[...Array(6)].map((_, i) => (
           <div key={i} className="card-dark h-56 animate-pulse p-6" />
         ))}
+      </div>
+    );
+  }
+
+  if (services.length === 0) {
+    return (
+      <div className="card-dark mt-8 flex flex-col items-start justify-between gap-4 p-6 sm:flex-row sm:items-center">
+        <div>
+          <p className="font-semibold text-white">{failed ? "Services are temporarily unavailable." : "Not sure which service fits?"}</p>
+          <p className="mt-1 text-sm text-secondary">{failed ? "Start with the free tax health check while the service catalog is restored." : "Start with the free tax health check for a clear next step."}</p>
+        </div>
+        <Link href="/health-check" className="btn-primary shrink-0">Check my tax situation <ArrowRight size={16} /></Link>
       </div>
     );
   }

@@ -33,7 +33,7 @@ function ConfirmContent() {
 
         <h1 className="mt-6 text-3xl font-bold">Great Choice!</h1>
         <p className="mt-2 text-secondary">
-          Let&apos;s get started with fixing your tax compliance.
+          Let&apos;s get started with a structured tax or compliance case.
         </p>
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
@@ -61,8 +61,8 @@ function ConfirmContent() {
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/5">
               <FileText className="h-6 w-6 text-emerald-400" />
             </div>
-            <p className="text-sm font-semibold">We Assign Your CA</p>
-            <p className="text-xs text-secondary">Our expert CA will review and take it forward</p>
+            <p className="text-sm font-semibold">Follow your case</p>
+            <p className="text-xs text-secondary">See requested documents and progress in one place</p>
           </div>
         </div>
 
@@ -71,7 +71,7 @@ function ConfirmContent() {
         </button>
 
         <p className="mt-4 flex items-center justify-center gap-2 text-xs text-secondary">
-          🔒 100% Secure. Your data is safe with us.
+          Your case details are collected only as you continue through the intake.
         </p>
 
         {!user && (

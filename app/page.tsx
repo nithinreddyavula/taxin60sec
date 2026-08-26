@@ -12,6 +12,13 @@ import FreeTools from "@/sections/FreeTools";
 import DeadlinesWidget from "@/sections/DeadlinesWidget";
 
 export default function HomePage() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Organization", name: "TaxIn60Sec", url: "https://tax60sec.com" },
+      { "@type": "WebSite", name: "TaxIn60Sec", url: "https://tax60sec.com" },
+    ],
+  };
   return (
     <>
       <Navbar />
@@ -30,6 +37,7 @@ export default function HomePage() {
       <Footer />
 
       <WhatsAppButton />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     </>
   );
 }

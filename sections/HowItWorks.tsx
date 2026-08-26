@@ -1,14 +1,10 @@
 type Step = { title: string; copy: string };
 
 const steps: Step[] = [
-  { title: "Answer Simple Questions", copy: "(2 Minutes)" },
-  { title: "AI Understands Your Situation", copy: "" },
-  { title: "Get Personalized Recommendations", copy: "" },
-  { title: "Choose the Right Service", copy: "" },
-  { title: "Upload Documents", copy: "" },
-  { title: "CA Reviews & Verifies", copy: "" },
-  { title: "Track Progress Live", copy: "" },
-  { title: "Work Completed", copy: "" },
+  { title: "Check your situation", copy: "A few plain-language questions" },
+  { title: "See what applies", copy: "A clear next step before you commit" },
+  { title: "Start a guided case", copy: "Documents and details stay together" },
+  { title: "Follow the progress", copy: "Return for case updates and deadlines" },
 ];
 
 export default function HowItWorks() {
@@ -16,7 +12,8 @@ export default function HowItWorks() {
     <section className="section-space">
       <div className="container-main">
         <div className="section-header">
-          <h2 className="section-title">What Happens Next?</h2>
+          <p className="eyebrow">A clear path, not a sales call</p>
+          <h2 className="section-title mt-3">From “I’m not sure” to an organised next step.</h2>
         </div>
 
         <div className="mt-8 grid grid-cols-2 gap-x-2 gap-y-8 sm:grid-cols-4 lg:flex lg:items-start lg:justify-between">

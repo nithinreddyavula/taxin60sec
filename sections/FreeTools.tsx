@@ -1,25 +1,13 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  Sparkles,
-  UserCheck2,
-  ShieldCheck,
-  Activity,
-  Lock,
-  MessageCircle,
-  Calculator,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowRight, BellRing, Calculator, ClipboardCheck, Share2, type LucideIcon } from "lucide-react";
 
 type Highlight = { icon: LucideIcon; title: string; copy: string };
 
 const HIGHLIGHTS: Highlight[] = [
-  { icon: Sparkles, title: "AI Identifies", copy: "What You Actually Need" },
-  { icon: UserCheck2, title: "Expert CA", copy: "Verifies Every Case" },
-  { icon: ShieldCheck, title: "Transparent Pricing", copy: "Before You Pay" },
-  { icon: Activity, title: "Live Progress", copy: "Tracking" },
-  { icon: Lock, title: "Secure Document", copy: "Vault" },
-  { icon: MessageCircle, title: "WhatsApp Updates", copy: "At Every Stage" },
+  { icon: ClipboardCheck, title: "Tax health check", copy: "Find a sensible starting point" },
+  { icon: Calculator, title: "Tax calculator", copy: "Compare a simple estimate" },
+  { icon: BellRing, title: "Deadline reminders", copy: "Keep key dates visible" },
+  { icon: Share2, title: "Easy to share", copy: "Send a useful starting point" },
 ];
 
 type Tool = { icon: LucideIcon; title: string; tone: string; href: string };
@@ -33,10 +21,12 @@ export default function FreeTools() {
     <section className="section-space">
       <div className="container-main">
         <div className="section-header">
-          <h2 className="section-title">Free Tools &amp; Tax60?</h2>
+          <p className="eyebrow">Useful before you are ready to file</p>
+          <h2 className="section-title mt-3">Free tax tools and reminders</h2>
+          <p className="section-copy mt-3">Use a calculator, check deadlines, or share a useful starting point with someone who needs tax help.</p>
         </div>
 
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {HIGHLIGHTS.map((item) => {
             const Icon = item.icon;
             return (
@@ -60,7 +50,7 @@ export default function FreeTools() {
           </Link>
         </div>
 
-        <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {TOOLS.map((tool) => {
             const Icon = tool.icon;
             return (

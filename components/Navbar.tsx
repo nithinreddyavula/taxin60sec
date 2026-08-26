@@ -44,7 +44,7 @@ export default function Navbar() {
                 Tax60
               </span>
               <span className="hidden whitespace-nowrap text-[10px] font-medium text-secondary sm:flex sm:items-center sm:gap-1">
-                AI Powered. CA Verified.
+                Guided tax and compliance support
                 <span className="text-emerald-400">&#10003;</span>
               </span>
             </div>
@@ -78,9 +78,11 @@ export default function Navbar() {
               )}
             </div>
 
-            <Link href="/services" className="transition hover:text-white">
-              Pricing
+            <Link href="/tools" className="transition hover:text-white">
+              Tools
             </Link>
+
+            <Link href="/deadlines" className="transition hover:text-white">Deadlines</Link>
 
             <Link href="/cases" className="transition hover:text-white">
               Track Case
@@ -162,8 +164,11 @@ export default function Navbar() {
               <Link href="/services" className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5" onClick={() => setIsOpen(false)}>
                 Services
               </Link>
-              <Link href="/services" className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5" onClick={() => setIsOpen(false)}>
-                Pricing
+              <Link href="/tools" className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5" onClick={() => setIsOpen(false)}>
+                Tools
+              </Link>
+              <Link href="/deadlines" className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5" onClick={() => setIsOpen(false)}>
+                Deadlines
               </Link>
               <Link href="/cases" className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/5" onClick={() => setIsOpen(false)}>
                 Track Case

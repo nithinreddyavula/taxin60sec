@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import Navbar from "@/components/Navbar"; import Footer from "@/components/Footer"; import ServiceLanding from "@/components/ServiceLanding";
+export const metadata: Metadata = { title: "NRI tax filing and Indian income", description: "Understand your NRI Indian-income tax next step and start a structured TaxIn60Sec case.", alternates: { canonical: "/services/nri-tax-filing" } };
+const config = { title: "NRI tax support for your Indian income", intro: "Indian income, accounts, and filing questions can be difficult to organise from abroad. Start with a short check so your next step reflects your situation.", category: "NRI", codeHints: ["NRI"], forWho: ["NRIs with Indian income", "People with NRE or NRO account questions", "People preparing for an Indian tax or repatriation-related case"], tool: { href: "/health-check", label: "Check your tax situation" } };
+export default function Page() { return <main><Navbar /><ServiceLanding config={config} /><Footer /></main>; }

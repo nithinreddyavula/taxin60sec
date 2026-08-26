@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import Navbar from "@/components/Navbar"; import Footer from "@/components/Footer"; import ServiceLanding from "@/components/ServiceLanding";
+export const metadata: Metadata = { title: "GST registration: understand your next step", description: "Start with your business situation before choosing GST registration support.", alternates: { canonical: "/services/gst-registration" } };
+const config = { title: "GST registration starts with your business situation", intro: "Tell us whether you are operating as a business or freelancer and what needs attention. TaxIn60Sec can guide you to the available GST workflow.", category: "GST", codeHints: ["REGISTRATION", "GST"], forWho: ["New businesses evaluating GST registration", "Freelancers with GST questions", "Businesses preparing to organise their compliance"], tool: { href: "/health-check", label: "Check your tax situation" } };
+export default function Page() { return <main><Navbar /><ServiceLanding config={config} /><Footer /></main>; }

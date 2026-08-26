@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
+import { Mail, Phone, ShieldCheck } from "lucide-react";
 
 const quickLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/services", label: "Pricing" },
+  { href: "/tools", label: "Free Tools" },
+  { href: "/deadlines", label: "Deadlines" },
   { href: "/cases", label: "Track Case" },
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact" },
@@ -28,12 +29,7 @@ const support = [
   { href: "/terms", label: "Terms & Conditions" },
 ];
 
-const socialLinks = [
-  { href: "https://wa.me/917013734079", label: "WhatsApp", initials: "WA" },
-  { href: "#", label: "LinkedIn", initials: "in" },
-  { href: "#", label: "YouTube", initials: "YT" },
-  { href: "#", label: "Instagram", initials: "IG" },
-];
+const socialLinks = [{ href: "https://wa.me/917013734079", label: "WhatsApp", initials: "WA" }];
 
 export default function Footer() {
   return (
@@ -47,12 +43,12 @@ export default function Footer() {
               </div>
               <div>
                 <h2 className="text-xl font-bold tracking-tight text-white">Tax60</h2>
-                <p className="text-[11px] text-secondary">AI Powered. CA Verified.</p>
+                <p className="text-[11px] text-secondary">Guided tax and compliance support</p>
               </div>
             </div>
 
             <p className="mt-4 max-w-sm text-sm leading-6 text-secondary">
-              Your trusted partner for taxation, compliance, and business growth.
+              Start with your situation, then keep your tax work, documents and next steps organised.
             </p>
 
             <div className="mt-4 flex items-center gap-2">
@@ -104,17 +100,13 @@ export default function Footer() {
               <p className="flex items-center gap-2">
                 <Mail size={13} /> compliance@taxin60sec.com
               </p>
-              <p className="flex items-start gap-2">
-                <MapPin size={13} className="mt-0.5 shrink-0" />
-                [Your full registered office address, city, state, PIN code]
-              </p>
             </div>
           </div>
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-secondary sm:flex-row sm:items-center sm:justify-between">
-          <p>Copyright 2026 Tax60Sec. All rights reserved. ICAI Firm Reg. No. [Your Registration Number]</p>
-          <p>Made with love in India</p>
+          <p>Copyright 2026 Tax60Sec. All rights reserved.</p>
+          <p>Tax and compliance support for India.</p>
         </div>
       </div>
     </footer>

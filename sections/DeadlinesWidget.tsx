@@ -40,13 +40,13 @@ export default function DeadlinesWidget() {
   }
 
   return (
-    <section className="section-space">
+    <section id="deadlines" className="section-space scroll-mt-20">
       <div className="container-main">
         <div className="section-header">
           <p className="eyebrow">Free, no signup needed</p>
           <h2 className="section-title mt-3">This Month&apos;s Tax Deadlines</h2>
           <p className="section-copy mt-3">
-            Every Indian business needs this — bookmark it, share it, or get it on WhatsApp free.
+            Check upcoming dates, bookmark this page, or opt in to a monthly WhatsApp reminder.
           </p>
         </div>
 

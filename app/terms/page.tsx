@@ -10,7 +10,7 @@ const sections = [
   {
     heading: "1. Our Services",
     body: [
-      "TaxIn60Sec connects you with a verified Chartered Accountant for income tax filing, GST compliance, company registration, ROC compliance, and related advisory services. The AI Tax Health Check provides a preliminary assessment only — it is not a substitute for professional advice from your assigned CA.",
+      "TaxIn60Sec provides a guided product journey for tax and compliance work: a rule-based health check, service intake, document collection, case tracking, deadlines and support paths. A health-check result is general guidance only; it is not professional tax advice.",
     ],
   },
   {
@@ -23,7 +23,7 @@ const sections = [
   {
     heading: "3. Fees & Payments",
     body: [
-      "Pricing for each service is shown before you confirm an order. [Describe refund/cancellation policy here — e.g. full refund if work has not started, partial refund once a CA has been assigned, no refund after filing is submitted.]",
+      "Service pricing and any estimate shown in the catalog are presented before you proceed. The business has not yet published an approved refund or cancellation policy. Do not rely on an assumed refund outcome; contact support before payment if you need clarification.",
     ],
   },
   {
@@ -35,13 +35,13 @@ const sections = [
   {
     heading: "5. Limitation of Liability",
     body: [
-      "[This section needs a lawyer. At minimum it should state the maximum liability cap, what is and isn't covered — e.g. government-imposed penalties vs. errors caused by TaxIn60Sec — and how disputes are resolved.]",
+      "A complete limitation-of-liability policy has not yet been published. This page is not a substitute for the final legal terms the business must approve with qualified legal counsel.",
     ],
   },
   {
     heading: "6. Governing Law",
     body: [
-      "These terms are governed by the laws of India. Any disputes are subject to the jurisdiction of the courts in [Your City], [Your State].",
+      "The governing-law and jurisdiction provisions will be published once the business has confirmed its legal entity and registered office details.",
     ],
   },
 ];
@@ -57,8 +57,7 @@ export default function TermsPage() {
               <p className="eyebrow">Legal</p>
               <h1 className="section-title mt-3">Terms &amp; Conditions</h1>
               <p className="section-copy mt-3">
-                Last updated: [DD Month YYYY]. By using TaxIn60Sec, you agree to
-                the terms below.
+                This is an interim customer-information page. Final terms require business and legal review before publication.
               </p>
 
               <div className="mt-10 space-y-8">
@@ -78,10 +77,7 @@ export default function TermsPage() {
 
               <div className="card-dark mt-10 p-5">
                 <p className="text-sm leading-6 text-secondary">
-                  This is a starting template, not legal advice. Sections 3 and
-                  5 in particular need a lawyer&apos;s input before this is safe
-                  to rely on — refund terms and liability limits are exactly
-                  where generic templates fail founders.
+                  Owner action required: publish the approved legal entity, registered office, effective date, refund/cancellation policy, liability terms and dispute jurisdiction. Until then, customers should contact support for clarification before paying.
                 </p>
               </div>
             </div>
