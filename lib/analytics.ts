@@ -30,7 +30,8 @@ export type AnalyticsEvent =
   | "referral_reward_earned"
   | "deadline_subscription_started"
   | "application_resume_clicked"
-  | "tool_calculated";
+  | "tool_calculated"
+  | "health_check_shared";
 
 declare global {
   interface Window {
