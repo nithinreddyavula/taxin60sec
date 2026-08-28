@@ -19,7 +19,7 @@ export const DocumentService = {
 
     const response = await client.get(
 
-      `/api/v1/public/intake/cases/${caseId}/documents`
+      `/api/v1/public/intake/cases/${caseId}/documents/required`
 
     );
 

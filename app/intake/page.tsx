@@ -55,11 +55,7 @@ function IntakeContent() {
   useEffect(() => {
     if (!ready) return;
     if (!resumeSessionChecked) return;
-    if (!user && !caseId) {
-      const currentUrl = `${window.location.pathname}${window.location.search}`;
-      router.replace(`/login?next=${encodeURIComponent(currentUrl)}`);
-    }
-  }, [ready, user, router, resumeSessionChecked, caseId]);
+  }, [ready, resumeSessionChecked]);
 
   useEffect(() => {
     const resumeToken = searchParams.get("resume");
@@ -204,7 +200,7 @@ function IntakeContent() {
     }, 650);
   }
 
-  if (!ready || (!user && !caseId)) {
+  if (!ready) {
     return (
       <main className="min-h-screen p-6">
         <div className="mx-auto mt-24 h-40 max-w-xl animate-pulse rounded-2xl bg-white/5" />

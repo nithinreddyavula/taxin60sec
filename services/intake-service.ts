@@ -158,7 +158,7 @@ export const OnboardingService = {
     caseId: number
   ) =>
     request<RequiredDocument[]>(
-      `/api/v1/public/intake/cases/${caseId}/documents`
+      `/api/v1/public/intake/cases/${caseId}/documents/required`
     ),
 
   /*

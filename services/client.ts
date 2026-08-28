@@ -10,6 +10,7 @@ export const client = axios.create({
   // body and never touched by this file. withCredentials makes the browser send
   // those cookies on every request and store the ones the backend sets on login.
   withCredentials: true,
+  withXSRFToken: true,
 });
 
 client.interceptors.request.use((config) => {
