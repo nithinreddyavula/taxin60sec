@@ -2,7 +2,8 @@
 import axios from "axios";
 
 export const client = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080",
+  // Point to the Next.js proxy instead of directly to the backend to ensure SameSite=Lax cookies are sent
+  baseURL: "", 
   headers: { "Content-Type": "application/json" },
   // The backend now issues the access/refresh tokens exclusively as httpOnly
   // cookies (see AuthCookieService on the backend) - they're never in the JSON
@@ -12,9 +13,15 @@ export const client = axios.create({
 });
 
 client.interceptors.request.use((config) => {
-  if (typeof window !== "undefined" && config.url?.startsWith("/api/v1/public/intake/cases/")) {
+  if (typeof window !== "undefined" && config.url && config.url.includes("/api/v1/public/intake/cases/")) {
     const intakeToken = window.sessionStorage.getItem("tax60-intake-resume-token");
-    if (intakeToken) config.headers.set("X-Intake-Token", intakeToken);
+    if (intakeToken) {
+      if (config.headers && typeof config.headers.set === 'function') {
+        config.headers.set("X-Intake-Token", intakeToken);
+      } else if (config.headers) {
+        (config.headers as any)["X-Intake-Token"] = intakeToken;
+      }
+    }
   }
   return config;
 });
@@ -25,7 +32,7 @@ function doRefresh(): Promise<void> {
   if (!refreshInFlight) {
     refreshInFlight = axios
       .post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080"}/api/v1/auth/refresh`,
+        `/api/v1/auth/refresh`,
         {},
         { withCredentials: true }
       )

@@ -139,7 +139,7 @@ export const OnboardingService = {
    */
 
   resumeUrl: (token: string) =>
-    `${process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080"}/api/v1/public/intake/resume/${encodeURIComponent(token)}`,
+    `/api/v1/public/intake/resume/${encodeURIComponent(token)}`,
 
   resumeCurrentSession: () =>
     request<ResumeResponse>("/api/v1/public/intake/resume-session"),
@@ -201,9 +201,7 @@ export const OnboardingService = {
     );
 
     const response = await fetch(
-
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/public/intake/cases/${caseId}/documents`,
-
+      `/api/v1/public/intake/cases/${caseId}/documents`,
       {
         method: "POST",
         body: formData,
@@ -215,7 +213,6 @@ export const OnboardingService = {
           return headers;
         })(),
       }
-
     );
 
     if (!response.ok) {

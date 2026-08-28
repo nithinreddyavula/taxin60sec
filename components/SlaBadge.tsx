@@ -27,7 +27,7 @@ export default function SlaBadge({ responseSeconds, slaMet, startedAt }: Props) 
       return (
         <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-700">
           <Clock size={13} />
-          Awaiting first response — 60s guarantee in progress
+          Awaiting first response — target under 60s
         </span>
       );
     }
@@ -39,7 +39,7 @@ export default function SlaBadge({ responseSeconds, slaMet, startedAt }: Props) 
       return (
         <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-bold tabular-nums text-amber-700">
           <Clock size={13} />
-          First response in {remaining}s — 60s guarantee
+          First response in {remaining}s — target under 60s
         </span>
       );
     }
@@ -47,7 +47,7 @@ export default function SlaBadge({ responseSeconds, slaMet, startedAt }: Props) 
     return (
       <span className="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1.5 text-xs font-bold tabular-nums text-red-700">
         <AlertTriangle size={13} />
-        {elapsed}s elapsed — past the 60s guarantee, we&apos;re on it
+        {elapsed}s elapsed — past the 60s target, we&apos;re working on it
       </span>
     );
   }
@@ -56,7 +56,7 @@ export default function SlaBadge({ responseSeconds, slaMet, startedAt }: Props) 
     return (
       <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700">
         <ShieldCheck size={13} />
-        Responded in {responseSeconds}s — 60-second guarantee met
+        Responded in {responseSeconds}s — 60-second target met
       </span>
     );
   }
