@@ -6,8 +6,11 @@ import CtaBanner from "@/components/CtaBanner";
 
 import Hero from "@/sections/Hero";
 import HowItWorks from "@/sections/HowItWorks";
+import ProductShowcase from "@/sections/ProductShowcase";
 import ResultsAndServices from "@/sections/ResultsAndServices";
 import Testimonials from "@/sections/Testimonials";
+import Pricing from "@/sections/Pricing";
+import FAQ from "@/sections/FAQ";
 import FreeTools from "@/sections/FreeTools";
 import DeadlinesWidget from "@/sections/DeadlinesWidget";
 
@@ -26,11 +29,10 @@ export default function HomePage() {
       <main>
         <Hero />
         <HowItWorks />
-        <TrustBadges />
+        <ProductShowcase />
         <ResultsAndServices />
-        <Testimonials />
-        <FreeTools />
-        <DeadlinesWidget />
+        <Pricing />
+        <FAQ />
         <CtaBanner />
       </main>
 
