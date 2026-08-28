@@ -62,14 +62,40 @@ function IntakeContent() {
   }, [ready, user, router, resumeSessionChecked, caseId]);
 
   useEffect(() => {
+    const resumeToken = searchParams.get("resume");
+    if (resumeToken && !caseId) {
+      window.location.replace(OnboardingService.resumeUrl(resumeToken));
+      return;
+    }
+
     async function load() {
       try {
         const response = await OnboardingService.services();
         const loadedServices = response.items;
         setServices(loadedServices);
 
-        const id = searchParams.get("id");
+        // If no token in URL, try to resume session from cookie
+        if (!resumeToken && !caseId) {
+          try {
+            const saved = await OnboardingService.resumeCurrentSession();
+            setCaseId(saved.caseId);
+            
+            // The backend's ResumeIntakeResponse omits the questions list, so we extract it from the matched service
+            const match = loadedServices.find(s => s.displayName === saved.serviceName);
+            const parsedQuestions = match?.intakeQuestions?.map(q => q.trim()).filter(q => q.length > 0) ?? [];
+            
+            setQuestions(parsedQuestions);
+            setAnswers(saved.answers);
+            setSaveStatus("saved");
+            track("intake_resumed");
+          } catch {
+            // No active session
+          } finally {
+            setResumeSessionChecked(true);
+          }
+        }
 
+        const id = searchParams.get("id");
         if (id) {
           const selected = loadedServices.find(
             (service) => String(service.id) === id
@@ -89,20 +115,6 @@ function IntakeContent() {
     }
 
     load();
-  }, [searchParams]);
-
-  useEffect(() => {
-    const resumeToken = searchParams.get("resume");
-    if (!resumeToken || caseId) return;
-    window.location.replace(OnboardingService.resumeUrl(resumeToken));
-  }, [searchParams, caseId]);
-
-  useEffect(() => {
-    if (searchParams.get("resume") || caseId) return;
-    OnboardingService.resumeCurrentSession().then((saved) => {
-      setCaseId(saved.caseId); setQuestions(saved.questions); setAnswers(saved.answers); setSaveStatus("saved");
-      track("intake_resumed");
-    }).catch(() => undefined).finally(() => setResumeSessionChecked(true));
   }, [searchParams, caseId]);
 
   useEffect(() => () => Object.values(saveTimers.current).forEach(clearTimeout), []);
@@ -113,6 +125,7 @@ function IntakeContent() {
     if (!raw) return;
     try {
       const draft = JSON.parse(raw) as { caseId: number; resumeToken: string };
+      if (!draft.resumeToken) throw new Error("Invalid token");
       window.location.replace(OnboardingService.resumeUrl(draft.resumeToken));
     } catch { localStorage.removeItem(`tax60-intake-draft:${serviceId}`); }
   }, [serviceId, caseId]);
@@ -135,8 +148,8 @@ function IntakeContent() {
       setCaseId(result.caseId);
       setQuestions(result.questions);
       setAnswers({});
-      localStorage.setItem(`tax60-intake-draft:${serviceId}`, JSON.stringify({ caseId: result.caseId, resumeToken: result.resumeToken }));
-      sessionStorage.setItem("tax60-intake-resume-token", result.resumeToken);
+      localStorage.setItem(`tax60-intake-draft:${serviceId}`, JSON.stringify({ caseId: result.caseId, resumeToken: result.intakeToken }));
+      sessionStorage.setItem("tax60-intake-resume-token", result.intakeToken);
       track("intake_started", { has_referral: Boolean(localStorage.getItem("tax60-referral-code")) });
 
       const elapsedSeconds = Math.max(1, Math.round((Date.now() - startedAt) / 1000));

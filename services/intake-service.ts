@@ -28,9 +28,11 @@ export type ServiceOffering = {
 
 export type StartIntakeResponse = {
   caseId: number;
-  caseNumber: string;
-  resumeToken: string;
+  intakeToken: string;
+  customerName: string;
+  serviceName: string;
   questions: string[];
+  answers: Record<string, string>;
 };
 
 export type RequiredDocument = {
@@ -48,9 +50,13 @@ export type DocumentValidationResult = {
 
 export type ResumeResponse = {
   caseId: number;
+  clientName: string;
+  serviceName: string;
+  completed: boolean;
+  answeredCount: number;
+  totalQuestions: number;
   currentQuestion: string;
   answers: Record<string, string>;
-  questions: string[];
 };
 export type PageResponse<T> = {
   items: T[];
