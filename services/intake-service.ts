@@ -144,8 +144,12 @@ export const OnboardingService = {
    * RESUME
    */
 
-  resumeUrl: (token: string) =>
-    `/api/v1/public/intake/resume/${encodeURIComponent(token)}`,
+  resumeUrl: (token: string) => {
+    if (!token?.trim()) {
+      throw new Error("A valid intake resume token is required");
+    }
+    return `/api/v1/public/intake/resume/${encodeURIComponent(token)}`;
+  },
 
   resumeCurrentSession: () =>
     request<ResumeResponse>("/api/v1/public/intake/resume-session"),

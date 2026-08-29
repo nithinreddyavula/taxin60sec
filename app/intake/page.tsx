@@ -141,6 +141,10 @@ function IntakeContent() {
     try {
       const result = await OnboardingService.start(Number(serviceId), submittedName, submittedPhone, submittedEmail);
 
+      if (!result.intakeToken?.trim()) {
+        throw new Error("Your intake could not be resumed. Please try again.");
+      }
+
       setCaseId(result.caseId);
       setQuestions(result.questions);
       setAnswers({});

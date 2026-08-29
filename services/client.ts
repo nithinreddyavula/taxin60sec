@@ -14,6 +14,10 @@ export const client = axios.create({
 });
 
 client.interceptors.request.use((config) => {
+  if (config.url && /^https?:\/\//i.test(config.url)) {
+    return Promise.reject(new Error("Browser API calls must use the same-origin /api proxy"));
+  }
+
   if (typeof window !== "undefined" && config.url && config.url.includes("/api/v1/public/intake/cases/")) {
     const intakeToken = window.sessionStorage.getItem("tax60-intake-resume-token");
     if (intakeToken) {
