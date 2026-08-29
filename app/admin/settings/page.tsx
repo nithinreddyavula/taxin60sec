@@ -3,16 +3,19 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import AppShell from "@/components/AppShell";
+import { useAppSession } from "@/components/AppProviders";
 import { AdminService, PlatformSetting } from "@/services/admin-service";
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<PlatformSetting[]>([]);
+  const { user, ready } = useAppSession();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!ready || !user?.roles.includes("ROLE_ADMIN")) return;
     AdminService.settings().then(setSettings).catch(() => setSettings([])).finally(() => setLoading(false));
-  }, []);
+  }, [ready, user]);
 
   async function save(key: string, value: string) {
     setSaving(key);

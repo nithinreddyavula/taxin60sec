@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Download, Search } from "lucide-react";
 import AppShell from "@/components/AppShell";
+import { useAppSession } from "@/components/AppProviders";
 import { AdminService, AdminClientSummary } from "@/services/admin-service";
 
 export default function AdminClientsPage() {
   const router = useRouter();
+  const { user, ready } = useAppSession();
   const [clients, setClients] = useState<AdminClientSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -17,6 +19,7 @@ export default function AdminClientsPage() {
   const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
+    if (!ready || !user?.roles.includes("ROLE_ADMIN")) return;
     let active = true;
     AdminService.clients(search, page, 20)
       .then((res) => {
@@ -28,7 +31,7 @@ export default function AdminClientsPage() {
       .catch(() => { if (active) setClients([]); })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
-  }, [search, page]);
+  }, [ready, user, search, page]);
 
   async function handleExport() {
     setExporting(true);

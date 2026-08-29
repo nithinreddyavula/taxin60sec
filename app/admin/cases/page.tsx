@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import { Download, Search } from "lucide-react";
 import { toast } from "sonner";
 import AppShell from "@/components/AppShell";
+import { useAppSession } from "@/components/AppProviders";
 import { AdminService, AdminCaseSummary, AssignableCa } from "@/services/admin-service";
 
 const STATUS_OPTIONS = ["All Status", "IN_PROGRESS", "CA_REVIEW", "PENDING_INFO", "COMPLETED", "CANCELLED"];
 
 export default function AdminCasesPage() {
   const router = useRouter();
+  const { user, ready } = useAppSession();
   const [cases, setCases] = useState<AdminCaseSummary[]>([]);
   const [cas, setCas] = useState<AssignableCa[]>([]);
   const [loading, setLoading] = useState(true);
@@ -20,6 +22,7 @@ export default function AdminCasesPage() {
   const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
+    if (!ready || !user?.roles.includes("ROLE_ADMIN")) return;
     AdminService.cases()
       .then(setCases)
       .catch((e) => { console.error("Failed to load cases:", e); setCases([]); })
@@ -28,7 +31,7 @@ export default function AdminCasesPage() {
     AdminService.assignableCas()
       .then(setCas)
       .catch((e) => { console.error("Failed to load assignable CAs:", e); setCas([]); });
-  }, []);
+  }, [ready, user]);
 
   const filtered = useMemo(
     () =>

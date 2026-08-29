@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Search } from "lucide-react";
 import AppShell from "@/components/AppShell";
+import { useAppSession } from "@/components/AppProviders";
 import { AdminService, AuditLog } from "@/services/admin-service";
 
 export default function AuditLogsPage() {
   const [logs, setLogs] = useState<AuditLog[]>([]);
+  const { user, ready } = useAppSession();
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [module, setModule] = useState("");
@@ -16,6 +18,7 @@ export default function AuditLogsPage() {
   const [totalElements, setTotalElements] = useState(0);
 
   useEffect(() => {
+    if (!ready || !user?.roles.includes("ROLE_ADMIN")) return;
     let active = true;
     AdminService.auditLogs(search, module, page, 20)
       .then((res) => {
@@ -27,7 +30,7 @@ export default function AuditLogsPage() {
       .catch(() => { if (active) setLogs([]); })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
-  }, [search, module, page]);
+  }, [ready, user, search, module, page]);
 
   return (
     <AppShell roles={["ROLE_ADMIN"]}>
